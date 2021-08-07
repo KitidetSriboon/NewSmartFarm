@@ -1,0 +1,508 @@
+<app-header [zone]="takedata.zonedata"></app-header>
+<app-sidebar [username]="takedata.supname" [userphoto]="takedata.suppic_url" [supcode]="takedata.supcode"
+    [userlevel]="level"></app-sidebar>
+<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#0058ff" type="ball-scale-pulse" [fullScreen]="true">
+    <p style="color: black"> กำลังโหลดข้อมูล... </p>
+</ngx-spinner>
+<div class="content-wrapper" style="min-height: 307px">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-N">
+                <div class="col-sm-6">
+                    <!-- <span class="input-group-text">: เลือกงวดงาน : </span>
+               <select formControlName="selectzone" class="form-control">
+                  <option *ngFor="let item of selecttime " [ngValue]="item.time">
+                     {{ item.time }}
+                  </option>
+               </select>
+               <button class="btn btn-info" (click)="Getsupportdata()">แสดงข้อมูล KPI</button> -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <!-- <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="./supporter#singeldata">หน้าแรก</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol> -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+
+    <!-- More content | Component -->
+    <app-action [zone]="takedata.zonedata" [supcode]="takedata.supcode" [userlevel]="level"></app-action>
+    <app-kpiall [usercode]="takedata.supcode"></app-kpiall>
+    <app-findlanddata></app-findlanddata>
+    <app-accept [zone]="takedata.zonedata" [supcode]="takedata.supcode" [userlevel]="level"></app-accept>
+    <app-myprofile [supcode]="takedata.supcode"></app-myprofile>
+   
+    <app-stockonline></app-stockonline>
+    <app-plantaction></app-plantaction>
+    <app-prbrd></app-prbrd>
+    <app-groupcut></app-groupcut>
+    <app-credit [zone]="takedata.zonedata"></app-credit>
+    <app-managearea [supcode]="takedata.supcode"  [supzone]="takedata.zonedata"></app-managearea>
+    <app-docforgroupcut></app-docforgroupcut>
+    <!-- More content | Component -->
+
+    <section class="content" id="main" style="display: block;">
+        <div class="col-lg-12" style="display: block;">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" (click)="check(1)">
+                    <a [ngClass]="{'nav-link':true,'active': home}">
+                        <mat-icon>import_contacts</mat-icon> พื้นที่ปลูก 64/65
+                    </a>
+                </li>
+                <li class="nav-item" (click)="check(4)">
+                    <a [ngClass]="{'nav-link':true,'active': graph}">
+                        <mat-icon>donut_small</mat-icon> กราฟแสดงผลสรุปข้อมูล
+                    </a>
+                </li>
+            </ul>
+
+            <div class="card" style="display: block; overflow:auto;" id="alltarget">
+                <div class="card-body">
+                   
+                    
+                    <div class="row" [formGroup]="Timecheck">
+                        <div class="col-md-6">
+                            <div class="input-group mb-6">
+                                <span class="input-group-text" id="basic-addon1">เลือกวันที่ต้องการ</span>
+                                <input class="form-control" type="date" id="today" formControlName="selettime">
+                                <button class="btn btn-info" (click)="Maindashboard();"> แสดงข้อมูล </button>
+                                <span class="input-group-text" id="basic-addon1">ระบุโซน</span>
+                                <select class="form-control" formControlName="seletzone" (change)="Maindashboard();">
+                                    <option *ngFor="let item of selectzone" [ngValue]="item.zonecode">{{item.zonecode}}
+                                    </option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered border-primary">
+                            <thead>
+                                <tr>
+                                    <th rowspan="1" class="text-center" style="background-color: #477EAE;">ส่วน</th>
+                                    <th rowspan="1" class="text-center" style="background-color: #477EAE; ">โซน</th>
+                                    <th rowspan="1" class="text-center" style="background-color: #477EAE; width: 10%;">
+                                        นักส่งเสริม</th>
+                                    <th class="text-center" colspan="2" style="background-color: rgb(62, 161, 87);">
+                                        ปลายฝนขยาย</th>
+                                    <th class="text-center" colspan="2" style="background-color: rgb(62, 161, 87);">
+                                        ปลายฝนรื้อตอ</th>
+                                    <th class="text-center" colspan="1" style="background-color: rgb(62, 161, 87);">
+                                        ปลายฝน</th>
+                                    <th class="text-center" colspan="3" style="background-color: rgb(62, 161, 87);">
+                                        รวมปลายฝน</th>
+                                    <th class="text-center" colspan="2" style="background-color: rgb(62, 161, 87);">
+                                        ต้นฝน</th>
+                                    <th class="text-center" colspan="2" style="background-color:rgb(142, 250, 92);">
+                                        อ้อยปลูกใหม่</th>
+                                    <th class="text-center" colspan="1" style="background-color:rgb(101, 166, 250);">
+                                        อ้อยตอ</th>
+                                    <th class="text-center" colspan="3" style="background-color: rgb(216, 65, 65);">รวม
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th class="text-center">ส่วน</th>
+                                    <th class="text-center">โซน</th>
+                                    <th class="text-center">นักส่งเสริม</th>
+                                    <th style="background-color: rgb(251, 255, 0);">แจ้ง</th>
+                                    <th style="background-color: rgb(0, 138, 46);">ปลูกเสร็จ</th>
+                                    <th style="background-color: rgb(251, 255, 0);">แจ้ง</th>
+                                    <th style="background-color: rgb(0, 138, 46);">ปลูกเสร็จ</th>
+                                    <th style="background-color: rgb(119, 255, 165);">ไถเตรียม</th>
+                                    <th style="background-color: rgb(251, 255, 0);">แจ้งโครงการ</th>
+                                    <th style="background-color: rgb(87, 158, 252);">วัดแผนที่</th>
+                                    <th style="background-color: rgb(0, 138, 46);">ปลูกเสร็จ</th>
+                                    <th style="background-color: rgb(87, 158, 252);">GPS</th>
+                                    <th style="background-color: rgb(0, 138, 46);">ปลูกเสร็จ/เป้าหมาย </th>
+                                    <th style="background-color: rgb(0, 138, 46);">ปลูกเสร็จ/เป้าหมาย</th>
+                                    <th style="background-color: rgb(87, 158, 252);">ยืนยันแปลง</th>
+                                    <th style="background-color: rgb(0, 138, 46);">ปลูกเสร็จ/เป้าหมาย</th>
+                                    <th style="background-color: rgb(0, 138, 46);">Progress</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="maindata" *ngFor="let item of maindata">
+                                <tr *ngIf="item.supcode!=='Z'" style="background-color: #ffffff;">
+
+                                    <td>{{item.Partcode}}</td>
+                                    <td>{{item.SUPZONE}}</td>
+                                    <td style="width: 20%;" class="text-left"> {{item.supcode}} | {{item.SUPNAME}}</td>
+                                    <td>{{item.erNew.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_map_new.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.erOld_y.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_map_old.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_phowed.toLocaleString('ar-TH')}}</td>
+
+                                    <td>{{item.pc_target_ER}}%
+                                        &nbsp;&nbsp;{{item.sumER.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_target_ER}}%"
+                                                aria-valuenow="{{item.pc_target_ER}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_ER_map}}%
+                                        &nbsp;&nbsp;{{item.er_map.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_ER_map}}%" aria-valuenow="{{item.pc_ER_map}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_ER_map}}%
+                                        &nbsp;&nbsp;{{item.er_map.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_ER_map}}%" aria-valuenow="{{item.pc_ER_map}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.SR.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.pc_target_SR}}%
+                                        &nbsp;&nbsp;{{item.SR_y.toLocaleString('ar-TH')}}/{{item.target_SR.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                                style="width:  {{item.pc_target_SR}}%"
+                                                aria-valuenow="{{item.pc_target_SR}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.newcane_pc}}%
+                                        &nbsp;&nbsp;{{item.newcane_y.toLocaleString('ar-TH')}}/{{item.newcane_target.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                                style="width:  {{item.newcane_pc}}%" aria-valuenow="{{item.newcane_pc}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+
+                                    <td>{{item.sum_st_map.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.pc_target_ST_y}}%
+                                        &nbsp;&nbsp;{{item.sum_st_y.toLocaleString('ar-TH')}}/{{item.target_ST.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                                style="width:{{item.pc_target_ST_y}}%"
+                                                aria-valuenow="{{item.pc_target_ST_y}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_sum_areas_y}}%
+                                        &nbsp;&nbsp;{{item.sum_areas_y.toLocaleString('ar-TH')}}/{{item.sum_areas.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                                style="width:{{item.pc_sum_areas_y}}%"
+                                                aria-valuenow="{{item.pc_sum_areas_y}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="item.supcode==='Z' && item.Partcode!=='BRD'"
+                                    style="background-color: #ffdc7d;">
+
+                                    <td>{{item.Partcode}}</td>
+                                    <td>{{item.SUPZONE}}</td>
+                                    <td style="width: 20%;" class="text-left"> {{item.supcode}} | {{item.SUPNAME}}</td>
+                                    <td>{{item.erNew.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_map_new.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.erOld_y.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_map_old.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_phowed.toLocaleString('ar-TH')}}</td>
+
+                                    <td>{{item.pc_target_ER}}%
+                                        &nbsp;&nbsp;{{item.sumER.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_target_ER}}%"
+                                                aria-valuenow="{{item.pc_target_ER}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_ER_map}}%
+                                        &nbsp;&nbsp;{{item.er_map.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_ER_map}}%" aria-valuenow="{{item.pc_ER_map}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_ER_map}}%
+                                        &nbsp;&nbsp;{{item.er_map.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_ER_map}}%" aria-valuenow="{{item.pc_ER_map}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.SR.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.pc_target_SR}}%
+                                        &nbsp;&nbsp;{{item.SR_y.toLocaleString('ar-TH')}}/{{item.target_SR.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                                style="width:  {{item.pc_target_SR}}%"
+                                                aria-valuenow="{{item.pc_target_SR}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.newcane_pc}}%
+                                        &nbsp;&nbsp;{{item.newcane_y.toLocaleString('ar-TH')}}/{{item.newcane_target.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                                style="width:  {{item.newcane_pc}}%" aria-valuenow="{{item.newcane_pc}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+
+                                    <td>{{item.sum_st_map.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.pc_target_ST_y}}%
+                                        &nbsp;&nbsp;{{item.sum_st_y.toLocaleString('ar-TH')}}/{{item.target_ST.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                                style="width:{{item.pc_target_ST_y}}%"
+                                                aria-valuenow="{{item.pc_target_ST_y}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_sum_areas_y}}%
+                                        &nbsp;&nbsp;{{item.sum_areas_y.toLocaleString('ar-TH')}}/{{item.sum_areas.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                                style="width:{{item.pc_sum_areas_y}}%"
+                                                aria-valuenow="{{item.pc_sum_areas_y}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="item.supcode==='Z' && item.Partcode==='BRD'"
+                                    style="background-color: #1C77C3; color: white;">
+                                    <td>{{item.Partcode}}</td>
+                                    <td>{{item.SUPZONE}}</td>
+                                    <td style="width: 20%;" class="text-left"> {{item.supcode}} | {{item.SUPNAME}}</td>
+                                    <td>{{item.erNew.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_map_new.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.erOld_y.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_map_old.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.er_phowed.toLocaleString('ar-TH')}}</td>
+
+                                    <td>{{item.pc_target_ER}}%
+                                        &nbsp;&nbsp;{{item.sumER.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_target_ER}}%"
+                                                aria-valuenow="{{item.pc_target_ER}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_ER_map}}%
+                                        &nbsp;&nbsp;{{item.er_map.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_ER_map}}%" aria-valuenow="{{item.pc_ER_map}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_ER_map}}%
+                                        &nbsp;&nbsp;{{item.er_map.toLocaleString('ar-TH')}}/{{item.target_ER.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                                style="width: {{item.pc_ER_map}}%" aria-valuenow="{{item.pc_ER_map}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.SR.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.pc_target_SR}}%
+                                        &nbsp;&nbsp;{{item.SR_y.toLocaleString('ar-TH')}}/{{item.target_SR.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                                style="width:  {{item.pc_target_SR}}%"
+                                                aria-valuenow="{{item.pc_target_SR}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.newcane_pc}}%
+                                        &nbsp;&nbsp;{{item.newcane_y.toLocaleString('ar-TH')}}/{{item.newcane_target.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                                style="width:  {{item.newcane_pc}}%" aria-valuenow="{{item.newcane_pc}}"
+                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+
+                                    <td>{{item.sum_st_map.toLocaleString('ar-TH')}}</td>
+                                    <td>{{item.pc_target_ST_y}}%
+                                        &nbsp;&nbsp;{{item.sum_st_y.toLocaleString('ar-TH')}}/{{item.target_ST.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                                style="width:{{item.pc_target_ST_y}}%"
+                                                aria-valuenow="{{item.pc_target_ST_y}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{item.pc_sum_areas_y}}%
+                                        &nbsp;&nbsp;{{item.sum_areas_y.toLocaleString('ar-TH')}}/{{item.sum_areas.toLocaleString('ar-TH')}}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                                style="width:{{item.pc_sum_areas_y}}%"
+                                                aria-valuenow="{{item.pc_sum_areas_y}}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="graph" style="display: none;">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label for=""> หากข้อมูลไม่ขึ้นลองกดปุ่มแล้วรอ </label> <button class="btn btn-success"
+                            (click)="Allchart();">โหลดใหม่</button>
+                    </div>
+
+                </div> <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <br>
+                            <div id="BRDArea" style="height: 500px; width: 100%;"></div>
+                        </div>
+
+                    </div>
+
+                    <br><br>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <br>
+                            <div id="BRDTon" style="height: 500px; width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <br>
+                            <div id="BRDYield" style="height: 500px; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     
+        <!-- Modal -->
+
+    </section>
+
+    <app-repairgroup [supcode]="takedata.supcode"></app-repairgroup>
+
+    <section class="content" id="report" style="display: none;">
+        <div class="container-fluid">
+            <div class="card" id="">
+                <div class="card-body" style="overflow-x:auto;">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <h3>สรุปกิจกรรมแปลงตามช่วงอายุอ้อย โซน </h3>
+                        </div>
+                        <div class="col-lg-2"><button class="btn btn-success d-print-none" (click)="Printdata()"> Print
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-printer" viewBox="0 0 16 16">
+                                    <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                                    <path
+                                        d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+                                </svg> </button>
+                        </div>
+                    </div>
+
+                    <table class="table table-hove table-bordered" id="printarea">
+                        <thead class="text-center">
+                            <tr>
+                                <td class="d-print-none" style="position: sticky;">ลำดับ</td>
+                                <td class="">ส่วน</td>
+                                <td class="">เขต / โซน</td>
+                                <td>รหัสนักส่งเสริม</td>
+                                <td>ชื่อนักส่งเสริม</td>
+                                <td>จำนวนแปลงทั้งหมด</td>
+                                <td>จำนวนแปลงที่ปลูกเสร็จ</td>
+
+                                <!-- cnt p 1 -->
+
+                                <td class="text-center">
+
+                            <tr>
+                                <td colspan="2"> <label for=""> งวดที่ 1 (1-60) วัน</label> </td>
+                            </tr>
+                            <tr>
+                                <td>จำนวนแปลง </td>
+                                <td>% ปลูกเสร็จ </td>
+                            </tr>
+                            </td>
+
+                            <td class="text-center">
+                                <tr>
+                                    <td colspan="2"><label for="" class=""> งวดที่ 2 (61-120) วัน</label></td>
+                                </tr>
+                                <tr>
+                                    <td>จำนวนแปลง</td>
+                                    <td>% ปลูกเสร็จ </td>
+                                </tr>
+                            </td>
+
+                            <td class="text-center">
+                                <tr>
+                                    <td colspan="2"><label for="" class=""> งวดที่ 3 (121-180) วัน</label> </td>
+                                </tr>
+                                <tr>
+                                    <td>จำนวนแปลง</td>
+                                    <td>% ปลูกเสร็จ </td>
+                                </tr>
+                            </td>
+
+                            <td class="text-center">
+                                <tr>
+                                    <td colspan="2"> <label for="" class=""> งวดที่ 4 (181-210) วัน</label> </td>
+                                </tr>
+                                <tr>
+                                    <td>จำนวนแปลง</td>
+                                    <td>% ปลูกเสร็จ </td>
+                                </tr>
+                            </td>
+
+
+                            </tr>
+                        </thead>
+                        <tbody id="supportdata">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+
+    <section class="content" id="showhavegroup" style="display: none;">
+
+    </section>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,272 @@
+<section id="managearea" style="display: none;">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary">เพิ่มแปลงขยาย</div>
+                    <div class="card-body">
+                        <form [formGroup]="Formaddarea">
+                              <div class="input-group mb-3">
+                                <span class="input-group-text">รหัสชาวไร่</span>
+                                <input type="text" class="form-control" placeholder="0000123456" id="fmcode" [value]="famercode">
+                               
+                                <span class="input-group-text">เบอร์ติดต่อ</span>
+                                <input type="text" class="form-control" placeholder="0321654987" formControlName="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                              </div>
+        
+                              <div class="input-group mb-3">
+                                <span class="input-group-text">หมู่บ้าน</span>
+                                <input type="text" class="form-control" formControlName="NAMEMOO" placeholder="บ้านหนองสำราญ">
+                               
+                                <span class="input-group-text">หมายเหตุ</span>
+                                <input type="text" class="form-control" formControlName="note" placeholder="หมายเหตุ">
+                                
+                              </div>
+                              <div class="input-group mb-3">
+                                <span class="input-group-text">ขนาดพื้นที่ที่คาดว่าจะปลูก (ไร่)</span>
+                                <input type="text" class="form-control" placeholder="เช่น 5 " formControlName="area_new" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                               
+                              </div>
+                              <div class="input-group mb-3">
+                                <span class="input-group-text">ประมาณการวันปลูก</span>
+                                <input type="date" class="form-control" formControlName="plant_date">
+                              </div>
+
+                              <div class="input-group mb-3">
+                                <span class="input-group-text">รหัสนักส่งเสริม</span>
+                                <input type="text" class="form-control" formControlName="supcode" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                              </div>
+                              <!-- <div class="input-group mb-3">
+                                <span class="input-group-text" formControlName="Confirm">ยืนยันการปลูก</span>
+                                <select class="form-control" >
+                                    <option value="0">กรุณาเลือก</option>
+                                    <option value="1">ปลูกแน่นอน</option>
+                                    <option value="2">ยกเลิก</option>
+                                </select>
+                              </div> -->
+                              <div class="input-group mb-3">
+                                  <button mat-raised-button color="primary" (click)="Insernewarea();">บันทึกข้อมูล</button>
+                              </div>
+                        </form>
+                    </div>
+                </div>
+
+                <mat-card>
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                             (closed)="panelOpenState = false">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              Self aware panel
+                            </mat-panel-title>
+                            <mat-panel-description>
+                              Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                            </mat-panel-description>
+                          </mat-expansion-panel-header>
+                          <p>I'm visible because I am open</p>
+                        </mat-expansion-panel>
+                      </mat-accordion>
+                </mat-card>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body"> 
+                       <div class="input-group mb-3" [formGroup]="Formaddarea">
+                          <span class="input-group-text"><mat-icon>person</mat-icon> สืบค้นข้อมูลชาวไร่ </span>
+                          <input class="form-control" type="text" formControlName="fmnameorcode"><button mat-raised-button color="primary" (click)="Findfarmmerdata();"><mat-icon>search</mat-icon></button>
+                       </div>
+                       <div class="table-responsive" style="height: 500px;">
+                        <mat-form-field>
+                            <mat-label>ค้นหา</mat-label>
+                            <input matInput (keyup)="FilterbyFarmer($event)" placeholder="รหัสชาวไร่ ชื่อ โควต้า" #input>
+                        </mat-form-field>
+                        <table mat-table [dataSource]="Farmerdata" matSort>
+                        
+                            <!-- โควตา Column -->
+                            <ng-container matColumnDef="fmcode">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;" id="KanitTH"> โควตา </th>
+                              <td mat-cell *matCellDef="let element"> {{element.fmcode_b1}} </td>
+                            </ng-container>
+                            
+                            <!-- ชื่อ - สกุล Column -->
+                            <ng-container matColumnDef="fmname">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 45%;" id="KanitTH"> ชื่อ - สกุล </th>
+                              <td mat-cell *matCellDef="let element"> {{element.fmname}}  </td>
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="zone" >
+                               <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;" id="KanitTH"> โซน </th>
+                               <td mat-cell *matCellDef="let element"> {{element.supzone}} </td>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="cane" >
+                               <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;" id="KanitTH"> ประเมินอ้อย </th>
+                               <td mat-cell *matCellDef="let element"> {{element.yield6465}} </td>
+                            </ng-container>
+                                  
+                                  
+                            <tr mat-header-row color="primary" *matHeaderRowDef="displayfarmaer ; sticky: true;" ></tr>
+                            <tr mat-row  (click)='test(row.fmcode_b1)' *matRowDef="let row; columns: displayfarmaer;"></tr>
+                            
+                            <!-- Row shown when there is no matching data. -->
+                            <tr class="mat-row" *matNoDataRow>
+                              <td class="mat-cell" colspan="4">ไม่มีข้อมูลตรงกัน "{{input.value}}"</td>
+                            </tr>
+                         </table>
+                       </div>
+                      
+                    </div>
+                 </div>
+            </div>
+        </div>
+        <!-- ตารางแสดงข้อมูลขยาย -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">ข้อมูลแปลงขยาย</div>
+                    <div class="card-body">
+
+                        <mat-form-field>
+                        <mat-label>ค้นหา</mat-label>
+                        <input matInput (keyup)="Filterby($event)" placeholder="รหัสชาวไร่ ชื่อ โควต้า" #input>
+                        </mat-form-field>
+
+                        <table mat-table [dataSource]="Selectdatainformarea6566" matSort class="mat-elevation-z8" style="width: 100%;">
+                            <ng-container matColumnDef="fmcode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> รหัสชาวไร่ </th>
+                                <td mat-cell *matCellDef="let element"> {{element.fmcode}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="fmname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> ชื่อ - สกุล </th>
+                                <td mat-cell *matCellDef="let element"> {{element.fmname}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="type_area">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> ประเภทอ้อย </th>
+                                <td mat-cell *matCellDef="let element"> {{element.type_area}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="area_new">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> พื้นที่(ไร่) </th>
+                                <td mat-cell *matCellDef="let element"> {{element.area_new}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="NAMEMOO">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> หมู่บ้าน </th>
+                                <td mat-cell *matCellDef="let element"> {{element.NAMEMOO}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="plant_date">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> วันที่ปลูก </th>
+                                <td mat-cell *matCellDef="let element"> {{element.plant_date}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="date_left">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> ก่อนถึงวันปลูก </th>
+                                <td mat-cell *matCellDef="let element"> {{element.date_left}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="supcode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> รหัสนักส่งเสริม </th>
+                                <td mat-cell *matCellDef="let element"> {{element.supcode}} </td>
+                            </ng-container>
+
+                            <!-- <ng-container matColumnDef="tel">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> เบอร์ติดต่อ </th>
+                                <td mat-cell *matCellDef="let element"> {{element.tel}} </td>
+                            </ng-container> -->
+
+                            <ng-container matColumnDef="note">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> หมายเหตุ </th>
+                                <td mat-cell *matCellDef="let element"> {{element.note}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                                <td mat-cell *matCellDef="let element"> 
+                                    <button mat-raised-button color="primary"  data-toggle="modal"
+                                    data-target="#Editplantarea" (click)="CheckEditnewarea(element.dataid);"><mat-icon>edit</mat-icon></button> 
+                                    <button mat-raised-button color="warn" (click)="Canclenewarea(element.dataid);"><mat-icon>remove</mat-icon></button> 
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="datacolum; sticky: true;" style="background-color: whitesmoke;"></tr>
+                            <tr mat-row *matRowDef="let element; columns: datacolum"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+    <!-- Model Edit ข้อมูลแปลงขยาย -->
+    <div class="modal fade" id="Editplantarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="width: 100%;">
+        <div class="modal-dialog modal-md" style="max-width: 75%;" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h3 class="modal-title">แก้ไขข้อมูลแปลงขยาย </h3>
+                    <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <div class="modal-body" [formGroup]="Formaddarea">
+                    <table *ngFor="let item of Singledata">
+                        <tr>
+                            <td >
+                                <p> รหัสชาวไร่ : {{item.fmcode}} </p>
+                                <p>ชื่อ - สกุล : {{item.fmname}} </p>
+                                <p>พื้นที่ : {{item.area_new}} </p>
+                                <p>วันที่ปลูก : {{item.plant_date}} </p>
+                                <p>หมู่บ้าน : {{item.NAMEMOO}} </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">ขนาดพื้นที่ที่คาดว่าจะปลูก (ไร่)</span>
+                                    <input type="text" class="form-control" value="{{newarea}}" id="area_new" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>    
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td> 
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">หมายเหตุ</span>
+                                    <input type="text" class="form-control" id="note" value="{{note}}">
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td> 
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">ประมาณการวันปลูก</span>
+                                    <input type="date" class="form-control" formControlName="editplant_date" [value]="item.plant_date">
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">หมู่บ้าน</span>
+                                    <input type="text" class="form-control" id="NAMEMOO" value="{{mooname}}">
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td><button mat-raised-button color="primary"  (click)="Editnewarea(item.dataid);">แก้ไขข้อมูล</button></td>
+                        </tr>
+                    </table>
+
+
+                </div>
+                <div class="modal-footer">
+                   
+                    <!-- <button type="button"  #closebutton class="close btn btn-danger" data-dismiss="modal" >Close</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Model Edit ข้อมูลแปลงขยาย -->
+</section>

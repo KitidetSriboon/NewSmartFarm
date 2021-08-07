@@ -1,0 +1,83 @@
+{
+  "rules": {
+    "formerData": {
+      "formerArea" : {
+        ".indexOn": ["landno"]
+      }
+    },
+      "backup" : {
+          "areas" : {
+            ".indexOn" : ["landno"]
+          }
+        },
+    "test": {
+      "profile" : {
+          ".indexOn": ["name","hid","fmCode","supCode","mrole", "code","username", "password","ZoneId"]
+      },
+      "master" : {
+        ".read": true,
+        ".write": false
+      },
+      "tx" : {
+        "1920" : {
+          "areas" : {
+            ".indexOn" : ["mapKeyOld","approveSts","landno","DetailPlant/ZoneId","spv","spv_profile/code","bnm_profile/code","bnm","landno","DetailPlant/CaneTypeId","DetailPlant/FormerLandNo"]
+          }
+        },
+          "2021" : {
+          "areas" : {
+            ".indexOn" : ["mapKeyOld","approveSts","landno","DetailPlant/ZoneId","spv","spv_profile/code","bnm_profile/code","bnm","landno","DetailPlant/CaneTypeId","DetailPlant/FormerLandNo"]
+          }
+        }
+      }
+    },
+   
+    
+    "inst1": {
+      "runLandno" : {
+        ".indexOn" : ["code","number"]
+      },
+      "profile" : {
+          ".indexOn": ["name","hid","fmCode","supCode", "mrole", "code","username", "password","ZoneId","creDt"]
+      },
+      "master" : {
+        ".read": true,
+        ".write": false
+      },
+      "tx" : {
+        "1920" : {
+          "areas" : {
+            ".indexOn" : ["closeArea","mapKeyOld","approveSts","creBy","landno","DetailPlant/ZoneId","spv","spv_profile/code","bnm_profile/code","bnm","landno","DetailPlant/CaneTypeId","DetailPlant/FormerLandNo","DetailPlant/Root"]
+          },
+          "factors" : {
+            ".indexOn" : ["spv","mapKey","cash","type"]
+          }
+        },
+        "2021" : {
+          "areas" : {
+            ".indexOn" : ["creDt","closeArea","mapKeyOld","approveSts","creBy","landno","DetailPlant/ZoneId","spv","spv_profile/code","bnm_profile/code","bnm","landno","DetailPlant/CaneTypeId","DetailPlant/FormerLandNo","DetailPlant/Root"]
+          },
+          "factors" : {
+            ".indexOn" : ["spv","mapKey","cash","type"]
+          }
+        },
+        "2122" : {
+          "areas" : {
+            ".indexOn" : ["creDt","closeArea","mapKeyOld","approveSts","creBy","landno","DetailPlant/ZoneId","spv","spv_profile/code","bnm_profile/code","bnm","landno","DetailPlant/CaneTypeId","DetailPlant/FormerLandNo","DetailPlant/Root"]
+          },
+          "factors" : {
+            ".indexOn" : ["spv","mapKey","cash","type"]
+          },
+        }  
+      },
+      "log" : {
+        ".indexOn" : ["mapKey","platform"]
+      },
+        "historys" : {
+          ".indexOn" : ["landno"]
+        }
+    },
+     ".read": true,
+    ".write": true
+  }
+}

@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300&display=swap');
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+
+label{
+  margin-top: auto;
+}
+
+#map {
+  height: 50%;
+  /* The height is 400 pixels */
+  width: 100%;
+  /* The width is the width of the web page */
+}
+
+agm-map {
+ height: 600px;
+ width: 100%;
+}
+
+
+h1,h2,h3,h4,h5 {
+  font-family: 'Sarabun', sans-serif;
+}

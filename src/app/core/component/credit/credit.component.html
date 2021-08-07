@@ -1,0 +1,204 @@
+<section id="credit" style="display: none;">
+<div class="col-lg-12">
+    <div class="card">
+         <!-- navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+               <li class="nav-item d-none d-sm-inline-block">
+                  
+               </li>
+            </ul>
+              <!-- Center navbar links -->
+            <ul class="navbar-nav ml-auto">
+         
+               <li class="nav-item d-none d-sm-inline-block">
+         
+                  <div >
+                  </div>
+               </li>
+         
+            </ul>   
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+         
+               <li class="nav-item">
+         
+                  <div class="navbar-search-block">
+                     <button class="btn" ><mat-icon>add</mat-icon> เพิ่มข้อมูล</button>
+                  </div>
+               </li>
+               <li class="nav-item">
+         
+                <div class="navbar-search-block">
+                   <button class="btn" ><mat-icon>attach_file</mat-icon> ยังไม่ตรวจสัญญา</button>
+                </div>
+             </li>
+             <li class="nav-item">
+         
+                <div class="navbar-search-block">
+                   <button class="btn" ><mat-icon>view_list</mat-icon> ข้อมูลทั้งหมด</button>
+                </div>
+             </li>
+         
+         
+         
+            </ul>
+         </nav>
+            <!-- navbar -->
+         <div class="row">
+            <div class="col-lg-6">
+               <div class="card">
+                  <div class="card-body">
+                     <form [formGroup]="FormFirst">
+                        <div class="input-group mb-3">
+                        
+                           <span  class="input-group-text">เลือกชาวไร่ <mat-icon>person</mat-icon></span >
+                           <input type="text" class="form-control" list="farmerdata" formControlName="fullname" (change)="Toformdata();">
+                           <datalist id="farmerdata">
+                              <option *ngFor="let item of Selectfarmer">[{{item.fmcode_b1}}] {{item.fmname}}</option>
+                           </datalist>
+                           <!-- <select class="form-control"> <option value="">เลือกข้อมูล</option></select> -->
+                  
+                        </div>
+                        <div class="input-group mb-3">
+                           <button class="btn btn-info" (click)="InsertCredit();">ใช้หลักทรัพย์</button>
+                        </div>
+                        <div class="input-group mb-3">
+                           <label style="color: red;">เฉพาะกรณีชาวไร่ใช้หลักทรัพย์ที่ไม่ใช่ชื่อตนเองค้ำประกัน แค่คีย์ วันเดือนปีเกิดและเลขบัตรประชาชนและแนบสัญญาตัวจริง</label>
+                        </div>
+                        <div class="input-group mb-3">
+                           <span  class="input-group-text"> <mat-icon>contact_mail</mat-icon></span >
+                              <input type="text" class="form-control"   onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="{{cardid}}" id="cardid"> 
+                           <span  class="input-group-text"> <mat-icon>event</mat-icon></span >
+                              <input type="date" class="form-control"  formControlName="birthday">
+                        </div>
+                        <div class="input-group mb-3">
+                           <span  class="input-group-text"> <mat-icon>person</mat-icon></span >
+                           <input type="text" class="form-control" value="{{fullname}}" disabled id="fullname">
+                           <span  class="input-group-text"> <mat-icon>local_shipping</mat-icon></span >
+                           <input type="text" class="form-control"  disabled>
+                           <span  class="input-group-text"> <mat-icon>groups</mat-icon></span >
+                           <input type="text" class="form-control"  disabled>
+                        </div>
+                     </form>
+                  </div>
+               </div> <br>
+               <div class="card">
+                  <div class="card-body" [formGroup]="FormCredit">
+                     <!-- Person 1 -->
+                     <div class="input-group mb-3">
+                        <span  class="input-group-text"> คนค้ำ 1 </span >
+                           <input type="text" class="form-control" placeholder="รหัสโควต้าคนค้ำที่ 1" formControlName="fmcodeperson1">
+                           <button class="btn btn-info" (click)="CheckFarmer1();">ตรวจสอบ 1</button>
+                     </div>
+                     <div class="input-group mb-3" *ngFor="let item of person1">
+                        <span  class="input-group-text"> <mat-icon>person</mat-icon></span >
+                           <input type="text" class="form-control"  id="fmnameperson1" value="{{item.fmname}}"  disabled>
+                        <label class="input-group-text">ประเมิน {{item.as6465.toLocaleString('ar-TH')}}  ตัน</label >   
+                        <label *ngIf="item.CanGet3==='N'" class="input-group-text">ค้ำไปแล้ว</label >  <label *ngIf="item.CanGet3==='Y'" class="input-group-text">ค้ำได้</label > 
+                     </div>
+                     <!-- Person 1 -->
+                     
+                     <!-- Person 2 -->
+                     <div class="input-group mb-3" >
+                        <span  class="input-group-text"> คนค้ำ 2 </span >
+                           <input type="text" class="form-control" placeholder="รหัสโควต้าคนค้ำที่ 2" formControlName="fmcodeperson2">
+                           <button class="btn btn-info" (click)="CheckFarmer2();">ตรวจสอบ 2</button>
+                     </div>
+                     <div class="input-group mb-3" *ngFor="let item of person2">
+                        <span  class="input-group-text"> <mat-icon>person</mat-icon></span >
+                           <input type="text" class="form-control"  id="fmnameperson2" value="{{item.fmname}}" >
+                           <label class="input-group-text">ประเมิน {{item.as6465.toLocaleString('ar-TH')}}  ตัน</label >   
+                           <label *ngIf="item.CanGet3==='N'" class="input-group-text">ค้ำไปแล้ว</label >  <label *ngIf="item.CanGet3==='Y'" class="input-group-text">ค้ำได้</label > 
+                     </div>
+                     <!-- Person 2 -->
+                     <!-- Person 3 -->
+                     <div class="input-group mb-3">
+                        <span  class="input-group-text"> คนค้ำ 3 </span >
+                           <input type="text" class="form-control" placeholder="รหัสโควต้าคนค้ำที่ 3" formControlName="fmcodeperson3">
+                           <button class="btn btn-info" (click)="CheckFarmer3();">ตรวจสอบ 3</button>
+                     </div>
+                     <div class="input-group mb-3" *ngFor="let item of person3">
+                        <span  class="input-group-text"> <mat-icon>person</mat-icon></span >
+                           <input type="text" class="form-control"  id="fmnameperson3" value="{{item.fmname}}"  >
+                           <label class="input-group-text">ประเมิน {{item.as6465.toLocaleString('ar-TH')}}  ตัน</label >   
+                           <label *ngIf="item.CanGet3==='N'" class="input-group-text">ค้ำไปแล้ว</label >  <label *ngIf="item.CanGet3==='Y'" class="input-group-text">ค้ำได้</label > 
+                     </div>
+                      <!-- Person 3 -->
+                      <div class="input-group mb-3">
+                         <button mat-raised-button color="primary" (click)="InsertCreditWithPerson();"> บันทึกข้อมูล </button>
+                      </div>
+                  </div>
+               </div>
+            </div>
+
+
+            <div class="col-lg-6">
+               <div class="card">
+                  <div class="card-body">
+                     <table class="table">
+                        <thead>
+                           <th scope="col"> โควต้า</th>
+                           <th scope="col"> ชื่อ</th>
+                           <th scope="col"> วันที่อัพเดทข้อมูล</th>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor="let item of tendata">
+                              <td>{{item.FMCODE}}</td>
+                              <td>{{item.FullName}}</td>
+                              <td>{{item.DateAdd}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <div class="card">
+                  <div class="card-body"> 
+                     <div class="input-group mb-3" [formGroup]="FormCredit">
+                        <span class="input-group-text"><mat-icon>person</mat-icon> สืบค้นข้อมูลชาวไร่ </span>
+                        <input class="form-control" type="text" formControlName="fmnameorcode"><button mat-raised-button color="primary" (click)="Findfarmmerdata();"><mat-icon>search</mat-icon></button>
+                     </div>
+                  
+                     <table mat-table [dataSource]="Farmerdata" matSort>
+                      
+                        <!-- โควตา Column -->
+                        <ng-container matColumnDef="fmcode">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;" id="KanitTH"> โควตา </th>
+                          <td mat-cell *matCellDef="let element"> {{element.fmcode}} </td>
+                        </ng-container>
+                        
+                        <!-- ชื่อ - สกุล Column -->
+                        <ng-container matColumnDef="fmname">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 45%;" id="KanitTH"> ชื่อ - สกุล </th>
+                          <td mat-cell *matCellDef="let element"> {{element.fmname}}  </td>
+                        </ng-container>
+                    
+                                    <!-- วันที่ฝึกอบรม Column -->
+                        <ng-container matColumnDef="zone" >
+                           <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;" id="KanitTH"> โซน </th>
+                           <td mat-cell *matCellDef="let element"> {{element.supzone}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="cane" >
+                           <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;" id="KanitTH"> ประเมินอ้อย </th>
+                           <td mat-cell *matCellDef="let element"> {{element.yield6465}} </td>
+                        </ng-container>
+                              
+                              
+                        <tr mat-header-row color="primary" *matHeaderRowDef="displayfarmaer ; sticky: true;" ></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayfarmaer;"></tr>
+                        
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                          <td class="mat-cell" colspan="4">ไม่มีข้อมูลตรงกัน "{{input.value}}"</td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+            
+    </div>
+</div>
+</section>

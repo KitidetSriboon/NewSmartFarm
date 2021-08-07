@@ -1,0 +1,588 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #006EB8;">
+    <!-- Brand Logo -->
+    <a href="" (click)="false" class="brand-link">
+        <img src="assets/images/bsflogo.png" alt="BRD Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8; background-color: white;">
+        <span class="brand-text font-weight-light">BRR ระบบไร่ออนไลน์</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{photourl}}" class="img-circle elevation-3" alt="User Image" (click)="myprofile()">
+            </div>
+            <div class="info">
+                <a  (click)="false" class="d-block" (click)="myprofile()">
+                    <p>{{name}}</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- SidebarSearch Form -->
+        <!-- <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                   <i class="fas fa-search fa-fw"></i>
+                </button>
+                </div>
+            </div>
+            <div class="sidebar-search-results">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <div class="search-title">
+                            <b class="text-light"></b>N<b class="text-light"></b>o<b class="text-light"></b> <b class="text-light"></b>e<b class="text-light"></b>l<b class="text-light"></b>e<b class="text-light"></b>m<b class="text-light"></b>e<b class="text-light"></b>n
+                            <b class="text-light"></b>t<b class="text-light"></b> <b class="text-light"></b>f<b class="text-light"></b>o<b class="text-light"></b>u<b class="text-light"></b>n<b class="text-light"></b>d<b class="text-light"></b>!<b class="text-light"></b>
+                        </div>
+                        <div class="search-path">
+
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                <li [ngClass]="{'nav-item': true}" (click)="main();">
+                    <a href="" [ngClass]="{'nav-link': true,'active': mainclick}" (click)="false">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            หน้าแรก
+                        </p>
+                    </a>
+                </li>
+                <li [hidden]="orther" [ngClass]="{'nav-item': true,'menu-is-opening menu-open': accept}" (click)="clicked(100);">
+                    <a href="" [ngClass]="{'nav-link': true,'active': accept}" (click)="false">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            รายการตรวจสอบ/บันทึก
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        
+                        <li [hidden]="manager" class="nav-item">
+                            <a class="nav-link" (click)="showfertilizer3();">
+                                &nbsp; <i class="far fa-list-alt nav-icon"></i>
+                                <p> อนุมัติปุ๋ย 3</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="shownote6465();">
+                                &nbsp; <i class="far fa-edit nav-icon"></i>
+                                <p> บันทึกกิจกรรมแปลง 64/65</p>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" (click)="showkpisupportter();">
+                                &nbsp; <i class="far fa-list-alt nav-icon"></i>
+                                <p>สรุป KPI นักส่งเสริม</p>
+                            </a>
+                        </li> -->
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" (click)="showkpiheadzone();">
+                                &nbsp; &nbsp; <i class="far fa-circle nav-icon"></i>
+                                <p>สรุป KPI หัวหน้าส่วนส่งเสริม (ยังไม่เปิดใช้งาน)</p>
+                            </a>
+                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="showkpimanager();">
+                                &nbsp; <i class="far fa-list-alt nav-icon"></i>
+                                <p>สรุป KPI ผู้จัดการเขต (ยังไม่เปิดใช้งาน)</p>
+                            </a>
+                        </li> -->
+
+                    </ul>
+                </li>
+                
+                <hr>
+                
+                <li [hidden]="!pr" [ngClass]="{'nav-item': true,'menu-is-opening menu-open': KPI}" (click)="clicked(1);">
+                    <a href="" [ngClass]="{'nav-link': true,'active': KPI}" (click)="false">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            KPI Online
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="showkpi();">
+                                &nbsp; <i class="far fa-list-alt nav-icon"></i>
+                                <p> KPI ประจำงวดของฉัน</p>
+                            </a>
+                        </li>
+                        <li [hidden]="manager" class="nav-item">
+                            <a class="nav-link" (click)="showkpisupportter();">
+                                &nbsp; <i class="far fa-list-alt nav-icon"></i>
+                                <p>สรุป KPI นักส่งเสริม</p>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" (click)="showkpiheadzone();">
+                                &nbsp; &nbsp; <i class="far fa-circle nav-icon"></i>
+                                <p>สรุป KPI หัวหน้าส่วนส่งเสริม (ยังไม่เปิดใช้งาน)</p>
+                            </a>
+                        </li> 
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="showkpimanager();">
+                                &nbsp; <i class="far fa-list-alt nav-icon"></i>
+                                <p>สรุป KPI ผู้จัดการเขต (ยังไม่เปิดใช้งาน)</p>
+                            </a>
+                        </li> -->
+
+                    </ul>
+                </li>
+                <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': sugarcanedata}">
+                    <a [ngClass]="{'nav-link': true,'active': sugarcanedata}" (click)="clicked(2);">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            ข้อมูลแปลงอ้อย
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="findlandata()">
+                                &nbsp; <i class="fas fa-search nav-icon"></i>
+                                <p> สืบค้นข้อมูลแปลง</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="showmorearea6566()">
+                                &nbsp; <i class="fas fa-globe-asia nav-icon"></i>
+                                <p> พื้นที่ขยาย 65/66</p>
+                            </a>
+                        </li>
+                        <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': action6465}">
+                            <a [ngClass]="{'nav-link': true}" (click)="clicked(29);">
+                                &nbsp; <i class="far fa-clipboard nav-icon"></i>
+                                <p> กิจกรรมแปลง 64/65</p>
+                                <i class="right fas fa-angle-left"></i>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="showaction6465()">
+                                        &nbsp; &nbsp; <i class="fas fa-file-contract nav-icon"></i>
+                                        <p>แบบติดตามกิจกรรมแปลงอ้อย</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="showdocforgroupcut6566();">
+                                         &nbsp; &nbsp; <i class="far fa-circle nav-icon"></i>
+                                        <p> ฟอร์มจัดกลุ่มตัด 64/65</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="showgrade6465()">
+                                        &nbsp; &nbsp; <i class="fas fa-columns nav-icon"></i>
+                                        <p>เกรดแปลง  64/65</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="showtarget6465()">
+                                        &nbsp; &nbsp; <i class="fas fa-chart-line nav-icon"></i>
+                                        <p>สรุปกิจกรรมแปลง </p>
+                                    </a>
+                                </li>
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="showmaingroupcut()">
+                                        &nbsp; &nbsp; <i class="far fa-edit nav-icon"></i>
+                                        <p> บันทึกกลุ่มตัดแปลงอ้อย </p>
+                                    </a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a class="nav-link" (click)="showbugandgerm();">
+                                         &nbsp; &nbsp; <i class="far fa-circle nav-icon"></i>
+                                        <p> บันทึกโรคแมลง 64/65</p>
+                                    </a>
+                                </li> -->
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="showactioncomment();">
+                                         &nbsp; &nbsp; <i class="fas fa-clipboard-list"></i>
+                                        <p> แบบฟอร์มประเมินอ้อย <br>ตามหลักวิชาการ</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': supportdata}" (click)="clicked(3);">
+                    <a (click)="false" [ngClass]="{'nav-link': true,'active': supportdata}">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            ข้อมูลสนับสนุน 
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="findfarmmerdata();">
+                                &nbsp;<i class="fas fa-search nav-icon"></i>
+                                <p> สืบค้นข้อมูลชาวไร่</p>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> สืบค้นเลขบัญชีธ.กรุงเทพ</p>
+                            </a>
+                        </li>  -->
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="stockonline();">
+                                &nbsp;<i class="fas fa-store nav-icon"></i>
+                                <p> สต็อคออนไลน์</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="showrepairgroup();">
+                                &nbsp; <i class="fas fa-users nav-icon"></i>
+                                <p> กลุ่มตัด | กลุ่มบำรุง </p>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> ปริมาณน้ำฝน</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> แจ้งโครงการปลูกอ้อย</p>
+                            </a>
+                        </li> -->
+
+                    </ul>
+                </li>
+                <li  class="nav-item" (click)="showcheckandtrain();" [hidden]="pr">
+                    <a (click)="false" [ngClass]="{'nav-link': true,'active': false}">
+                        <i class="nav-icon fas fa-clipboard-check"></i>
+                        &nbsp; &nbsp; <p>งานประเมินและ<br>ติดตามการฝึกอบรม</p>
+                    </a>
+                </li>
+
+                <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': onlinecredit}" (click)="clicked(4);"> 
+                    <a  [ngClass]="{'nav-link': true,'active': onlinecredit}">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            สินเชื่อออนไลน์
+                            <i class="fas fa-angle-left right"></i>
+                           
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a [ngClass]="{'nav-link': true}" >
+                                &nbsp;   <i class="far fa-address-book nav-icon"></i>
+                                <p>ปี 65/66 <i class="fas fa-angle-left right"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item" (click)="showcontact();">
+                                    <a  class="nav-link">
+                                        &nbsp; &nbsp;<i class="far fa-id-card nav-icon"></i><p>สัญญาปี 65/66 </p>
+                                       
+                                    </a>
+                                </li>
+                                <!-- <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> ขอปุ๋ยรอบ x</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> พิมพ์ใบจ่ายปุ๋ย</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> พิมพ์ใบปะหน้าเกี๊ยว</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>ตรวจสอบการทำสัญญา</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> ประวัติการขอปัจจัยการผลิต</p>
+                                    </a>
+                                </li> -->
+
+
+                            </ul>
+                        </li>
+                        <!-- <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': false}">
+                            <a href="" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ปี 64/65</p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>สัญญาปี 64/65</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> ขอปุ๋ยรอบ x</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> พิมพ์ใบจ่ายปุ๋ย</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> พิมพ์ใบปะหน้าเกี๊ยว</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>ตรวจสอบการทำสัญญา</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> ประวัติการขอปัจจัยการผลิต</p>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>สรุปรายการเกี้ยวแต่ละแผนก</p>
+                            </a>
+                        </li> -->
+
+                    </ul>
+                </li> 
+
+               <!-- <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': seasoncane}" (click)="clicked(5);">
+                    <a href="#supporter" [ngClass]="{'nav-link': true,'active': seasoncane}">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            ฤดูหีบอ้อย (ยังไม่เปิดใช้งาน)
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="charts/chartjs.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ปี 62/63</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="charts/flot.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ปี 63/64</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="charts/inline.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ปี 64/65</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': onlinereport}" (click)="clicked(6);">
+                    <a href="#supporter" [ngClass]="{'nav-link': true,'active': onlinereport}">
+                        <i class="nav-icon fas fa-tree"></i>
+                        <p>
+                            รายงานออนไลน์ (ยังไม่เปิดใช้งาน)
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': false}">
+                            <a href="UI/general.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>KPI Online</p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>KPI นักส่งเสริม</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> KPI เขต</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': false}">
+                            <a href="UI/icons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>สรุปภาพรวม</p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>ปี 62/63</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> ปี 63/64</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> ปี 64/65</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="UI/buttons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Buttons</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="UI/sliders.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sliders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="UI/modals.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Modals &amp; Alerts</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="UI/navbar.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Navbar &amp; Tabs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="UI/timeline.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Timeline</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="UI/ribbons.html" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ribbons</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': formreport}" (click)="clicked(7);">
+                    <a href="#supporter" [ngClass]="{'nav-link': true,'active': formreport}">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            แบบฟอร์ม (ยังไม่เปิดใช้งาน)
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#supporter" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>General Elements</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#supporter" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Advanced Elements</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#supporter" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Editors</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#supporter" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Validation</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': tabledata}" (click)="clicked(8);">
+                    <a href="#supporter" [ngClass]="{'nav-link': true,'active': tabledata}">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            ตารางแสดงข้อมูล (ยังไม่เปิดใช้งาน)
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#supporter" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Simple Tables</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#supporter" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>DataTables</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#supporter" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>jsGrid</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li> -->
+               <hr>
+
+
+            </ul>
+        </nav>
+
+
+
+        <!-- /.sidebar-menu -->
+    </div>
+
+
+    <!-- /.sidebar -->
+</aside>

@@ -1,0 +1,518 @@
+<!-- อนุมัติปุ๋ย 3 -->
+<section id="fertilizer3" class="content" style="display:none;">
+
+    <!-- ตารางแสดงรายการอนุมัติปุ๋ย -->
+
+
+    <div class="card">
+        <div class="card-header bg-dark">
+            รายการปุ๋ยรอนุมัติ
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- ผอ  -->
+            <label [hidden]="headmanager" class="form-label">สามารถเลือกกรองโดยใช้ เขต หรือ รหัสชาวไร่ หมายเลขแปลง
+                วันที่ขออนุมัติ </label>
+            <div [hidden]="headmanager" class="input-group mb-3">
+                <mat-form-field appearance="standard">
+                    <mat-label>ค้นหา</mat-label>
+                    <input matInput (keyup)="FilterData($event)" placeholder="หมายเลขแปลง" #input>
+                </mat-form-field>
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- รหัสชาวไร่ Column -->
+                    <ng-container matColumnDef="supzone">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;" id="KanitTH"> โซน
+                        </th>
+                        <td mat-cell *matCellDef="let element"> {{element.supzone}} </td>
+                    </ng-container>
+
+                    <!-- ชื่อชาวไร่ Column -->
+                    <ng-container matColumnDef="fmname">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 300px;" id="KanitTH">
+                            ชื่อชาวไร่ </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fmname}} </td>
+                    </ng-container>
+
+                    <!-- หมายเลขแปลง Column -->
+                    <ng-container matColumnDef="intlandno">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;" id="KanitTH">
+                            หมายเลขแปลง </th>
+                        <td mat-cell *matCellDef="let element"> {{element.intlandno}} </td>
+                    </ng-container>
+
+                    <!-- วันที่ขออนุมัติ Column -->
+                    <ng-container matColumnDef="allow_date_th">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 300px;" id="KanitTH">
+                            วันที่ขออนุมัติ </th>
+                        <td mat-cell *matCellDef="let element"> {{element.allow_date_th}} </td>
+                    </ng-container>
+
+                    <!-- สถานะ Column -->
+                    <ng-container matColumnDef="ck_accept">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 250px;" id="KanitTH"> สถานะ
+                        </th>
+                        <td mat-cell *matCellDef="let element"> {{element.ck_accept_doc}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="accept">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 150px;" id="KanitTH">
+                            อนุมัติ </th>
+                        <td mat-cell *matCellDef="let element" id="Kanit"> <button mat-raised-button color="primary"
+                                (click)="AcceptFertilizer3(element.itid,element.fmcode);"> อนุมัติ </button> </td>
+                    </ng-container>
+
+                    <tr mat-header-row color="primary" *matHeaderRowDef="displaycolumFert3 ; sticky: true;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displaycolumFert3;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">ไม่มีข้อมูลตรงกัน "{{input.value}}"</td>
+                    </tr>
+                </table>
+            
+
+                <!-- ผอ  -->
+            </div>
+            <!-- ผอ  -->
+
+            <!-- ผจก  -->
+            <div [hidden]="manager" class="input-group mb-3" [formGroup]="Fertilizer3">
+                <span class="input-group-text">: เลือกรายการชาวไร่ : </span>
+                <input type="text" class="form-control" list="namefm" formControlName="farmercode"
+                    (change)="GetFarmerFertilizer3();">
+                <datalist id="namefm" [hidden]="true" class="form-control">
+                    <option *ngFor="let item of farmerlist" [ngValue]="item.FMCODE_B1">
+                        {{ item.FMCODE_B1 }} {{ item.fmname }}
+                    </option>
+                </datalist>
+            </div>
+
+            <!-- ตารางแสดงรายการอนุมัติปุ๋ย ผจก -->
+            <div [hidden]="manager" class="table-responsive">
+                <p> <b> ***เงื่อนไข คำสั่งอนุมัติ และขออนุมัติ
+                        *อนุมัติ คือ ผจก. สามารถอนุมัติปุ๋ยรอบที่3ได้ ตามเงื่อนไขประเมิน อ้อยปลายฝน(ER) => 16 อ้อยตอ(ST)
+                        => 13 %การงอก => 95 %
+                        **ขออนุมัติ คือ แปลงไม่เข้าเงื่อนไขขอปุ๋ยรอบ3 ผจก. ต้องส่งขออนุมัติจาก ผช. หรือ ผอ. </b></p>
+
+                <!-- ผจก  -->
+                <table class="table table-head-fixed" [hidden]='manager'>
+                    <thead class="table__head">
+                        <tr style="background-color: #39A9DB;">
+                            <th class="text-center">โซน/เขต</th>
+                            <th class="text-center">รูท</th>
+                            <th class="text-center">หมายเลขแปลง</th>
+
+                            <th class="text-center">ประเภทอ้อย </th>
+                            <th class="text-center">พื้นที่(ไร่)</th>
+                            <th class="text-center">ประเมิน</th>
+                            <th class="text-center">% การงอก</th>
+                            <th class="text-center"> วัชพืช </th>
+                            <th class="text-center">เบิกได้</th>
+                            <th class="text-center">เบิกไปแล้ว</th>
+                            <th class="text-center">ยอดคงเหลือ</th>
+
+                            <th class="text-center">รอการอนุมัติปุ๋ย 3 </th>
+                            <th [hidden]="manager" class="text-center">ส่งคำขออนุมัติ/อนุมัติ</th>
+                            <th [hidden]="headmanager" class="text-center">อนุมัติ</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody [hidden]="manager">
+                        <tr *ngFor="let item of datalistfarm">
+                            <td class="text-center">{{item.supzone}}</td>
+                            <td class="text-center">{{item.route}}</td>
+                            <td class="text-center">{{item.intlandno}}</td>
+
+                            <td class="text-center">{{item.canetype}}</td>
+                            <td class="text-center">{{item.landvalue}}</td>
+                            <td class="text-center">{{item.Ton}}</td>
+                            <td class="text-center">{{item.lastGerminationPercent}} </td>
+                            <td class="text-center"> <label *ngIf="item.lastweed==1" style="color: red;">มี</label>
+                                <label *ngIf="item.lastweed==2">ไม่มี</label>
+                            </td>
+                            <td class="text-center">{{item.caneGetfert3}}</td>
+                            <td class="text-center">{{item.Getferted}}</td>
+                            <td class="text-center">{{item.balance_fert3}}</td>
+
+
+                            <td class="text-center">
+                                <label style="color: red;" *ngIf="item.getFert3==='N'">ยังไม่อนุมัติ</label>
+                                <label style="color: blue;" *ngIf="item.getFert3==='A'">รออนุมัติ</label>
+                                <label style="color: yellowgreen;" *ngIf="item.getFert3==='Y'">อนุมัติแล้ว</label>
+                            </td>
+
+                            <!-- ผจก อนุมัติ || ขออนุมัติ -->
+                            <td [hidden]="manager" class="text-center">
+                                <button *ngIf="item.getFert3==!'Y' || item.caseOK==='Y'" class="btn btn-info"
+                                    (click)="AcceptFertilizer3(item.itid,item.fmcode);">อนุมัติ</button>
+                                <button class="btn btn-warning" *ngIf="item.caseOK==='N'"
+                                    (click)=" Allowrequest(item.itid,item.fmcode);">ขออนุมัติ</button>
+                            </td>
+                            <!-- ผอ  -->
+                            <!-- <td [hidden]="headmanager" class="text-center" *ngIf="item.caseOK==='Y'"><button class="btn btn-info" (click)="AcceptFertilizer3(item.itid,item.fmcode);">อนุมัติ</button></td> -->
+                            <td [hidden]="headmanager" class="text-center" *ngIf="item.getFert3==='A'"><button
+                                    class="btn btn-info"
+                                    (click)="AcceptFertilizer3(item.itid,item.fmcode);">อนุมัติ</button></td>
+                        </tr>
+                    </tbody>
+
+
+                </table>
+                <!-- ผจก  -->
+
+                <!-- ผอ  -->
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- รายการปุ๋ยที่อนุมัติแล้ว -->
+    <div class="card" [hidden]="headmanager">
+        <div class="card-header bg-success">รายการปุ๋ยที่อนุมัติแล้ว
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div [hidden]="headmanager" class="input-group mb-1" [formGroup]="Fertilizer3">
+                <input type="text" class="form-control">
+
+            </div>
+            <table class="table">
+                <thead>
+                    <th>#</th>
+                    <th scope="col">หมายเลขแปลง</th>
+                    <th scope="col">โซน</th>
+                    <th scope="col">เลขโควต้า</th>
+                    <th scope="col">ชื่อชาวไร่</th>
+                    <th scope="col">สถานะ</th>
+                    <th scope="col">วันที่ขออนุมัติ</th>
+                    <th scope="col">วันที่อนุมัติ</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of Allacceptdata; index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{item.intlandno}}</td>
+                        <td>{{item.supzone}}</td>
+                        <td>{{item.fmcode}}</td>
+                        <td>{{item.fmname}}</td>
+                        <td>{{item.ck_accept_doc}}</td>
+                        <td style="background-color: rgb(244, 255, 95);">{{item.allow_date_th}}</td>
+                        <td style="background-color: rgb(61, 172, 107);">{{item.accept_date_th}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" [hidden]="manager">
+        <div class="card-header bg-warning">รายการปุ๋ยขอนุมัติ</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr style="background-color: rgb(230, 255, 86);">
+                        <th>#</th>
+                        <th class="text-center">โซน/เขต</th>
+                        <th class="text-center">ชื่อชาวไร่ </th>
+                        <th class="text-center">หมายเลขแปลง</th>
+                        <th class="text-center">วันที่ขออนุมัติ </th>
+                        <th [hidden]="headmanager" class="text-center">อนุมัติ</th>
+                    </tr>
+                </thead>
+                <tbody [hidden]="manager">
+                    <tr *ngFor="let item of MAllowFert3; index as i">
+                        <td>{{i+1}}</td>
+                        <td class="text-center">{{item.supzone}}</td>
+                        <td class="text-center">{{item.fmname}}</td>
+                        <td class="text-center">{{item.intlandno}}</td>
+                        <td class="text-center">{{item.allow_date_th}}</td>
+
+                        <!-- ผอ  -->
+                        <!-- <td [hidden]="headmanager" class="text-center" *ngIf="item.caseOK==='Y'"><button class="btn btn-info" (click)="AcceptFertilizer3(item.itid,item.fmcode);">อนุมัติ</button></td> -->
+                        <td [hidden]="headmanager" class="text-center"><button class="btn btn-info"
+                                (click)="AcceptFertilizer3(item.itid,item.fmcode);">อนุมัติ</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!-- อนุมัติปุ๋ย 3 -->
+
+
+
+
+<!-- แบบสำรวจวิชาการ อ.กุมุท -->
+<section id="formactioncomment" class="content" style="display:none;">
+
+    <div class="col-md-12" id="mapdata">
+        <div class="card ">
+            <div class="card-header bg-primary">
+                <h3 class="card-title">ข้อมูลชาวไร่</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                </div>
+                <!-- /.card-tools -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="display: block;">
+                <div class="input-group mb-6" [formGroup]="FormKumut">
+                    <span class="input-group-text">: เลือกโซน : </span>
+                    <select formControlName="seletzone" class="form-control">
+                        <option *ngFor="let item of selectzone" [ngValue]="item.zonecode">
+                            {{ item.zonecode }}
+                        </option>
+                    </select>
+                    <input type="text" class="form-control" placeholder="กรอกรูท" formControlName="seletroot"
+                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                    <button class="btn btn-danger" (click)="getMap2();">ค้นหา</button>
+
+                </div>
+
+
+                <agm-map *ngIf="maps.length > 0" [fullscreenControl]="true" [latitude]="coordinatesCenter.lat"
+                    [longitude]="coordinatesCenter.lng" [zoom]="16" [maxZoom]="25" [minZoom]="10"
+                    [mapTypeId]="'hybrid'">
+
+                    <div *ngFor="let item of maps">
+                        <agm-marker [latitude]="item.coordinatesCenter.lat" [longitude]="item.coordinatesCenter.lng"
+                            (markerClick)="getinforwindows(item.key,infoWindow)">
+                            <agm-info-window #infoWindow>
+                                <div *ngFor="let list of infordata2">
+                                    <p> หมายเลขแปลง : <strong>{{ list.intlandno }}</strong> </p>
+                                    <p> ชื่อชาวไร่ : <strong>{{ list.fmname }} </strong></p>
+                                    <p> พื้นที่ : <strong>{{ list.landvalue }}</strong></p>
+                                    <p> ประเภทอ้อย : <strong> {{list.CaneTypeName}}</strong></p>
+                                    <p> โซน :<strong>{{ list.supzone }}</strong></p>
+                                    <p> วันที่ปลูก : <strong>{{ list.PlantDate }}</strong></p>
+                                    <p> อายุ : <strong>{{ list.caneage }} วัน</strong></p>
+                                </div>
+                            </agm-info-window>
+                        </agm-marker>
+                        <agm-polygon [paths]="item.coordinates" [strokeColor]="'#44FFD1'">
+                        </agm-polygon>
+                    </div>
+                </agm-map>
+
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                แบบฟอร์มประเมินอ้อยตามหลักวิชาการ
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <table class="table table-head-fixed" [formGroup]="FormKumut" style="overflow-x: auto;">
+
+                    <tbody>
+                        <tr *ngFor="let itemsql of infordata2">
+                            <td colspan="2">
+                                <p>หมายเลยแปลง : <label>{{itemsql.intlandno}}</label></p>
+                                <p>ชื่อชาวไร่ : <label>{{itemsql.fmname}}</label></p>
+                                <p> พื้นที่ : <strong>{{ itemsql.landvalue }} ไร่</strong></p>
+                                <p> ประเภทอ้อย : <strong> {{itemsql.CaneTypeName}}</strong></p>
+                                <p> โซน : <strong>{{ itemsql.supzone }}</strong></p>
+                                <p> วันที่ปลูก : <strong>{{ itemsql.PlantDate }}</strong></p>
+                            <td><input type="hidden" value={{itemsql.fmcode}} id="fmcode2" required /></td>
+                            <td><input type="hidden" value={{itemsql.itid}} id="landitid2" required /></td>
+                            <td><input type="hidden" value={{itemsql.intlandno}} id="landno2" required /></td>
+                        </tr>
+                        <tr>
+                            <td>1.วันที่สำรวจ</td>
+                            <td><input type="date" name="selectdate" id="selectdate" required
+                                    formControlName="dataaction"></td>
+                        </tr>
+                        <tr>
+                            <td>2. จำนวนลำขนาด ใหญ่ของแถวแรกที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr1big">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3. จำนวนลำขนาด กลางของแถวแรกที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr1mid">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4. จำนวนลำขนาด เล็กของแถวแรกที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr1small">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5. จำนวนลำขนาด ใหญ่ของแถวที่สองที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr2big">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>6. จำนวนลำขนาด กลางของแถวที่สองที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr2mid">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>7. จำนวนลำขนาด เล็กของแถวที่สองที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr2small">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>8. จำนวนลำขนาด ใหญ่ของแถวที่สามที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr3big">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>9. จำนวนลำขนาด กลางของแถวที่สามที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr3mid">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>10. จำนวนลำขนาด เล็กของแถวที่สามที่สำรวจ</td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" " formControlName="nr3small">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>11. น้ำหนัก ใหญ่ เฉลี่ย </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="massbig">,กก.</td>
+                        </tr>
+
+                        <tr>
+                            <td>12. ความยาวลำขนาดใหญ่เฉลี่ย, </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="heightbig">,ซม.</td>
+                        </tr>
+                        <tr>
+                            <td>13. เส้นผ่าศูนย์กลางลำของลำขนาดใหญ่เฉลี่ย, </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="diameterbig">,ซม.</td>
+                        </tr>
+
+                        <tr>
+                            <td>14. น้ำหนัก กลาง เฉลี่ย </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="massmid">,กก.</td>
+                        </tr>
+                        <tr>
+                            <td>15. ความยาวลำขนาดกลางเฉลี่ย, </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="heightmid">,ซม.</td>
+                        </tr>
+                        <tr>
+                            <td>16. เส้นผ่าศูนย์กลางลำของลำขนาดกลางเฉลี่ย, </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="diametermid">,ซม.</td>
+                        </tr>
+                        <tr>
+                            <td>17. น้ำหนัก เล็ก เฉลี่ย </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="masssmall">,กก.</td>
+                        </tr>
+                        <tr>
+                            <td>18. ความยาวลำขนาดเล็กเฉลี่ย, </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="heightsmall">,ซม.</td>
+                        </tr>
+                        <tr>
+                            <td>19. เส้นผ่าศูนย์กลางลำของลำขนาดเล็กเฉลี่ย, </td>
+                            <td><input type="number" step="0.01" value="0" min="0" max=" "
+                                    formControlName="diametersmall">,ซม.</td>
+                        </tr>
+                        <!-- <tr>
+                                <td><input type="text" name="" id=""></td>
+                                <td><input type="text" name="" id=""></td>
+                            </tr> -->
+                        <!-- <tr>
+
+                            <td><button class="btn btb-infor">คำนวณ</button></td>
+                        </tr> -->
+                        <tr>
+                            <td><button class="btn btn-success" (click)="SubmitDataK();">บันทึกข้อมูล</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12" id="displaydata">
+        <div class="card">
+            <div class="card-header bg-warning">
+                รายการแสดงข้อมูลที่บันทึก
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-head-fixed">
+                        <thead>
+                            <th>วันที่บันทึก</th>
+                            <th>ชื่อชาวไร่</th>
+                            <th>หมายเลขแปลง</th>
+                            <th>วันที่สำรวจแปลง</th>
+                            <th>ประเภทอ้อย</th>
+                            <th>ผลผลิตประเมิน</th>
+                            <th>ผลผลิตวันเข้าหีบ</th>
+
+                            <th>แถวแรกลำขนาดใหญ่</th>
+                            <th>แถวแรกลำขนาดกลาง</th>
+                            <th>แถวแรกลำขนาดเล็ก</th>
+                            <th>แถวที่สองลำขนาดใหญ่</th>
+                            <th>แถวที่สองลำขนาดกลาง</th>
+                            <th>แถวที่สองลำขนาดเล็ก</th>
+                            <th>แถวที่สามลำขนาดใหญ่</th>
+                            <th>แถวที่สามลำขนาดกลาง</th>
+                            <th>แถวที่สามลำขนาดเล็ก</th>
+                            <th>ยกเลิก</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of comment">
+                                <td>{{item.dateInsert}}</td>
+                                <td>{{item.fmname}}</td>
+                                <td>{{item.intlandno}}</td>
+                                <td>{{item.est_date}}</td>
+                                <td>{{item.canetype}}</td>
+                                <td>{{item.est_yld}}</td>
+                                <td>{{item.harvest_yld}}</td>
+
+                                <td>{{item.nr1big}}</td>
+                                <td>{{item.nr1mid}}</td>
+                                <td>{{item.nr1small}}</td>
+
+                                <td>{{item.nr2big}}</td>
+                                <td>{{item.nr2mid}}</td>
+                                <td>{{item.nr2small}}</td>
+
+                                <td>{{item.nr3big}}</td>
+                                <td>{{item.nr3mid}}</td>
+                                <td>{{item.nr3small}}</td>
+                                <td><button class="btn btn-danger" (click)="DeletecComemmt(item.idest);">
+                                        <mat-icon>remove</mat-icon>
+                                    </button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- แบบสำรวจวิชาการ อ.กุมุท -->

@@ -1,0 +1,8 @@
+p {
+    font-weight: bold;
+    font-size: larger;
+}
+
+tr>td {
+    font-size: 10pt;
+}

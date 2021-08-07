@@ -1,0 +1,193 @@
+<!-- อบรมนักธุรกิจอ่้อย -->
+<section class="content" id="checkandtrain" style="display: none;">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                  <form [formGroup]="FormCheckandTrain">
+                  <select class="form-select" formControlName="selectdoc" (change)="Changedoc();">
+                    <option value="1" selected> บันทึกหลักสูตรการฝึกอบรมนักธุรกิจไร่อ้อย</option>
+                    <option value="2"> รายการฝึกอบรม</option>
+                    <option value="3"> แสดงภาพรวมรายการฝึกอบรม</option>
+                  </select> <br>
+                </form>  
+                           
+                       
+                  <!-- บันทึกข้อมูลหลักสูตร -->
+                  <div class="card" [hidden]="savelist">
+                    <div class="card-header bg-primary">
+                      <div class="card-title">บันทึกหลักสูตรการฝึกอบรมนักธุรกิจไร่อ้อย</div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <form [formGroup]="FormCheckandTrain">
+                            <div class="form-group">
+                              <label class="form-label">หลักสูตร / ผู้ฝึกอบรม</label>
+                              <input type="text" class="form-control" formControlName="title_doc">
+                              
+                            </div>
+                            <div class="form-group">
+                              <label class="form-label">คำอธิบาย</label>
+                              <textarea class="form-control" formControlName="title_dec"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" (click)="SaveCheckandTrainGroup();">บันทึก</button> 
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+  
+                  <!-- บันทึกข้อมูลผลการอบรม -->
+                  <div class="card" [hidden]="showlist">
+                    <div class="card-header bg-warning">
+                      <div class="card-title">รายการฝึกอบรม</div>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <form [formGroup]="FormCheckandTrain">
+                            <div class="input-group mb-3">
+                              <span class="input-group-text" >หลักสูตร / ผู้ฝึกอบรม</span>
+                              <select class="form-select" formControlName="title_doc">
+                                <option *ngFor="let item of title" [ngValue]="item.title_id">
+                                  {{item.title_docs}}  {{item.title_Description}}
+                                </option>
+                              </select>
+                              <span class="input-group-text">วันที่ฝึกอบรม ปี ค.ศ. </span>
+                              <input type="date" class="form-control" formControlName="title_date">
+                            </div>
+  
+  
+                            <div class="input-group mb-3"> 
+                              <span class="input-group-text" id="basic-addon1">ระบุรหัสโควต้า หรือ ชื่อ :</span>
+                              <input type="text" class="form-control" formControlName="farmname" (change)="getfarmmerdata();">
+                              <span class="input-group-text" id="basic-addon1">เลือกชาวไร่ :</span>
+                              <select  class="form-control" id="farmernamese" formControlName="title_fmname">
+                                <option [ngValue]="['','','']">             เลือกรายการ               </option>
+                                  <option *ngFor="let item of farmmerdatalist" [ngValue]="[item.fmcode_b1,item.fmname,item.supzone]">
+                                      {{item.fmcode_b1}}   {{item.fmname}}
+                                  </option>
+                              </select>
+                              
+                              </div>
+                            <div class="form-group">
+                              <label class="form-label">ผลการอมรม</label>
+                              <select class="form-select" formControlName="title_check">
+                                <option value="3">ระหว่างตรวจสอบ</option>
+                                <option value="1">ผ่าน</option>
+                                <option value="2">ไม่ผ่าน</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-label">หมายเหตุ </label>
+                              <textarea class="form-control" formControlName="title_comment"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary" (click)="SaveTrainresults();">บันทึก</button> 
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- ภาพรวมการฝึกอบรม  -->
+  
+                  <mat-card class="example-card" [hidden]="showall">
+                    <mat-form-field appearance="standard">
+                      <mat-label>ค้นหา</mat-label>
+                      <input matInput (keyup)="Filterby($event)" placeholder="โซน ชื่อ โควต้า ผลการอมรม  " #input>
+                      </mat-form-field>
+                      
+                      <table mat-table [dataSource]="TrainallList" matSort>
+                      
+                      <!-- วันที่ฝึกอบรม Column -->
+                      <ng-container matColumnDef="date_training_th" >
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 150px;" id="KanitTH"> วันที่ฝึกอบรม </th>
+                        <td mat-cell *matCellDef="let element"> {{element.date_training_th}} </td>
+                      </ng-container>
+                      
+                      <!-- โควตา Column -->
+                      <ng-container matColumnDef="fmcode">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;" id="KanitTH"> โควตา </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fmcode}} </td>
+                      </ng-container>
+                      
+                      <!-- ชื่อ - สกุล Column -->
+                      <ng-container matColumnDef="fmname">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;" id="KanitTH"> ชื่อ - สกุล </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fmname}}  </td>
+                      </ng-container>
+                      
+                      <!-- หลักสูตร / ผู้ฝึกอบรม Column -->
+                      <ng-container matColumnDef="title_docs">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"> หลักสูตร / ผู้ฝึกอบรม </th>
+                        <td mat-cell *matCellDef="let element"> {{element.title_docs}} </td>
+                      </ng-container>
+                
+                      <!-- โซน Column -->
+                      <ng-container matColumnDef="supzone">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 150px;" id="KanitTH"> โซน </th>
+                        <td mat-cell *matCellDef="let element"> {{element.supzone}} </td>
+                        </ng-container>
+  
+                                 <!-- ผลการอมรม Column -->
+                      <ng-container matColumnDef="results_desc" >
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;" id="KanitTH"> ผลการอมรม </th>
+                        <td mat-cell *matCellDef="let element"> {{element.results_desc}} </td>
+                      </ng-container>
+                      
+                      <!-- หมายเหตุ Column -->
+                      <ng-container matColumnDef="comment">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;" id="KanitTH"> หมายเหตุ </th>
+                        <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+                      </ng-container>
+                      
+                      <!-- วันที่บันทึกข้อมูล Column -->
+                      <ng-container matColumnDef="date_add_th">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;" id="KanitTH"> วันที่บันทึกข้อมูล </th>
+                        <td mat-cell *matCellDef="let element"> {{element.date_add_th}}  </td>
+                      </ng-container>
+                      
+                      <!-- แก้ไขข้อมูล Column -->
+                      <ng-container matColumnDef="editdata">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 150px;" id="KanitTH"> แก้ไขข้อมูล </th>
+                        <td  *matCellDef="let element" [formGroup]="FormCheckandTrain">  
+                         
+                            <!-- <mat-label>เลือกรายการ</mat-label> -->
+                            <select   class="form-select" formControlName="title_check" (change)="Editdatatrain(element.pr_id,element.results);"  id="check" >
+                              <option   [ngValue]="0" [selected]>-- เลือกรายการ -- </option>
+                              <option   [ngValue]="1">ผ่าน</option>
+                              <option   [ngValue]="2">ไม่ผ่าน</option>
+                              <option  [ngValue]="3">ระหว่างตรวจสอบ</option>   
+                            </select> 
+                     
+                          
+                      </td>
+                      </ng-container>
+                
+                      <!-- ยกเลิก Column -->
+                      <ng-container matColumnDef="cancelddata">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"> ยกเลิก </th>
+                        <td mat-cell *matCellDef="let element"> <button mat-raised-button color="warn" (click)="CancleTrain(element.pr_id);">ยกเลิก</button></td>
+                        </ng-container>
+                    
+        
+                      <tr mat-header-row color="primary" *matHeaderRowDef="trainallListColumns ; sticky: true;" ></tr>
+                      <tr mat-row *matRowDef="let row; columns: trainallListColumns;"></tr>
+                      
+                      <!-- Row shown when there is no matching data. -->
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">ไม่มีข้อมูลตรงกัน "{{input.value}}"</td>
+                      </tr>
+                      </table>
+                     
+                  </mat-card>
+                
+                </div>
+              </div>
+        </div>
+       
+    </div>
+  </section>  
+  <!-- อบรมนักธุรกิจอ่้อย -->

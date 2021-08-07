@@ -1,0 +1,109 @@
+<section id="docforgroupcut" style="display:none;">
+    <div class="col-md-12">
+        <div class="row no-print">
+            <mat-card>
+                <mat-card-content [formGroup]="">
+        
+                    <mat-form-field appearance="fill">
+                        <mat-label>โควต้าชาวไร่</mat-label>
+                        <input matInput id="testfmcode">
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" (click)="Loaddataplant();">ค้นหา</button>
+                    &nbsp;&nbsp; <label style="color: red;">กดค้นหาข้อมูลให้ข้อมูลขึ้นก่อนกดออกเอกสาร</label>
+                    <button  mat-raised-button color="warn"  (click)="print()">ออกเอกสาร</button>
+                </mat-card-content>
+                
+            </mat-card>
+        
+        </div>
+     
+        <div class="row">
+            <div class="col-md-12" >
+               
+                <mat-card  id="pdfTable" #pdfTable> <br><br>
+                    <img mat-card-image src="../../../../assets/images/bsfLogo.jpg" style="width: 50%; margin-left: 25%;"> <br>
+                   
+                        <h2 style="font-weight: bold; font-family: 'Sarabun', sans-serif; text-align: center;">แบบฟอร์มสำรวจกลุ่มตัด แปลงอ้อยปี 64/65</h2> 
+                        <h2 style="font-weight: bold; font-family: 'Sarabun', sans-serif; text-align: center;"> <b>โควต้า</b> {{fmcode}}  <b>{{fmname}}</b> &nbsp;&nbsp;<b>โทร</b> {{fmtel}} </h2>
+                     
+                      <mat-card-content>
+                      
+                        <div class="row">   
+                            <h3 style=" font-weight: bold; font-family: 'Sarabun', sans-serif;">ข้อมูลแปลงอ้อยในระบบปี 64/65</h3>
+                            <div class="col-lg-12" style="text-align: center;">
+                               
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">โซน</th>
+                                            <th scope="col">หมายเลขแปลง</th>
+                                            <th scope="col">รูท</th>
+                                            <th scope="col">ประเภท</th>
+                                            <th scope="col">พื้นที่</th>
+                                            <th scope="col">ประเมิน(ตัน/ไร่)</th>
+                                            <th scope="col">ปริมาณตัน</th>
+                                            <th scope="col">ชาวไร่ประเมิน(ตัน/ไร่)</th>
+                                            <th scope="col">ปริมาณอ้อยชาวไร่ประเมิน(ตัน)</th>
+                                            <th scope="col">ชื่อกลุ่มตัด</th>
+                                            <th scope="col">ยืนยันไว้ตอปีหน้า(65/66)</th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of Singlefamerdata">
+                                            <td>{{item.supzone}}</td>
+                                            <td>{{item.intlandno}}</td>
+                                            <td>{{item.route}}</td>
+                                            <td>{{item.CaneTypeName}}</td>
+                                            <td>{{item.landvalue}}</td>
+                                            <td>{{item.Ton}}</td>
+                                            <td>{{item.Assess}}</td>
+                                            <td>...................................</td>
+                                            <td>...................................</td>
+                                            <td>...................................</td>
+                                            <td>...................................</td>
+                                        </tr>
+                                        <tr style="font-weight: bolder;">
+                                            <td colspan="2" style="text-align: center;"> ++ รวม ++ </td>
+                                            <td>{{allplant}}</td>
+                                            <td>แปลง</td>
+                                            <td> {{plantarea}}</td>
+                                            <td></td>
+                                            <td> {{Assessarea}}</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                               
+                            </div>
+                        </div>
+                        วันที่พิมพ์รายงาน {{today}}
+                      </mat-card-content>
+                      <mat-card-actions>
+                          <div class="row">
+                              <div class="col-6" style="margin-left: 10%;">
+                               
+                                <h1  style=" font-weight: bold; font-family: 'Sarabun', sans-serif;">แผนการปลูกปี 2565/66</h1> 
+                                <p>พื้นที่ รื้อตอ.................. ไร่</p>
+                                <p>ขยาย ...................... ไร่</p>
+                                <p>อ้อยตอ...................... ไร่</p>
+                                <p>รวม  ...................... ไร่</p>
+                                <p>กรณีท่านต้องการอัพเดตข้อมูลเบอร์โทรศัพท์ของท่าน</p>
+                                <p>เบอร์ที่ถูกต้อง ..............................................</p>
+                              </div>
+                              <div class="col-4"> <br><br><br>
+                                <p>ลงชื่อ ..................................................</p>
+                                <p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{{fmname}}</p>
+                                <p>ลงชื่อ ..................................................</p>
+                                <p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;พนักงานส่งเสริม</p>
+                              </div>
+                          </div>
+                        
+                      </mat-card-actions>
+                </mat-card>
+            </div>
+           
+        </div>
+    </div>
+   
+   
+</section>

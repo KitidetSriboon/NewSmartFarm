@@ -1,0 +1,44 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "timer" [fullScreen] = "true"><p style="color: white" > กำลังโหลดข้อมูล... </p></ngx-spinner>
+<div class="sidenav">
+   
+    
+    <div class="login-main-text">
+        <div class="col-md-6 text-center">
+            <img src="assets/images/bsflogo.png" alt="BRD Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8; background-color: white; width: 150px; height: 150px;">
+        </div><br>
+        <h2>ระบบไร่ออนไลน์<br> หน้าเข้าสู่ระบบ</h2>
+        <div class="div" *ngFor="let item of alldata">
+            <p>
+                Supcode : {{ item.supcode }}
+               ชื่อนักส่งเสริม {{ item.supname }}
+               Username: {{ item.username }}
+               
+            </p>
+            <img src="{{item.suppic_url}}" alt="supportterbrd" width="150px" height="150px">
+        </div>
+       
+        
+    </div>
+</div>
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="login-form">
+            <form [formGroup]="form">
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้งาน</label>
+                    <br>
+                    <input type="text" class="form-control" placeholder="User Name" id="username" (change)="Loaddata()" [(ngModel)]="username" formControlName="username" >
+                </div>
+                <br>
+                <div class="form-group">
+                    <label>รหัสผ่าน</label> <br>
+                    <input type="password" class="form-control" placeholder="Password" formControlName="password" name="password" >
+                </div>
+                <br>
+                <button type="submit" class="btn btn-black"  (click)="OnLogin()">Login</button>  &nbsp; &nbsp;
+                <!-- <button type="submit" class="btn btn-secondary">Register</button> -->
+            </form>
+        </div>
+    </div>
+</div>

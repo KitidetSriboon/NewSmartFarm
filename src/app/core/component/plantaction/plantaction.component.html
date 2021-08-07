@@ -1,0 +1,35 @@
+<section class="content" id="actionplantdata" style="display: none;">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header bg-primary">แก้ไขข้อมูลแปลง</div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="text-center" style="background-color: rgb(90, 180, 63);">
+                            <th scope="col">โซน</th>
+                            <th scope="col">หมายเลขแปลง</th>
+                            <th scope="col">ประเภทอ้อย</th>
+                            <th scope="col">รหัสชาวไร่</th>
+                            <th scope="col">ชื่อชาวไร่</th>
+                        
+                            <th scope="col">สถานะแปลง</th>
+                            <th scope="col">แก้ไขข้อมูล</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of Allplantdata">
+                            <td class="text-center">{{item.DetailPlant.ZoneId}}</td>
+                            <td class="text-center">{{item.landno}}</td>
+                            <td>{{item.DetailPlant.CaneTypeName}}</td>
+                            <td class="text-center">{{item.bnm_profile.code}}</td>
+                            <td>{{item.bnm_profile.name}} {{item.bnm_profile.surname}}</td>
+                        
+                            <td class="text-center"> <label *ngIf="item.approveSts==1" style="color: green;">ปกติ</label> <label *ngIf="item.approveSts==3" style="color: red;">ยกเลิก</label> </td>
+                            <td class="text-center"> <button class="btn btn-info"><mat-icon>edit</mat-icon> แก้ไขข้อมูล </button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

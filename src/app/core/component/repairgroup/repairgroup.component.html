@@ -1,0 +1,1263 @@
+<!-- กลุ่มตัด|กลุ่มซ่อมบำรุง -->
+<section id="repairgroup" class="content" style="display: none;">
+    <!-- ภาพรวมทั้งหมด -->
+    
+    <div class="col-md-12" style="display: block;">
+        <div class="card">
+            <div class="card-body">
+
+
+                <!-- ภารวมกลุ่มตัดทั้งหมด -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-card class="bg-info">
+                            <mat-card-header>
+                                <mat-card-title> <h1>{{sumhgroup}} กลุ่มตัด </h1></mat-card-title>
+                                <mat-card-subtitle>กำลังตัด XXX,XXXX ตันต่อวัน</mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="col-12" style="text-align: right;">
+                                    <mat-icon class="icon-display" style="margin-right: 10%;">
+                                        local_shipping
+                                    </mat-icon>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <p>more-infor</p>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-card class="bg-warning">
+                            <mat-card-header>
+                                <mat-card-title> <h1>{{summgroup}} กลุ่มบำรุง</h1> </mat-card-title>
+                                <mat-card-subtitle>ความสามารถทำงาน ไร่ต่อวัน</mat-card-subtitle>
+
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="col-12" style="text-align: right;">
+                                    <mat-icon class="icon-display" style="margin-right: 10%;">
+                                        build
+                                    </mat-icon>
+                                    <mdb-icon fas icon="truck"></mdb-icon>
+                                </div>
+
+
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <p>more-infor
+
+                                </p>
+                            </mat-card-actions>
+
+                        </mat-card>
+                    </div>
+                </div> <br>
+                <!-- การทำงานต่อวัน -->
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row text-center">
+
+                                <div class="col-2">
+                                    <p *ngFor="let item of h010">{{item.cnt}} คัน</p>
+                                    <p *ngFor="let item of h010">วันละ {{item.canePerDay.toLocaleString('ar-TH')}} ตัน</p>
+                                    <p>รถตัด</p>
+                                </div>
+                                <div class="col-2">
+                                     <p *ngFor="let item of h020">{{item.cnt}} คัน</p>
+                                    <p *ngFor="let item of h020">วันละ {{item.canePerDay.toLocaleString('ar-TH')}} ตัน</p>
+                                    <p>รถบรรทุก</p>
+                                </div>
+                                <div class="col-2">
+                                     <p *ngFor="let item of h030">{{item.cnt}} คัน</p>
+                                    <p *ngFor="let item of h030">วันละ {{item.canePerDay.toLocaleString('ar-TH')}} ตัน / วัน</p>
+                                    <p>รถคีบ</p>
+                                </div>
+
+                                <div class="col-2">
+                                     <p *ngFor="let item of m120">{{item.cnt}} คัน</p>
+                                    <p *ngFor="let item of m120">วันละ {{item.canePerDay.toLocaleString('ar-TH')}} ไร่ / วัน</p>
+                                    <p>รถไถ</p>
+                                </div>
+                                <div class="col-2">
+                                     <p *ngFor="let item of m070">{{item.cnt}} คัน</p>
+                                    <p *ngFor="let item of m070">วันละ {{item.canePerDay.toLocaleString('ar-TH')}} ไร่ / วัน</p>
+                                    <p>เครื่องปลูก</p>
+                                </div>
+                                <div class="col-2">
+                                     <p *ngFor="let item of m090">{{item.cnt}} คัน</p>
+                                    <p *ngFor="let item of m090">วันละ {{item.canePerDay.toLocaleString('ar-TH')}} ไร่ / วัน</p>
+                                    <p>เครื่องฝังปุ๋ย</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div> <br>
+                <!-- การทำงานทั้งหมด -->
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="card">
+                                        <card-body>
+                                            <div class="row">
+                                                <div class="col-6 bg-info text-center">
+                                                    <mat-icon class="icon-display-2" style="margin-top: 15%;">settings
+                                                    </mat-icon>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p>คิวรถตัด</p>
+                                                    <p>ตัน</p>
+                                                </div>
+                                            </div>
+
+                                        </card-body>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="card">
+                                        <card-body>
+                                            <div class="row">
+                                                <div class="col-6 bg-danger text-center">
+                                                    <mat-icon class="icon-display-2" style="margin-top: 15%;">lock
+                                                    </mat-icon>
+
+                                                </div>
+                                                <div class="col-6">
+                                                    <p>คิวล็อค</p>
+                                                    <p> ตัน</p>
+                                                </div>
+                                            </div>
+
+                                        </card-body>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="card">
+                                        <card-body>
+                                            <div class="row">
+                                                <div class="col-6 bg-success text-center">
+                                                    <mat-icon class="icon-display-2" style="margin-top: 15%;">
+                                                        local_shipping</mat-icon>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p>คิวรถโยน</p>
+                                                    <p> ตัน</p>
+                                                </div>
+                                            </div>
+
+                                        </card-body>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="card">
+                                        <card-body>
+                                            <div class="row">
+                                                <div class="col-6 bg-warning text-center">
+                                                    <mat-icon class="icon-display-2" style="margin-top: 15%;">groups
+                                                    </mat-icon>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p>คิวส่งลาน</p>
+                                                    <p> ตัน</p>
+                                                </div>
+                                            </div>
+
+                                        </card-body>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> <br>
+
+                    <div class="row"> 
+                        <div class="col-lg-12">
+                            <div class="card">
+                            <!-- <div id="TEST" style="width: 100%; height: 500px;"></div> -->
+                                <chart [type]="typeChart" [data]="dataChart"  [options]="optionsChart" style="height: 500px;"></chart>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">    
+                        <div class="col-lg-12">
+                            <div class="card">
+                            <!-- <div id="TEST" style="width: 100%; height: 500px;"></div> -->
+                                <chart [type]="typeChart" [data]="dataChart2"  [options]="optionsChart2" style="height: 500px;"></chart>
+                            </div>
+                        </div>
+                    </div>  <br>
+
+                    <!-- ส่วนกลุ่มตัด -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card collapsed-card" *ngFor="let item of MaindataGroupboard">
+                                <!-- รายส่วน -->
+                                <div class="card-header">
+                                    <mat-icon>group_work</mat-icon> ส่วนที่ {{item.Partcode}} กลุ่มตัด [{{item.cntH}}] กำลังตัด
+                                    [ {{item.canePerDayH.toLocaleString('ar-TH')}}] ตัน/วัน]
+                                    กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
+                                    <div class="card-tools"><button type="button" class="btn btn-tool"
+                                            data-card-widget="collapse"> 
+                                            <mat-icon (click)="GetSubGroupBoard(item.Partcode);">toc</mat-icon>
+                                        </button></div>
+                                </div>
+                                <div class="card-body">
+                                    <!-- รายโซน -->
+                                    <div class="card collapsed-card" *ngFor="let item of ZoneMaindataGroupboard;">
+                                        <div class="card-header">
+                                            <mat-icon>home</mat-icon> โซน {{item.supzone}} กลุ่มตัด [{{item.cntH}}]
+                                            กำลังตัด [{{item.canePerDayH.toLocaleString('ar-TH')}} ตัน/วัน]
+                                            กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
+                                            <div class="card-tools"><button type="button" class="btn btn-tool"
+                                                    data-card-widget="collapse">
+                                                    <mat-icon (click)="GetSupportGroupboard(item.Partcode,item.supzone);">toc</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <!-- นักส่งเสริม -->
+                                            <div class="card collapsed-card" *ngFor="let item of supportterboard;">
+                                                <div class="card-header">
+                                                    <div class="card-title">
+                                                        <mat-icon>assignment_ind</mat-icon>
+                                                    </div>
+                                                    นักส่งเสริม {{item.supname}} โซน {{item.supzone}}  กลุ่มตัด [{{item.cntH}}]
+                                                    กำลังตัด [{{item.canePerDayH.toLocaleString('ar-TH')}} ตัน/วัน]
+                                                    กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
+                                                    <div class="card-tools"><button type="button" class="btn btn-tool"
+                                                            data-card-widget="collapse">
+                                                            <mat-icon>toc</mat-icon>
+                                                        </button></div>
+                                                </div>
+                                                <div class="card-body">
+
+                                                </div>
+                                            </div>
+                                            <!-- นักส่งเสริม -->
+                                        </div>
+                                    </div>
+                                    <!-- รายโซน -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    <!-- ภาพรวมทั้งหมด -->
+
+    
+    <div class="col-lg-12">
+        <div class="card">
+            <ul class="nav nav-tabs">
+                <li class="nav-item" (click)="Swaptab(4)">
+                    <a [ngClass]="{'nav-link':true,'active': homegroup}">
+                        <mat-icon>home</mat-icon> รายการกลุ่มทั้งหมด
+                    </a>
+                </li>
+                <li class="nav-item" (click)="Swaptab(1)">
+                    <a [ngClass]="{'nav-link':true,'active': addgroup}">
+                        <mat-icon>group_work</mat-icon> เพิ่มกลุ่มหลัก
+                    </a>
+                </li>
+                <li class="nav-item" (click)="Swaptab(2)">
+                    <a [ngClass]="{'nav-link':true,'active': allsubgroup}">
+                        <mat-icon>donut_small </mat-icon> เพิ่มเครื่องจักร - กลุ่มตัด - กลุ่มบำรุง
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="card" id="homegroup" style="display:block;">
+                <div class="card-header bg-success">
+                    <h3 class="card-title" style="text-align: center;">ภาพรวม</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- <button  mat-raised-button  (click)="Getdatagrouptype();">โหลดข้อมูลใหม่</button> -->
+                    <div class="row" [formGroup]="FormRepair">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">เลือกรายการ</span>
+                            <select class="form-control" formControlName="groupcheck" (change)="swapshow();"
+                                style="background-color: antiquewhite;">
+                                <option value="1" [selected]>กลุ่มหลัก</option>
+                                <option value="2">เครื่องจักร - กลุ่มตัด</option>
+                                <option value="3">เครื่องจักร - กลุ่มบำรุง</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <mat-card [hidden]="showAllZone">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>ค้นหา</mat-label>
+                                    <input matInput (keyup)="applyFilter2($event)"
+                                        placeholder="เงื่อนไข ชื่อกลุ่ม ชื่อชาวไร่ โควตา" #input>
+                                </mat-form-field>
+
+                                <mat-table [dataSource]="dataGroupSource" matSort>
+
+                                    <ng-container matColumnDef="categoryGroup">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 100px;"> รหัสกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.categoryGroup}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="category_docs">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 100px;"> ลักษณะกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.category_docs}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="groupname">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 150px;"> ชื่อกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.groupname}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="qdesc">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 150px;"> ประเภทกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.qdesc}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="h_fmcode">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 100px;"> โควตาหัวหน้ากลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.h_fmcode}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="h_fmname">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 200px;"> หัวหน้ากลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.h_fmname}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="position_docs">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 150px;"> ตำแหน่งในกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.position_docs}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="supzone">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 50px;"> โซน </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.supzone}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="supcode">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 20px;"> นสส </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.supcode}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="canePerDay">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 250px; text-align: center;"> กำลังตัด(ตัน/วัน)</th>
+                                        <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.canePerDay}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="dateAdd_th">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 200px;"> วันที่เพิ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.dateAdd_th}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="dateUpdate_th">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"
+                                            style="width: 200px;"> วันที่อัพเดต </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.dateUpdate_th}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="editdata">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header id="KanitTH"> แก้ไขข้อมูล
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#EditGroup"
+                                                (click)="CheckIDdata(element.iddata,element.category);">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button class="btn btn-danger" (click)="RemoveMaingroup(element.iddata)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row color="primary"
+                                        *matHeaderRowDef="ColumGroupSource ; sticky: true;"
+                                        style="background-color: rgb(65, 154, 255);"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: ColumGroupSource;"></tr>
+
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="4">ไม่มีข้อมูลตรงกัน "{{input.value}}"</td>
+                                    </tr>
+                                </mat-table>
+                                <!-- [pageSize]="dataGroupSource.length" -->
+                              
+                            </mat-card>
+
+                            <mat-card [hidden]="showzoneH">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>ค้นหา</mat-label>
+                                    <input matInput (keyup)="applyFilter3($event)"
+                                        placeholder="เงื่อนไข ชื่อชาวไร่ โควตา" #input>
+                                </mat-form-field>
+
+                                <table mat-table [dataSource]="dataGroupSourceH" matSort>
+                                    <ng-container matColumnDef="supzone">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;"
+                                            id="KanitTH"> โซน </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.supzone}} </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="categoryGroup">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;"
+                                            id="KanitTH"> รหัสกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.categoryGroup}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="category_docs">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;"
+                                            id="KanitTH"> ลักษณะกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.category_docs}} </td>
+                                    </ng-container>
+
+
+
+                                    <ng-container matColumnDef="qdesc">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 150px;"
+                                            id="KanitTH"> ประเภทกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.qdesc}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="fmcode">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;"
+                                            id="KanitTH"> โควตา </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.fmcode}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="fmname">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> ชื่อชาวไร่ </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.fmname}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="position_docs">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 150px;"
+                                            id="KanitTH"> ตำแหน่งในกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.position_docs}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="Tools_docs">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> เครื่องมือ/อุปกรณ์ </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.Tools_docs}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="horsepower">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            style="width: 150px; text-align: center;" id="KanitTH"> แรงม้า </th>
+                                        <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                            {{element.horsepower}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="comment">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 250px;"
+                                            id="KanitTH"> เงื่อนไข</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="canePerDay">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> ความสามารถทำงาน ตัน / วัน </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.canePerDay}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="dateAdd_th">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> วันที่เพิ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.dateAdd_th}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="dateUpdate_th">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> วันที่อัพเดต </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.dateUpdate_th}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="editdata">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> แก้ไขข้อมูล </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <button mat-raised-button color="primary" data-toggle="modal"
+                                                data-target="#EditSubGroup"
+                                                (click)="CheckSubIDdata(element.iddata,element.category);">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button class="btn btn-danger" (click)="Removesubgroup(element.iddata)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row color="primary" *matHeaderRowDef="ColumnGroupH ; sticky: true;"
+                                        style="background-color: rgb(65, 154, 255);"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: ColumnGroupH;"></tr>
+
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="4">ไม่มีข้อมูลตรงกัน "{{input.value}}"</td>
+                                    </tr>
+                                </table>
+                               
+                            </mat-card>
+
+                            <mat-card [hidden]="showzoneM">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>ค้นหา</mat-label>
+                                    <input matInput (keyup)="applyFilter4($event)"
+                                        placeholder="เงื่อนไข ชื่อชาวไร่ โควตา" #input>
+                                </mat-form-field>
+
+                                <table mat-table [dataSource]="dataGroupSourceM" matSort>
+
+                                    <ng-container matColumnDef="supzone">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;"
+                                            id="KanitTH"> โซน </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.supzone}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="categoryGroup">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;"
+                                            id="KanitTH"> รหัสกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.categoryGroup}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="category_docs">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;"
+                                            id="KanitTH"> ลักษณะกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.category_docs}} </td>
+                                    </ng-container>
+
+
+
+                                    <ng-container matColumnDef="fmcode">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 100px;"
+                                            id="KanitTH"> โควตา </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.fmcode}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="fmname">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> ชื่อชาวไร่ </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.fmname}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="position_docs">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 150px;"
+                                            id="KanitTH"> ตำแหน่งในกลุ่ม </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.position_docs}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="brand">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 150px;"
+                                            id="KanitTH"> ยี่ห้อรถ </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.brand_name}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="Tools_docs">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> เครื่องมือ/อุปกรณ์ </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.Tools_docs}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="horsepower">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                            style="width: 150px;  text-align: center;" id="KanitTH"> แรงม้า </th>
+                                        <td mat-cell *matCellDef="let element" style="text-align: center;">
+                                            {{element.horsepower}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="comment">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 250px;"
+                                            id="KanitTH"> เงื่อนไข</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="canePerDay">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> ความสามารถทำงาน ไร่ / วัน </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.canePerDay}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="dateUpdate_th">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> วันที่อัพเดต </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.dateUpdate_th}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="editdata">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;"
+                                            id="KanitTH"> แก้ไขข้อมูล </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <button mat-raised-button color="primary" data-toggle="modal"
+                                                data-target="#EditSubGroup"
+                                                (click)="CheckSubIDdata(element.iddata,element.category);">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button class="btn btn-danger" (click)="Removesubgroup(element.iddata)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row color="primary" *matHeaderRowDef="ColumnGroupM ; sticky: true;"
+                                        style="background-color: rgb(65, 154, 255);"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: ColumnGroupM;"></tr>
+
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="4">ไม่มีข้อมูลตรงกัน "{{input.value}}"</td>
+                                    </tr>
+                                </table>
+                               
+                            </mat-card>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- แบบบันทึกกลุ่มหลัก -->
+            <div class="card" id="addgroup" style="display:none;">
+                <div class="card-header bg-primary">
+                    <h3 class="card-title text-center">เพิ่ม กลุ่มตัด|กลุ่มบำรุง</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered border-primary">
+                        <tbody [formGroup]="FormRepair" ngNativeValidate #form>
+                            <tr>
+                                <td>เลขกลุ่ม 6 ตัว</td>
+                                <td><input type="text" class="form-control" [(ngModel)]="groupname"
+                                        formControlName="groupid" disabled [attr.maxlength]="7"></td>
+                            </tr>
+                            <tr>
+                                <td style="color: red;">ประเภทกลุ่ม ***</td>
+                                <td>
+                                    <select class="form-control" (change)="selectGroupTypeOption($event.target.value)"
+                                        formControlName="grouptype" id="grouptype" required>
+                                        <option [value]="'N'" selected>-- เลือกประเภทกลุ่ม --</option>
+                                        <option [value]="'H'">H = กลุ่มตัด</option>
+                                        <option [value]="'M'">M = กลุ่มบำรุง</option>
+
+                                    </select> &nbsp;
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td style="color: red;">โซน ***</td>
+                                <td>
+                                    <!-- <input type="text" class="form-control" list="datazone" > -->
+                                    <select class="form-control" formControlName="idzone" (change)="selectZone();"
+                                        id="datazone" required>
+                                        <option *ngFor="let item of zonegroup"
+                                            [ngValue]="[item.zone_id,item.maxNumM,item.maxNumH1,item.maxNumH2,item.maxNumH3,item.maxNumH4,item.SUPZONE]">
+                                            รหัส : {{ item.SUPZONE }} ชื่อ : {{ item.ZONENAME }}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color: red;">ประเภทกลุ่ม </td>
+                                <td>
+                                    <select class="form-control" [hidden]="allow" (change)="selectGroupOption2()"
+                                        formControlName="grouptype2" id="grouptype2">
+                                        <option [ngValue]="0" selected>-- เลือกกลุ่ม --</option>
+                                        <option [ngValue]="[maxNumH1 , 1]">1 = คิวล็อค</option>
+                                        <option [ngValue]="[maxNumH2,2]">2 = คิวโยน</option>
+                                        <option [ngValue]="[maxNumH3,3]">3 = คิวรถตัด</option>
+                                        <option [ngValue]="[maxNumH4,4]">4 = คิวลาน</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color: red;">ชื่อกลุ่ม </td>
+                                <td><input type="text" class="form-control" formControlName="groupname" required ngModel
+                                        minlength="4" placeholder="เช่น สมหญิงโนนไท"></td>
+                            </tr>
+                            <tr>
+                                <td> <span class="input-group-text" id="basic-addon1">ระบุรหัสโควต้า หรือ ชื่อ :</span>
+                                </td>
+                                <td> <input type="text" class="form-control" formControlName="farmname"
+                                    placeholder="เช่น กิติ"   (change)="getfarmmerdata();"></td>
+                            </tr>
+                            <tr>
+                                <td><span class="input-group-text" id="basic-addon1">เลือกรายการ :</span></td>
+                                <td> <select type="text" class="form-control" id="farmernamese"
+                                        (change)="selectsupfmname();" formControlName="fmdata">
+                                        <option value="0">เลือกรายการ</option>
+                                        <option *ngFor="let item of farmmerdatalist"
+                                            [ngValue]="[item.fmcode_b1,item.fmname,item.homeno,item.namemoo,item.moo,item.district,item.county,item.province,item.tel,item.zip]">
+                                            {{item.fmcode_b1}} {{item.fmname}}
+                                        </option>
+                                    </select></td>
+                            </tr>
+
+
+
+
+                            <tr [hidden]='true'>
+                                <td style="color: red;">รหัสหัวหน้ากลุ่ม </td>
+                                <td><input type="text" class="form-control" id="h_fmcode" formControlName="h_fmcode" required
+                                       [ngModel]="farmernamecode"></td>
+                            </tr>
+                            <tr>
+                                <td style="color: red;">หัวหน้ากลุ่ม </td>
+                                <td><input type="text" class="form-control" id="h_fmname" formControlName="h_fmname" required
+                                       [ngModel]="farmername"></td>
+                            </tr>
+                            <tr>
+                                <td style="color: red;">รหัสนักส่งเสริม</td>
+                                <td><input type="text" class="form-control" formControlName="supcode" required placeholder="เช่น 012"></td>
+                            </tr>
+                            <tr>
+                                <td style="color: red;">เบอร์ติดต่อ</td>
+                                <td><input type="text" class="form-control"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' formControlName="tel" placeholder="เช่น 0888888888" ></td>
+                            </tr>
+                            <tr>
+                                <td style="color: red;">หมายเหตุ เช่น ทำเฉพาะกลุ่ม เป็นต้น</td>
+                                <td><input type="text" class="form-control" formControlName="comment"></td>
+                            </tr>
+
+                            <tr>
+                                <td><button class="btn btn-success" (click)="SaveGrouprepair();">บันทึกข้อมูล</button>
+                                </td>
+                                <td><button class="btn btn-info" (click)="ClearTEXT();">ยกเลิก / Clear ข้อมูล</button>
+                                </td>
+                            </tr> 
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+            </div>
+
+            <!-- แบบบันทึกกลุ่มตัด | แบบบันทึกกลุ่มบำรุง-->
+            <div class="card" id="allsubgroup" style="display:none;"> <br>
+                <div>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td> <button mat-raised-button color="primary" (click)="Change(1);"
+                                        style="width: 100%;">กลุ่มตัด</button></td>
+                                <td> <button mat-raised-button color="warn" style="width: 100%;" (click)="Change(2);">
+                                        กลุ่มบำรุง </button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-mg-6">&nbsp;&nbsp;&nbsp;&nbsp;<label style="color: rgb(255, 94, 53)">
+                            หมายเหตุหากต้องการบันทึกกลุ่มบำรุง ให้กดที่ปุ่มบำรุง ค่าปกติจะเป็นกลุ่มตัด
+                            สามารถสลับแบบฟอร์มบันทึกได้ด้วยการกดปุ่มด้านบน </label></div>
+                </div>
+                <br>
+                <div class="card-header bg-primary">
+                    <h3 [hidden]="showformH12" class="card-title"> เพิ่มเครื่องมือ | กลุ่มตัด</h3>
+                    <h3 [hidden]="showformM" class="card-title"> เพิ่มเครื่องมือ | กลุ่มบำรุง </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body" [formGroup]="FormRepair">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">เลือกกลุ่ม :</span>
+                        <!-- <input type="text" list="groupcut" class="form-control" id="group" placeholder="เลือกจากกลุุ่มหลัก เช่น H011104 | ชื่อกลุ่ม :ตาเทเวช หัวหน้ากลุ่ม : นายธนาศักดิ์ โกศรีรุ่งโรจน์" 
+                            required> -->
+                        
+                        <select id="groupcut" class="form-control" formControlName="groupname" >
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of dataforadd" [ngValue]="item.categoryGroup" >
+                                {{ item.categoryGroup }} | ชื่อกลุ่ม :{{ item.groupname }} หัวหน้ากลุ่ม : {{
+                                item.h_fmname }}
+                            </option>
+                        </select>
+
+                    </div>
+                    <div class="input-group mb-3" [formGroup]="FormRepair">
+                        <span class="input-group-text" id="basic-addon1">ระบุรหัสโควต้า หรือ ชื่อ :</span>
+                        <input type="text" class="form-control" formControlName="farmname"
+                            placeholder="เช่น สมหญิง หรือ 3542" (change)="getfarmmerdata();">
+                        <span class="input-group-text" id="basic-addon1">เลือกชาวไร่ :</span>
+                        <select type="text" class="form-control" id="farmernamese" (change)="selectsupfmname();"
+                            formControlName="fmdata">
+                            <option value="">กรุณาเลือก</option>
+                            <option *ngFor="let item of farmmerdatalist"
+                                [ngValue]="[item.fmcode_b1,item.fmname,item.homeno,item.namemoo,item.moo,item.district,item.county,item.province,item.tel,item.zip]">
+                                {{item.fmcode_b1}} {{item.fmname}}
+                            </option>
+                        </select>
+
+                    </div>
+                    <table class="table table-bordered border-primary">
+                        <tbody [formGroup]="FormRepair">
+                            <tr>
+                                <td style="width: 25%;">รหัสชาวไร่</td>
+                                <td style="width: 25%;"><input type="text" class="form-control" formControlName="fmcode"
+                                        [ngModel]="farmernamecode" placeholder="ตัวอย่าง. 0009632587"></td>
+                                <td style="width: 25%;">ชื่อ - สกุล</td>
+                                <td style="width: 25%;"><input type="text" class="form-control" formControlName="fmname"
+                                        [ngModel]="farmername" placeholder="ตัวอย่าง. สมหชาย ขายอ้อย"></td>
+                            </tr>
+                            <tr>
+                                <td>เบอร์ติดต่อ</td>
+                                <td><input type="text" class="form-control" [ngModel]="fmtel" formControlName="tel"
+                                        placeholder="ตัวอย่าง. 0987654321"></td>
+                                <td>ตำแหน่ง</td>
+                                <td>
+                                    <select class="form-control" formControlName="position">
+                                        <option value="0">-- กลุ่มหลัก --</option>
+                                        <option value="1">1 = หัวหน้ากลุ่ม</option>
+                                        <option value="2">2 = รองหัวหน้ากลุ่ม</option>
+                                        <option value="3">3 = สมาชิกกลุ่ม</option>
+
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ข้อมูลที่อยู่ </td>
+                                <td>
+                                    <p>ชื่อหมู่บ้าน : <input type="text" placeholder="ตัวอย่าง หินเหล็กไฟ"
+                                            class="form-control" formControlName="NAMEMOO" [ngModel]="fmnamemoo"></p>
+                                    <p>บ้านเลขที่ : <input type="text" placeholder="ตัวอย่าง 80" class="form-control"
+                                            formControlName="HOMENO" [ngModel]="fmhomeno"></p>
+                                    <p>หมู่ที่ : <input type="text" placeholder="ตัวอย่าง 8" class="form-control"
+                                            formControlName="MOO" required [ngModel]="fmmoo"></p>
+                                    <p>รหัสไปรษณีย์ : <input type="text" placeholder="ตัวอย่าง 88888"
+                                            class="form-control" formControlName="zip" minlength="5" maxlength="5"
+                                            required [ngModel]="fmzip"></p>
+                                </td>
+                                <td colspan="2">
+                                    <p>ตำบล : <input type="text" placeholder="ตัวอย่าง หินเหล็กไฟ" class="form-control"
+                                            formControlName="subdistrict" required [ngModel]="fmdistrict">
+                                    </p>
+                                    <p>อำเภอ : <input type="text" placeholder="ตัวอย่าง หินเหล็กไฟ" class="form-control"
+                                            formControlName="district" [ngModel]="fmcounty" required>
+                                    </p>
+
+                                    <p>จังหวัด : <input type="text" placeholder="ตัวอย่าง บุรีรัมย์"
+                                            class="form-control" formControlName="provinces" [ngModel]="fmprovince"
+                                            required>
+                                    </p>
+
+                                </td>
+                            </tr>
+                            <!-- เงื่อนไข -->
+                            <tr [hidden]="showformH12">
+                                <td>ประเภทเครื่องจักร :</td>
+                                <td>
+                                    <select class="form-control" formControlName="MainTools" id="Tools"
+                                        (change)="SubToolsSelectH()">
+                                        <option *ngFor="let item of MainToolsH" [ngValue]="item.left2">
+                                            {{item.tools_doc}}</option>
+                                    </select>
+                                </td>
+                                <td colspan="2">
+                                    <label style="color: red;">หมายเหตุ :
+                                        1.หากเลือกรถคีบกรุณาเลือกยี่ห้อรถด้วย
+                                        2.หากใช้คนตัดให้กรอกจำนวนแรงงานคน
+                                        3.หากกรอกช่องจำนวนแรงงาน ความสามารถต่อวัน จะคำนวณให้เอง
+                                    </label>
+                                </td>
+
+                            </tr>
+                            <!-- เงื่อนไข M -->
+                            <tr [hidden]="showformM">
+                                <td>เลือกเครื่องมือ :</td>
+                                <td>
+                                    <select class="form-control" formControlName="MainTools" id="Tools"
+                                        (change)="SubToolsSelectM()">
+                                        <option *ngFor="let item of MainToolsM" [ngValue]="item.left2">
+                                            {{item.tools_doc}}</option>
+                                    </select>
+                                </td>
+
+                            </tr>
+                            <!-- -->
+                            <tr [hidden]="showformH1">
+                                <td>ประเภทย่อย :</td>
+                                <td>
+                                    <select class="form-control" formControlName="Tools">
+                                        <option [ngValue]="''"> กรุณาเลือก
+                                        </option>
+                                        <option *ngFor="let item of Suptools" [ngValue]="item.tools_id">
+                                            {{item.tools_doc}}
+                                        </option>
+                                    </select>
+                                </td>
+
+                            </tr>
+                            <!-- เงื่อนไข แรงงานคน -->
+                            <tr [hidden]="showformH2">
+                                <td>จำนวนคน(แรงงาน)</td>
+                                <td><input type="text" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                        placeholder="จำนวนคน เช่น 1,2 แรงงาน 1 คนทำงานได้ 1.5ตัน/วัน"
+                                        formControlName="humancanperday" (change)="Humancanperday();"></td>
+                            </tr>
+                            <!-- เงื่อนไข แรงงานคน -->
+
+                            <!-- เงื่อนไข H -->
+                            <tr [hidden]="showformH">
+                                <td>ยี่ห้อรถ :</td>
+                                <td [hidden]="worker">
+                                    <select class="form-control" formControlName="brand">
+                                        <option *ngFor="let item of Carbrand" [ngValue]="item.id">
+                                            {{item.brand_name}} ||<b *ngIf="item.left1==2">รถบรรทุก</b> <b
+                                                *ngIf="item.left1==1">รถตัด</b> <b *ngIf="item.left1==3">รถไถ | รถคีบ
+                                            </b>
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- เงื่อนไข H -->
+                            <tr [hidden]="showformH">
+                                <td>รุ่น :</td>
+                                <td [hidden]="worker"><input type="text" class="form-control"
+                                        formControlName="Model_brand" placeholder="ตัวอย่าง BT-50"></td>
+                                <td [hidden]="worker">ปีที่ผลิต (พ.ศ.): <input class="form-control" type="number"
+                                        min="1800" max="9999" step="1" value="2564"
+                                        name="product_year" formControlName="product_year"></td>
+                                <td [hidden]="worker">ปีที่ครอบครอง (พ.ศ.):<input class="form-control" type="number"
+                                        min="1800" max="9999" step="1" value="2564"
+                                        name="possess_year" formControlName="possess_year"> </td>
+                            </tr>
+                            <!-- เงื่อนไข H -->
+                            <tr [hidden]="showformH || dishose">
+                                <td>แรงม้า : </td>
+                                <td [hidden]="worker"><input type="text" class="form-control" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                        formControlName="horsepower" placeholder="ตัวอย่าง 300"></td>
+                                <td colspan="2">
+                                    <label style="color: red;">หมายเหตุ :
+
+                                        1.หากกรณีเป็นคนตัด ให้กรอกรุ่น แรงม้าเป็น 0
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ความสามารถทำงานได้ :</td>
+                                <td><input type="text" class="form-control" formControlName="canePerDay" required onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                        placeholder="ตัวอย่าง 30" [ngModel]="allcandoperday"> </td>
+                                <td colspan="2">
+                                    <label style="color: red;">
+                                        กลุ่มตัด ตัน / วัน กลุ่มบำรุง เป็นไร่ / วัน
+                                        หมายเหตุ :
+                                        1.หากกรณีเป็นรถตัด รถบรรทุก รถคีบ ไม่ต้องกรอกแรงงาน
+
+                                    </label>
+                                </td>
+                            </tr>
+
+                            <!-- เงื่อนไข  H -->
+                            <tr [hidden]="showformH">
+                                <td>ทะเบียนรถ</td>
+                                <td><input type="text" class="form-control" formControlName="carboardnumber" required
+                                        placeholder="ทบ 112"> </td>
+                            </tr>
+                            <tr>
+                                <td>หมายเหตุ</td>
+                                <td><input type="text" class="form-control" formControlName="comment"
+                                        placeholder="เช่น ทำงานเฉพาะภายในกลุ่ม หรือ รับทำนอกกลุ่ม เป็นต้น"></td>
+                            </tr>
+                            <tr>
+
+                                <td colspan="2"><button class="btn btn-success" (click)="Savegroupcut();"
+                                        style="width: 100%;">บันทึกข้อมูล</button></td>
+                                <td><button class="btn btn-info" (click)="ClearTEXT();">ยกเลิก/Clear ช่อง </button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+            <!-- แบบบันทึกกลุ่มตัด | แบบบันทึกกลุ่มบำรุง -->
+
+
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+
+    <!-- Modal  Edit Main Group-->
+    <div class="modal fade" id="EditGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h3 class="modal-title">แก้ไขข้อมูลกลุ่มหลัก </h3>
+                    <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <div class="modal-body" [formGroup]="FormEditRepair">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>ชื่อกลุ่ม :</td>
+                                <td> <input type="text" class="form-control" formControlName="groupnameedit"
+                                        [ngModel]="oldgroupname"> </td>
+                            </tr>
+                            <tr>
+                                <td>โควตาหัวหน้ากลุ่ม : </td>
+                                <td> <input type="text" class="form-control" formControlName="hcodeedit"
+                                        [ngModel]="oldhcode"> </td>
+                            </tr>
+                            <tr>
+                                <td>ชื่อหัวหน้ากลุ่ม : </td>
+                                <td> <input type="text" class="form-control" formControlName="hnameedit"
+                                        [ngModel]="oldhname"> </td>
+                            </tr>
+                            <tr>
+                                <td>โซน :</td>
+                                <td> <input type="text" class="form-control" formControlName="zoneedit"
+                                        [ngModel]="oldsupzone"> </td>
+                            </tr>
+                            <tr>
+                                <td>รหัสนักส่งเสริม :</td>
+                                <td> <input type="text" class="form-control" formControlName="supcodeedit"
+                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'    [ngModel]="oldsupcode"> </td>
+                            </tr>
+
+                            <tr>
+                                <td>เบอร์ติดต่อ :</td>
+                                <td> <input type="text" class="form-control" formControlName="subtell"
+                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'   [ngModel]="oldtel"> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="modal-footer" *ngFor="let item of Olddata">
+                    <button class="btn btn-success" (click)="SaveEduitGroup(item.iddata);">บันทึกข้อมูล</button>
+                    <!-- <button type="button"  #closebutton class="close btn btn-danger" data-dismiss="modal" >Close</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Sup Group -->
+    <div class="modal fade" id="EditSubGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="width: 100%;">
+        <div class="modal-dialog modal-lg" style="max-width: 75%;" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h3 class="modal-title">แก้ไขข้อมูลกลุ่มย่อย </h3>
+                    <button type="button" #closebutton class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <div class="modal-body" [formGroup]="FormEditRepair">
+                    <table>
+                        <tbody>
+
+                            <tr>
+                                <td>โควตาชาวไร่ : </td>
+                                <td> <input type="text" class="form-control" formControlName="subcode"
+                                       [ngModel]="subcode" required placeholder="000000000"> </td>
+
+                            </tr>
+                            <tr>
+                                <td>ชื่อชาวไร่ : </td>
+                                <td> <input type="text" class="form-control" formControlName="subname"
+                                       [ngModel]="subname" required placeholder="สมหมาย ขายอ้อย"> </td>
+                            </tr>
+                            <tr>
+                                <td>เบอร์ติดต่อ :</td>
+                                <td> <input type="text" class="form-control" formControlName="subtell"
+                                       [ngModel]="subtell" required placeholder="0812345678"> </td>
+                            </tr>
+                            <tr>
+                                <td>ตำแหน่งในกลุ่ม :</td>
+                                <td><input type="text" class="form-control"    [ngModel]="oldposition_docs" disabled> </td>
+                                <td style="width: 150px; text-align: center;">แก้ไข :</td>
+                                <td style="width: fit-content;">
+                                    <select class="form-control" formControlName="subposition">
+                                        <option value="0">-- กลุ่มหลัก --</option>
+                                        <option value="1">1.หัวหน้ากลุ่ม</option>
+                                        <option value="2">2.รองหัวหน้ากลุ่ม</option>
+                                        <option value="3">3.สมาชิกกลุ่ม</option>
+
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr [hidden]="Mshow">
+                                <td>เลือกเครื่องมือ</td>
+                                <td [formGroup]="FormRepair">
+                                    <select class="form-control" formControlName="MainTools" id="Tools"
+                                        (change)="SubToolsSelectM()">
+                                        <option *ngFor="let item of MainToolsM" [ngValue]="item.left2">
+                                            {{item.tools_doc}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- M  -->
+                            <tr [hidden]="Mshow">
+                                <td>ประเภทย่อย : </td>
+                                <td><input type="text" class="form-control" [ngModel]="old_Tools_docs" disabled> </td>
+                                <td style="width: 150px; text-align: center;">แก้ไข :</td>
+                                <td>
+                                    <select class="form-control" formControlName="subTools">
+                                        <option [ngValue]="''"> กรุณาเลือก
+                                        </option>
+                                        <option *ngFor="let item of SuptoolsM" [ngValue]="item.tools_id">
+                                            {{item.tools_doc}}
+                                        </option>
+                                    </select>
+                                </td>
+
+                            </tr>
+                            <tr [hidden]="Mshow">
+                                <td>ยี่ห้อรถ :</td>
+                                <td><input type="text" class="form-control" [ngModel]="old_brand" disabled> </td>
+                                <td style="width: 150px; text-align: center;">แก้ไข :</td>
+                                <td>
+                                    <select class="form-control" formControlName="subbrand">
+                                        <option *ngFor="let item of Carbrand" [ngValue]="item.id">
+                                            {{item.brand_name}} ||<b *ngIf="item.left1==2">รถบรรทุก</b> <b
+                                                *ngIf="item.left1==1">รถตัด</b> <b *ngIf="item.left1==3">รถไถ | รถคีบ
+                                            </b>
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- M  -->
+                            <!-- H  -->
+                            <tr [hidden]="Hshow">
+                                <td>ประเภทเครื่องจักร </td>
+
+                                <td [formGroup]="FormRepair">
+
+                                    <select class="form-control" formControlName="MainTools" id="Tools"
+                                        (change)="SubToolsSelectH()">
+                                        <option *ngFor="let item of MainToolsH" [ngValue]="item.left2">
+                                            {{item.tools_doc}}</option>
+                                    </select>
+
+                                </td>
+
+                            </tr>
+                            <tr [hidden]="Hshow">
+                                <td>ประเภทย่อย : </td>
+                                <td><input type="text" class="form-control" [ngModel]="old_Tools_docs" disabled> </td>
+                                <td style="width: 150px; text-align: center;">แก้ไข :</td>
+                                <td>
+                                    <select class="form-control" formControlName="subTools">
+                                        <option [ngValue]="''"> กรุณาเลือก
+                                        </option>
+                                        <option *ngFor="let item of Suptools" [ngValue]="item.tools_id">
+                                            {{item.tools_doc}}
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr [hidden]="Hshow">
+                                <td>ยี่ห้อรถ :</td>
+                                <td><input type="text" class="form-control" [ngModel]="old_brand" disabled> </td>
+                                <td style="width: 150px; text-align: center;">แก้ไข :</td>
+                                <td>
+                                    <select class="form-control" formControlName="subbrand">
+                                        <option *ngFor="let item of Carbrand" [ngValue]="item.id">
+                                            {{item.brand_name}} ||<b *ngIf="item.left1==2">รถบรรทุก</b> <b
+                                                *ngIf="item.left1==1">รถตัด</b> <b *ngIf="item.left1==3">รถไถ | รถคีบ
+                                            </b>
+                                        </option>
+                                    </select>
+                                </td>
+
+
+                            </tr>
+                            <tr [hidden]="Hshow">
+                                <td>ทะเบียนรถ</td>
+                                <td><input type="text" class="form-control" formControlName="subcarboardnumber" required
+                                        placeholder="ทบ 112"> </td>
+                                <td>ปีที่ผลิต (พ.ศ.) : </td>
+                                <td><input class="form-control" type="text"
+                                        name="product_year" formControlName="subproduct_year"></td>
+                                <td>ปีที่ครอบครอง (พ.ศ.) :</td>
+                                <td><input class="form-control" type="text" minlength="4" maxlength="4"
+                                        name="possess_year" formControlName="subpossess_year"> </td>
+                            </tr>
+                            <tr [hidden]="Hshow">
+                                <td>จำนวนคน </td>
+                                <td><input type="text" class="form-control" formControlName="subworker" required
+                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'    placeholder="2,5 " value="0"> </td>
+
+                            </tr>
+                            <!-- H  -->
+                            <tr>
+                                <td>รุ่น</td>
+                                <td><input type="text" class="form-control" formControlName="subModel_brand"
+                                        [ngModel]="subModel_brand" placeholder="ตัวอย่าง. BT-50"></td>
+                            </tr>
+                            <tr>
+                                <td>แรงม้า</td>
+                                <td><input type="text" class="form-control" formControlName="subhosepower"
+                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'    [ngModel]="subhorsepower" placeholder="ตัวอย่าง. 1500"></td>
+                            </tr>
+                            <tr>
+                                <td> ความสามารถต่อวัน</td>
+                                <td><input type="text" class="form-control" formControlName="subcanePerDay"
+                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'    [ngModel]="subcanePerDay" placeholder="ตัวอย่าง. 50"></td>
+                            </tr>
+
+                            <tr>
+                                <td>หมายเหตุ</td>
+                                <td><textarea type="text" class="form-control" formControlName="subcomment"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label style="color: red;"> หากเลือกรถคีบกรุณาเลือกยี่ห้อรถด้วย</label></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="modal-footer" *ngFor="let item of Oldsupdata">
+                    <button class="btn btn-success" (click)="SaveEditSupGroup(item.iddata);">แก้ไขข้อมูล</button>
+                    <!-- <button type="button"  #closebutton class="close btn btn-danger" data-dismiss="modal" >Close</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- กลุ่มตัด|กลุ่มซ่อมบำรุง -->

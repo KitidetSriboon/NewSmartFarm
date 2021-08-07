@@ -1,0 +1,238 @@
+<section class="content" id="findlanddata" style="display: none;">
+  <div class="col-md-6">
+    <div class="input-group mb-3" [formGroup]="FormCode">
+      <input type="text" class="form-control" formControlName="farmmercode" placeholder="กรอกรหัสชาวไร่"
+        aria-label="กรอกรหัสชาวไร่" aria-describedby="button-addon2">
+      <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+        (click)="OnFinddata();">ค้นหาข้อมูล</button>
+    </div>
+  </div>
+
+
+  <div class="col-md-6">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a (click)="check(1)" [ngClass]="{'nav-link':true,'active': d6465}">
+          <mat-icon>description</mat-icon> ปี 64/65
+        </a>
+      </li>
+      <li class="nav-item">
+        <a (click)="check(2)" [ngClass]="{'nav-link':true,'active': d6463}">
+          <mat-icon>description</mat-icon> ปี 63/64
+        </a>
+      </li>
+      <li class="nav-item">
+        <a (click)="check(3)" [ngClass]="{'nav-link':true,'active': d6362 }">
+          <mat-icon>description</mat-icon> ปี 62/63
+        </a>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="col-md-12" id="6465">
+    <div class="card">
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">หมายเลขแปลง</th>
+              <th scope="col">ชื่อ - สกุล</th>
+              <th scope="col">ประเภทอ้อย</th>
+
+              <th scope="col">พื้นที่</th>
+              <th scope="col">พันธุ์อ้อย</th>
+              <th scope="col">กรรมสิทธิ์</th>
+
+              <!-- <th scope="col">ประเมิน</th> -->
+              <th scope="col">ปลูกเสร็จ</th>
+              <th scope="col">วันปลูก</th>
+
+              <!-- <th scope="col">ผลผลิต</th> -->
+              <th scope="col">รูท</th>
+              <th scope="col">โซน</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data6465; index as i">
+              <th scope="row">{{i+1}}</th>
+              <td>{{item.intlandno}}</td>
+              <td>{{item.fmname}}</td>
+              <td>{{item.canetype}}</td>
+              <td>{{item.landvalue}}</td>
+              <td>{{item.seedname}}</td>
+              <td>{{item.plotdesc}}</td>
+              <td>{{item.growed1}}</td>
+              <td>{{item.PlantDateTH}}</td>
+              <td>{{item.route}}</td>
+              <td>{{item.supzone}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12" id="6364" style="display: none;">
+    <div class="card">
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">หมายเลขแปลง</th>
+              <th scope="col">ชื่อ - สกุล</th>
+              <th scope="col">ประเภทอ้อย</th>
+
+              <th scope="col">พื้นที่</th>
+              <th scope="col">พันธุ์อ้อย</th>
+              <th scope="col">กรรมสิทธิ์</th>
+
+              <th scope="col">ประเมิน</th>
+              <th scope="col">เข้าหีบ</th>
+              <th scope="col">ตัดพันธุ์</th>
+
+              <th scope="col">ผลผลิต</th>
+              <th scope="col">รูท</th>
+              <th scope="col">โซน</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data6364; index as i">
+              <th scope="row">{{i+1}}</th>
+              <td>{{item.intlandno}}</td>
+              <td>{{item.fmname}}</td>
+              <td>{{item.canetype}}</td>
+              <td>{{item.landvalue}}</td>
+              <td>{{item.seedname}}</td>
+              <td>{{item.plotdesc}}</td>
+
+              <td>{{item.Assess}}</td>
+              <td>{{item.canein}}</td>
+              <td>{{item.cutseed}}</td>
+
+              <td>{{item.yieldEnd}}</td>
+              <td>{{item.route}}</td>
+              <td>{{item.supzone}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12" id="6263" style="display: none;">
+    <div class="card">
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">หมายเลขแปลง</th>
+              <th scope="col">ชื่อ - สกุล</th>
+              <th scope="col">ประเภทอ้อย</th>
+
+              <th scope="col">พื้นที่</th>
+              <th scope="col">พันธุ์อ้อย</th>
+              <th scope="col">กรรมสิทธิ์</th>
+
+              <th scope="col">ประเมิน</th>
+              <th scope="col">เข้าหีบ</th>
+              <th scope="col">ตัดพันธุ์</th>
+
+              <th scope="col">ผลผลิต</th>
+              <th scope="col">รูท</th>
+              <th scope="col">โซน</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data6263; index as i">
+              <th scope="row">{{i+1}}</th>
+              <td>{{item.intlandno}}</td>
+              <td>{{item.fmname}}</td>
+              <td>{{item.canetype}}</td>
+              <td>{{item.landvalue}}</td>
+              <td>{{item.seedname}}</td>
+              <td>{{item.plotdesc}}</td>
+
+              <td>{{item.assess}}</td>
+              <td>{{item.canein}}</td>
+              <td>{{item.cutseed}}</td>
+
+              <td>{{item.yieldEnd}}</td>
+              <td>{{item.route}}</td>
+              <td>{{item.supzone}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- สืบค้นข้อมูลชาวไร่  -->
+<section class="content" id="farmmerdata" style="display: none;">
+  <div class="col-md-12">
+
+    <div class="card bg-info">
+      <div class="card-header">
+        <h3 class="card-title">สืบค้นข้อมูลชาวไร่</h3>
+
+        <div class="card-tools"><button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+              class="fas fa-minus"></i> </button></div>
+
+      </div>
+
+      <div class="card-body">
+        <div class="input-group mb-6" [formGroup]="FormCode">
+          <span class="input-group-text bg-warning">: ระบุชื่อหรือนามสกุลชาวไร่ : </span>
+          <input type="text" class="form-control" placeholder="ป้อนชื่อหรือนามสกุลชาวไร่" formControlName="farmmertext">
+          <button class="btn btn-danger" (click)="getfarmmerdata();">ค้นหา</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <th>รหัสชาวไร่</th>
+              <th>ชื่อ - สกุล</th>
+              <th>ที่อยู่ </th>
+              <th> โซน </th>
+              <th>นักส่งเสริม</th>
+              <th>กลุ่ม</th>
+              <th> พื้นที่ปลูก6364 </th>
+              <th> อ้อยเข้า6364</th>
+              <th> ผลผลิต6364</th>
+              <th> พื้นที่ปลูก6465</th>
+              <th> อ้อยเข้า6465</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of farmmerdatalist">
+                <td>{{item.fmcode_b1}}</td>
+                <td>{{item.fmname}}</td>
+                <td>บ้านเลขที่ {{item.homeno}} หมู่ {{item.moo}} หมู่บ้าน {{item.namemoo}} <br> ต. {{item.district}} อ.
+                  {{item.county}} จ. {{item.province}}</td>
+                <td>{{item.supzone}}</td>
+                <td>{{item.supcode}}</td>
+                <td>{{item.groupcode}}</td>
+                <td>{{item.area6364}}</td>
+                <td>{{item.wgt6364}}</td>
+                <td>{{item.yield6364}}</td>
+                <td>{{item.area6465}}</td>
+                <td>{{item.wgt6465}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- สืบค้นข้อมูลชาวไร่  -->

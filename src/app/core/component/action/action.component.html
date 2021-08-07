@@ -1,0 +1,1465 @@
+<section class="content" id="action6465" style="display: none;">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2>ติดตามแปลงอ้อย</h2>
+        </div>
+        <div class="card-body">
+
+
+            <div class="input-group mb-3" [formGroup]="FormTrackCane">
+
+                <span class="input-group-text">: เลือกเขต/โซน : </span>
+                <select formControlName="seletzone" class="form-control"(change)="GetFarmerList()">
+                    <option *ngFor="let item of selectzone" [ngValue]="item.zonecode">
+                        {{ item.zonecode }}
+                    </option>
+                </select>
+                <span class="input-group-text">: กรอกรหัสชาวไร่ : </span>
+                <input type="text" class="form-control" formControlName="farmercode" list="farmername">
+                <datalist  id="farmername" [hidden]="true" class="form-control">
+                    <option *ngFor="let item of farmerlist" [ngValue]="item.FMCODE_B1">
+                        {{ item.FMCODE_B1 }} {{ item.fmname }}
+                    </option>
+                </datalist>
+                <button class="btn btn-info" (click)="LoaddataTrackCaneLand();">แสดงรายการ</button>
+            </div>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">รหัสชาวไร่</th>
+                        <th scope="col">ชื่อชาวไร่</th>
+                        <th scope="col">หมายเลขแปลง</th>
+                        <th scope="col">ประเภทอ้อย</th>
+                        <th scope="col">พื้นที่</th>
+                        <th scope="col">โซน</th>
+                        <th scope="col">รูท</th>
+                        <th scope="col">นักส่งเสริม</th>
+                        <th scope="col">ออกใบติดตาม</th>
+                        <!-- <th scope="col">บันทึกกิจกรรม</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of Datacanetrack; index as i">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{item.fmcode}}</td>
+                        <td>{{item.fmname}}</td>
+                        <td>{{item.intLandNo}}</td>
+                        <td>{{item.canetype}}</td>
+                        <td>{{item.landvalue}}</td>
+                        <td>{{item.supzone}}</td>
+                        <td>{{item.route}}</td>
+                        <td>{{item.supcode}}</td>
+                        <td><button class="btn btn-warning"
+                                (click)="GenPDF(item.grade,item.intLandNo,item.canetype,item.landvalue,item.supzone,item.route,item.fmcode,item.ck_hardSoilBlast,item.ck_AmountFertilizer,item.ck_Dolomite,item.ck_AmountNatural,item.ck_GerminationP,item.ck_weed,item.ck_Disease,item.ck_Groove)">ออกเอกสาร</button>
+                        </td>
+                        <!-- <td><button class="btn btn-info">บันทึกกิจกรรมแปลง</button></td> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+<!-- ติดตามแปลง  -->
+
+<!-- บันทึกไถเตรียม -->
+<section class="content" id="readygrow" style="display: none;">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="input-group mb-3" [formGroup]="FormTrackCane">
+
+                <span class="input-group-text">: เลือกเขต/โซน : </span>
+                <select formControlName="seletzone" class="form-control">
+                    <option *ngFor="let item of selectzone" [ngValue]="item.zonecode">
+                        {{ item.zonecode }}
+                    </option>
+                </select>
+                <span class="input-group-text">: เลือกรูท : </span>
+                <input type="text" class="form-control" formControlName="seletroot" pattern="[0-9]"
+                    onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                <button class="btn btn-info" (click)="false">แสดงรายการ</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <th scope="col">ลำดับ</th>
+                    <th scope="col">ชื่อชาวไร่</th>
+                    <th scope="col">หมายเลขแปลง</th>
+                    <th scope="col">ประเภทอ้อย</th>
+                    <th scope="col">พื้นที่</th>
+                    <th scope="col">ปลูกเสร็จ</th>
+                    <th scope="col">ไถเตรียม</th>
+                    <th scope="col"> บันทึกไถเตรียม</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button class="btn btn-outline-info"> บันทึกไถเตรียม</button></td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</section>
+<!-- บันทึกไถเตรียม -->
+
+<!-- เกรดแปลง -->
+<section class="content" id="mytarget"  style="display: none;">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">เงื่อนไขการจับเกรดแปลง พค.64</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>1. ระเบิดดาน</p>
+                        <p>2. ใส่ปุ๋ยเคมี >=50 กก./ไร่</p>
+                        <p>3. ใส่ปุ๋ยอินทรีย์ หรือ ไว้ใบ</p>
+                        <p>4. ใส่โดโลไมท์</p>
+                        <p>5. ไม่มีวัชพืช</p>
+                        <p>6. %งอก 100 หรือ =>90 และซ่อมอ้อย</p>
+                    </div>
+
+                </div>
+                </div>
+            </div>
+
+           <br>
+            <div class="col-sm-6">
+                <div class="input-group md-3" [formGroup]="FormTrackCane">
+                    <input class="form-control" type="date" id="today" formControlName="selettime">
+                    <button class="btn btn-info" (click)="GetGradePlant();"> แสดงข้อมูล</button>
+                    <button type="button"  style="float: right;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="showmodal();">
+                        เงื่อนไขเกรดแปลง
+                      </button>
+                </div>
+            </div>
+
+
+
+                <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-head-fixed">
+                        <thead id="thead">
+                            <tr style="background-color: #39A9DB;">
+
+                                <th scope="col">ส่วน</th>
+                                <th scope="col">โซน/เขต</th>
+                                <th scope="col">รหัสนักส่งเสริม </th>
+                                <th scope="col">ชื่อนักส่งเสริม </th>
+                                <th scope="col">จำนวนแปลงทั้งหมด </th>
+                                <th scope="col">แปลงเกรด A</th>
+                                <th scope="col">จำนวนไร่</th>
+                                <th scope="col">%แปลง เกรด A</th>
+                                <th scope="col">แปลงเกรด B</th>
+                                <th scope="col">จำนวนไร่</th>
+                                <th scope="col">%แปลง เกรด B</th>
+                                <th scope="col">แปลงเกรด C</th>
+                                <th scope="col">จำนวนไร่</th>
+                                <th scope="col">%แปลง เกรด C</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="gradedata" *ngFor="let score of grade">
+
+                            <tr *ngIf="score.Partcode !== 'BRD' && score.supcode!=='Z'" >
+
+                                <td>{{score.Partcode}}</td>
+                                <td>{{score.supzone}}</td>
+                                <td>{{score.supcode}}</td>
+                                <td>{{score.SUPNAME}}</td>
+                                <td>{{score.count_all}}</td>
+                                <td>{{score.gradeA}}</td>
+                                <td>{{score.areaGradeA}}</td>
+                                <td class="text-center"> {{score.pc_gradeA}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width:{{score.pc_gradeA}}%;" aria-valuenow="{{score.pc_gradeA}}">
+                                            <span>{{score.pc_gradeA}}% </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{score.gradeB}}</td>
+                                <td class="text-center"> {{score.areaGradeB}}</td>
+                                <td class="text-center"> {{score.pc_gradeB}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width: {{score.pc_gradeB}}%;" aria-valuenow="{{score.pc_gradeB}}" >
+                                            <span>{{score.pc_gradeB}} % </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{score.gradeC}}</td>
+                                <td class="text-center"> {{score.areaGradeC}} </td>
+                                <td class="text-center"> {{score.pc_gradeC}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width:{{score.pc_gradeC}}%;" aria-valuenow="{{score.pc_gradeC}}" > {{score.pc_gradeC}} %
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="score.Partcode !== 'BRD' && score.supcode==='Z'" style="background-color: #ffd56c;">
+
+                                <td>{{score.Partcode}}</td>
+                                <td>{{score.supzone}}</td>
+                                <td>{{score.supcode}}</td>
+                                <td>{{score.SUPNAME}}</td>
+                                <td>{{score.count_all}}</td>
+                                <td>{{score.gradeA}}</td>
+                                <td>{{score.areaGradeA}}</td>
+                                <td class="text-center"> {{score.pc_gradeA}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width:{{score.pc_gradeA}}%;" aria-valuenow="{{score.pc_gradeA}}">
+                                            <span>{{score.pc_gradeA}}% </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{score.gradeB}}</td>
+                                <td class="text-center"> {{score.areaGradeB}}</td>
+                                <td class="text-center"> {{score.pc_gradeB}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width:{{score.pc_gradeB}}%; " aria-valuenow="{{score.pc_gradeB}}" >
+                                            <span>{{score.pc_gradeB}} % </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{score.gradeC}}</td>
+                                <td class="text-center"> {{score.areaGradeC}} </td>
+                                <td class="text-center"> {{score.pc_gradeC}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width:{{score.pc_gradeC}}%; " aria-valuenow="{{score.pc_gradeC}}" > {{score.pc_gradeC}} %
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="score.Partcode === 'BRD' && score.supzone==='P'" style="background-color: #1875ff;">
+
+                                <td>{{score.Partcode}}</td>
+                                <td>{{score.supzone}}</td>
+                                <td>{{score.supcode}}</td>
+                                <td>{{score.SUPNAME}}</td>
+                                <td>{{score.count_all}}</td>
+                                <td>{{score.gradeA}}</td>
+                                <td>{{score.areaGradeA}}</td>
+                                <td class="text-center"> {{score.pc_gradeA}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width:{{score.pc_gradeA}}%;" aria-valuenow="{{score.pc_gradeA}}">
+                                            <span>{{score.pc_gradeA}}% </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{score.gradeB}}</td>
+                                <td class="text-center"> {{score.areaGradeB}}</td>
+                                <td class="text-center"> {{score.pc_gradeB}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width:{{score.pc_gradeB}}%; " aria-valuenow="{{score.pc_gradeB}}" >
+                                            <span>{{score.pc_gradeB}} % </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{score.gradeC}}</td>
+                                <td class="text-center"> {{score.areaGradeC}} </td>
+                                <td class="text-center"> {{score.pc_gradeC}} %
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-success" style="width:{{score.pc_gradeC}}%; " aria-valuenow="{{score.pc_gradeC}}" > {{score.pc_gradeC}} %
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+<!-- เกรดแปลง -->
+
+
+<!-- กิจกรรมแปลง -->
+<section class="content" id="target" style="display: none;">
+    <div class="card" style="display: block; overflow-x:auto;">
+        <div class="card-body">
+            <!-- <button class="btn btn-info" (click)="GetTarget();"> Refesh/โหลดข้อมูลใหม่ </button> -->
+            <div class="row"  [formGroup]="FormTrackCane">
+                <div class="col-md-6">
+                    <div class="input-group mb-6">
+                        <span class="input-group-text" id="basic-addon1">เลือกวันที่ต้องการ</span>
+                        <input class="form-control" type="date" id="today" formControlName="selettime">
+                        <button class="btn btn-outline-info" (click)="GetTarget();"> แสดงข้อมูล </button>
+                      </div>
+
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-head-fixed">
+                <thead class="table__head">
+                    <tr  class="first-col">
+                        <th  rowspan="1" class="text-center" style="background-color: #39A9DB;">วันที่ </th>
+                        <th  rowspan="1" class="text-center" style="background-color: #39A9DB; ">{{today}}</th>
+                        <th  class="text-center" colspan="2" style="background-color: #39A9DB;">พื้นที่</th>
+                        <th  class="text-center" colspan="2" style="background-color: #39A9DB;">ผลผลิตต่อไร่</th>
+                        <th  class="text-center" colspan="2" style="background-color: #39A9DB;">ปริมาณอ้อย</th>
+                        <th  class="text-center" colspan="13" style="background-color: #39A9DB;">กิจกรรมแปลง (ไร่)</th>
+                        <th  rowspan="1"  class="text-center" colspan="1" style="background-color: #39A9DB;"></th>
+                        <th  rowspan="1"  class="text-center" colspan="1" style="background-color: #39A9DB;"></th>
+
+
+                    </tr>
+                    <tr  class="second-col">
+                        <th class="text-center" style="background-color: #39A9DB;" >นักส่งเสริม</th>
+                        <th class="text-center" style="background-color: #39A9DB; " >ประเภท</th>
+
+                        <th class="text-right">ผล</th>
+                        <th class="text-right">เป้า</th>
+                        <th class="text-right">ประเมิน</th>
+                        <th class="text-right">เป้า</th>
+                        <th class="text-right">ประเมิน</th>
+                        <th class="text-right">เป้าหมาย</th>
+                        <th class="text-right">ระเบิดดินดาน</th>
+                        <th class="text-right">เคมี 1</th>
+                        <th class="text-right">เคมี 2</th>
+                        <th class="text-right">ปุ๋ยรอบ 3</th>
+                        <th class="text-right">อินทรีย์ + ไว้ใบ</th>
+                        <th class="text-right">โดโลไมท์</th>
+                        <th class="text-right">ไม่มีวัชพืช</th>
+
+                        <th class="text-right">ระยะร่อง</th>
+                        <th class="text-right">ไม่มีโรคแมลง</th>
+                        <th class="text-right">ให้น้ำ</th>
+
+                        <th class="text-right"> % งอก</th>
+                        <th class="text-right">เกรดแปลง A  (ไร่)</th>
+                        <th  rowspan="1"  class="text-center" colspan="1" style="background-color: #39A9DB;">% ความสำเร็จ</th>
+                        <th  rowspan="1"  class="text-center" colspan="1" style="background-color: #39A9DB;">% แปลงเกรด A  </th>
+                        <th class="text-center" colspan="1" style="background-color: #39A9DB;"> การอัพเดตข้อมูลเดือนนี้ </th>
+
+                    </tr>
+                </thead>
+                <tbody *ngFor="let item of actionplanmaindata">
+                    <tr *ngIf="item.canetype!==''">
+                        <td class="text-center">{{ item.supcode }} | {{ item.SUPNAME }}</td>
+                        <td style="text-align: right;">{{ item.canetype }}</td>
+
+                        <td style="text-align: right;">{{ item.sumArea }}</td>
+                        <td style="text-align: right;">{{ item.yieldTarget }}</td>
+                        <td style="text-align: right;">{{ item.yieldAssess }}</td>
+                        <td style="text-align: right;">{{ item.targetCane }}</td>
+                        <td style="text-align: right;">{{ item.assessNow }}</td>
+                        <td style="text-align: right;">{{ item.sumArea }}</td>
+                        <td style="text-align: right;">{{ item.areaH }}</td>
+                        <td style="text-align: right;">{{ item.areaC }}</td>
+                        <td style="text-align: right;">{{ item.areaC2 }}</td>
+                        <td style="text-align: right;">{{ item.areaC3 }}</td>
+                        <td style="text-align: right;">{{ item.areaO }}</td>
+                        <td style="text-align: right;">{{ item.areaD }} </td>
+
+                        <td style="text-align: right;">{{ item.areaW }}</td>
+                        <td style="text-align: right;">{{ item.areaGR }} </td>
+                        <td style="text-align: right;">{{ item.areaDI }} </td>
+                        <td style="text-align: right;">{{ item.areaWT }}</td>
+
+                        <td style="text-align: right;">{{ item.areaG }} </td>
+                        <td style="text-align: right;"> {{ item.areaA }}</td>
+                        <td style="text-align: center;">{{ item.pcSuccess }} </td>
+                        <td style="text-align: center;">{{ item.pcareaA }}</td>
+                        <td style="text-align: center;">{{ item.pcUpdateMonth }} </td>
+                     </tr>
+                   <tr *ngIf="item.canetype===''" style="background-color: #96E6B3;">
+                       <td class="text-center">{{ item.supcode }} | {{ item.SUPNAME }}</td>
+                       <td style="text-align: right;">{{ item.canetype }}</td>
+
+                       <td style="text-align: right;">{{ item.sumArea }}</td>
+                       <td style="text-align: right;">{{ item.yieldTarget }}</td>
+                       <td style="text-align: right;">{{ item.yieldAssess }}</td>
+                       <td style="text-align: right;">{{ item.targetCane }}</td>
+                       <td style="text-align: right;">{{ item.assessNow }}</td>
+                       <td style="text-align: right;">{{ item.sumArea }}</td>
+                       <td style="text-align: right;">{{ item.areaH }}</td>
+                       <td style="text-align: right;">{{ item.areaC }}</td>
+                       <td style="text-align: right;">{{ item.areaC2 }}</td>
+                       <td style="text-align: right;">{{ item.areaC3 }}</td>
+                       <td style="text-align: right;">{{ item.areaO }}</td>
+                       <td style="text-align: right;">{{ item.areaD }} </td>
+
+                       <td style="text-align: right;">{{ item.areaW }}</td>
+                       <td style="text-align: right;">{{ item.areaGR }} </td>
+                       <td style="text-align: right;">{{ item.areaDI }} </td>
+                       <td style="text-align: right;">{{ item.areaWT }}</td>
+
+                       <td style="text-align: right;">{{ item.areaG }} </td>
+                       <td style="text-align: right;"> {{ item.areaA }}</td>
+                       <td style="text-align: center;">{{ item.pcSuccess }} </td>
+                       <td style="text-align: center;">{{ item.pcareaA }}</td>
+                       <td style="text-align: center;">{{ item.pcUpdateMonth }} </td>
+                    </tr>
+
+                </tbody>
+                <tbody  *ngFor="let item of actionplanallZone">
+                    <tr style="background-color: #FFBA08;">
+                        <td class="text-center">{{ item.supcode }} | {{ item.SUPNAME }}</td>
+                        <td style="text-align: right;">{{ item.canetype }}</td>
+
+                        <td style="text-align: right;">{{ item.sumArea }}</td>
+                        <td style="text-align: right;">{{ item.yieldTarget }}</td>
+                        <td style="text-align: right;">{{ item.yieldAssess }}</td>
+                        <td style="text-align: right;">{{ item.targetCane }}</td>
+                        <td style="text-align: right;">{{ item.assessNow }}</td>
+                        <td style="text-align: right;">{{ item.sumArea }}</td>
+                        <td style="text-align: right;">{{ item.areaH }}</td>
+                        <td style="text-align: right;">{{ item.areaC }}</td>
+                        <td style="text-align: right;">{{ item.areaC2 }}</td>
+                        <td style="text-align: right;">{{ item.areaC3 }}</td>
+                        <td style="text-align: right;">{{ item.areaO }}</td>
+                        <td style="text-align: right;">{{ item.areaD }} </td>
+
+                        <td style="text-align: right;">{{ item.areaW }}</td>
+                        <td style="text-align: right;">{{ item.areaGR }} </td>
+                        <td style="text-align: right;">{{ item.areaDI }} </td>
+                        <td style="text-align: right;">{{ item.areaWT }}</td>
+
+                        <td style="text-align: right;">{{ item.areaG }} </td>
+                        <td style="text-align: right;"> {{ item.areaA }}</td>
+                        <td style="text-align: center;">{{ item.pcSuccess }} </td>
+                        <td style="text-align: center;">{{ item.pcareaA }}</td>
+                        <td style="text-align: center;">{{ item.pcUpdateMonth }} </td>
+                        </tr>
+                </tbody>
+                <tbody  *ngFor="let item of actionplanallbrd">
+                    <tr style="background-color: #3464ff;">
+                        <td class="text-center">{{ item.supcode }} | {{ item.SUPNAME }}</td>
+                        <td style="text-align: right;">{{ item.canetype }}</td>
+
+                        <td style="text-align: right;">{{ item.sumArea }}</td>
+                        <td style="text-align: right;">{{ item.yieldTarget }}</td>
+                        <td style="text-align: right;">{{ item.yieldAssess }}</td>
+                        <td style="text-align: right;">{{ item.targetCane }}</td>
+                        <td style="text-align: right;">{{ item.assessNow }}</td>
+                        <td style="text-align: right;">{{ item.sumArea }}</td>
+                        <td style="text-align: right;">{{ item.areaH }}</td>
+                        <td style="text-align: right;">{{ item.areaC }}</td>
+                        <td style="text-align: right;">{{ item.areaC2 }}</td>
+                        <td style="text-align: right;">{{ item.areaC3 }}</td>
+                        <td style="text-align: right;">{{ item.areaO }}</td>
+                        <td style="text-align: right;">{{ item.areaD }} </td>
+
+                        <td style="text-align: right;">{{ item.areaW }}</td>
+                        <td style="text-align: right;">{{ item.areaGR }} </td>
+                        <td style="text-align: right;">{{ item.areaDI }} </td>
+                        <td style="text-align: right;">{{ item.areaWT }}</td>
+
+                        <td style="text-align: right;">{{ item.areaG }} </td>
+                        <td style="text-align: right;"> {{ item.areaA }}</td>
+                        <td style="text-align: center;">{{ item.pcSuccess }} </td>
+                        <td style="text-align: center;">{{ item.pcareaA }}</td>
+                        <td style="text-align: center;">{{ item.pcUpdateMonth }} </td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+
+        </div>
+    </div>
+</section>
+<!-- กิจกรรมแปลง -->
+
+
+<!-- แบบฟอร์มบันทึกการสำรวจกิจกรรมแปลง -->
+<section class="content" id="note6465" style="display: none;">
+    <div class="col-md-12" id="mapdata">
+        <div class="card ">
+          <div class="card-header bg-primary">
+            <h3 class="card-title">ข้อมูลชาวไร่</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+            </div>
+            <!-- /.card-tools -->
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body" style="display: block;" >
+            <div class="input-group mb-6" [formGroup]="FormTrackCane">
+                <span class="input-group-text">: เลือกโซน : </span>
+                <select formControlName="seletzone" class="form-control">
+                    <option *ngFor="let item of selectzone" [ngValue]="item.zonecode">
+                        {{ item.zonecode }}
+                    </option>
+                </select>
+                <input type="text" class="form-control" placeholder="กรอกรูท"  formControlName="seletroot"  onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+                <button class="btn btn-danger" (click)="getMap();">ค้นหา</button>
+
+            </div>
+
+              <!-- <div class="table-responsive" style="height: 350px;">
+                  <table class="table">
+                      <thead>
+                          <th>รูท</th>
+                          <th>โซน/เขต</th>
+                          <th>หมายเลขแปลง</th>
+                          <th>ชื่อชาวไร่</th>
+                          <th>ประเภทอ้อย </th>
+                          <th>พื้นที่</th>
+                          <th>เป้าหมายผลผลิต</th>
+                          <th>บันทึกกิจกรรมแปลง</th>
+                      </thead>
+                      <tbody>
+                          <tr>
+                            <tr *ngFor="let item of Datacanetrack;">
+
+                                <td>{{item.route}}</td>
+                                <td>{{item.supzone}}</td>
+                                <td>{{item.intLandNo}}</td>
+                                <td>{{item.fmname}}</td>
+                                <td>{{item.canetype}}</td>
+                                <td>{{item.landvalue}}</td>
+                                <td class="text-center">{{item.target_yield}}</td>
+                              <td><button class="btn btn-info" (click)="SendDatatoform(item.itid);">กรอกแบบฟอร์ม</button></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div> -->
+
+               <agm-map [streetViewControl]="false" *ngIf="maps.length > 0" [latitude]="coordinatesCenter.lat" [longitude]="coordinatesCenter.lng" [zoom]="zoom" [maxZoom]="28" [minZoom]="10"
+                 [fullscreenControl]="true"  [locationButton]="true" [mapTypeId]="'hybrid'" >
+
+                <div *ngFor="let item of maps">
+                   <agm-marker  [latitude]="item.coordinatesCenter.lat" [longitude]="item.coordinatesCenter.lng" (markerClick)="getinforwindows(item.key,infoWindow)">
+                        <agm-info-window #infoWindow>
+                            <div *ngFor="let list of infordata">
+                            <p> หมายเลขแปลง : <strong>{{ list.intlandno }}</strong> </p>
+                            <p> ชื่อชาวไร่ : <strong>{{ list.fmname }}  </strong></p>
+                            <p> พื้นที่ : <strong>{{ list.landvalue }}</strong></p>
+                            <p> ประเภทอ้อย : <strong> {{list.CaneTypeName}}</strong></p>
+                            <p> โซน :<strong>{{ list.supzone }}</strong></p>
+                            <p> วันที่ปลูก : <strong>{{ list.PlantDate }}</strong></p>
+                            <p> อายุ : <strong>{{ list.caneage }} วัน</strong></p>
+                            </div>
+                        </agm-info-window>
+                   </agm-marker>
+                   <agm-polygon [paths]="item.coordinates" [strokeColor]="'#44FFD1'"  [fillColor]="colorclick">
+                   </agm-polygon>
+                    <agm-circle *ngif="current" [latitude]="lat" [longitude]="lng"  [radius]="50" [fillColor]="'blue'"   [circleDraggable]="false"   [editable]="false"></agm-circle>
+
+                </div>
+
+
+              </agm-map>
+
+              <button id="currentlocation" class="toggle-button controls button" (click)="currentlocation();">ตำแหน่งปัจจุบัน</button>
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- form infor  -->
+      <div class="col-md-12" id="formdata">
+        <div class="card border-primary">
+            <div class="card-header text-center bg-warning">แบบฟอร์มบันทึกการสำรวจกิจกรรมแปลง
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-head-fixed" [formGroup]="FormTrackActionLand" style="overflow-x: auto;">
+                    <tbody>
+                    <tr *ngFor="let itemsql of infordata">
+                        <td colspan="2"> <p>หมายเลยแปลง : <label>{{itemsql.intlandno}}</label></p>
+                        <p>ชื่อชาวไร่ :  <label>{{itemsql.fmname}}</label></p>
+                        <p> พื้นที่ : <strong>{{ itemsql.landvalue }} ไร่</strong></p>
+                        <p> ประเภทอ้อย : <strong> {{itemsql.CaneTypeName}}</strong></p>
+                        <p> โซน : <strong>{{ itemsql.supzone }}</strong></p>
+                        <p> วันที่ปลูก : <strong>{{ itemsql.PlantDate }}</strong></p>
+
+                        <td><input type="hidden" value={{itemsql.itid}} id="landitid" required  /></td>
+                        <td><input type="hidden" value={{itemsql.intlandno}} id="landno" required /></td>
+                    </tr>
+                    <tr>
+                        <td>1.วันที่สำรวจแปลง</td>
+                        <td><input type="date" name="selectdate" id="selectdate" required  formControlName="selectdate"></td>
+                        <td style="color: red;">กรุณาระบุ</td>
+                    </tr>
+                    <tr>
+                        <td>2.ประเมินผลผลิตอ้อย </td>
+                        <td ><input type="number" name="lookcaneton" id="lookcaneton" min="1" max="40"  maxlength="2"  required formControlName="lookcaneton"> ตัน / ไร่</td>
+                        <td style="color: red;">กรุณาระบุ</td>
+                    </tr>
+                    <tr>
+                        <td>3.ระยะร่อง   </td>
+                        <td colspan="2"><input type="number" name="landrate" id="landrate" value="80" min="80" max="250"  formControlName="landrate"> ซม.</td>
+                    </tr>
+                    <tr>
+                        <td>4. % การงอก 0-100  </td>
+                        <td colspan="N"><input type="number" name="percenrate" id="percenrate"  min="1" max="100"  maxlength="3"  formControlName="percenrate"> % </td>
+                    </tr>
+                        <tr>
+                            <td>5.ระเบิดดาน</td>
+                            <td>
+                                <div class="form-check form-check">
+                                <input class="form-check-input" type="radio" name="dindan"  value="Y"  required formControlName="dindan">
+                                <label class="form-check-label" >ทำ</label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                                <input class="form-check-input" type="radio" name="dindan"  value="N"  required formControlName="dindan">
+                                <label class="form-check-label" >ไม่ทำ</label> &nbsp; &nbsp;&nbsp; &nbsp;
+
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td> <div class="form-check form-check">
+                                    <input class="form-check-input" type="radio" name="dindanQ"  value="Y"  required formControlName="dindanQ">
+                                    <label class="form-check-label" >คุณภาพ</label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                                    <input class="form-check-input" type="radio" name="dindanQ"  value="N"  required formControlName="dindanQ">
+                                    <label class="form-check-label" >ไม่ได้คุณภาพ</label>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>6.ปุ๋ย 1 </td>
+                            <td><div class="form-check form-check">
+                                <input class="form-check-input" type="radio" name="cemee1"  value="Y"  required formControlName="cemee1">
+                                <label class="form-check-label" >
+                                ใส่
+                                </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                                <input class="form-check-input" type="radio" name="cemee1"  value="N"  required formControlName="cemee1">
+                                <label class="form-check-label" >
+                                ไม่ใส่
+                                </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>7.ปุ๋ย 2</td>
+                            <td><div class="form-check form-check">
+                                <input class="form-check-input" type="radio" name="cemee2"  value="Y"  required formControlName="cemee2">
+                                <label class="form-check-label" >
+                                ใส่
+                                </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                                <input class="form-check-input" type="radio" name="cemee2"  value="N"  required formControlName="cemee2">
+                                <label class="form-check-label" >
+                                ไม่ใส่
+                                </label>
+                            </div>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>8.ปุ๋ย 3</td>
+                            <td><div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="cemee3"  value="Y"  required formControlName="cemee3">
+                            <label class="form-check-label" >
+                                ใส่
+                            </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                            <input class="form-check-input" type="radio" name="cemee3"  value="N"  required formControlName="cemee3">
+                            <label class="form-check-label" >
+                                ไม่ใส่
+                            </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>9.ปุ๋ยอินทรีย์ </td>
+                            <td><div class="form-check form-check">
+                                <input class="form-check-input" type="radio" name="fertilizeruse"  value="Y"  required formControlName="fertilizeruse">
+                                <label class="form-check-label" >
+                                ใส่
+                                </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                                <input class="form-check-input" type="radio" name="fertilizeruse"  value="N"  required formControlName="fertilizeruse">
+                                <label class="form-check-label" >
+                                ไม่ใส่
+                                </label> &nbsp; &nbsp;&nbsp; &nbsp;
+                                <input class="form-check-input" type="checkbox" name="leaves"  value="H"  required formControlName="leaves">
+                                <label class="form-check-label" >
+                                ไว้ใบ
+                                </label>
+                            </div>
+                            </td>
+                            <!-- <td><input type="text" name="organicfertilizerstext" id="organicfertilizerstext"   required formControlName="selectfertilizer"> กิโลกรัม / ไร่</td>
+                        </tr> -->
+                         <tr>
+                            <td>10.โดโลไมท์</td>
+                            <td><div class="form-check form-check">
+                                <input class="form-check-input" type="radio" name="dolomite"  value="Y"  required formControlName="dolomite">
+                                <label class="form-check-label" >
+                                ใส่
+                                </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                                <input class="form-check-input" type="radio" name="dolomite"  value="N"  required formControlName="dolomite">
+                                <label class="form-check-label" >
+                                ไม่ใส่
+                                </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>11.วัชพืช </td>
+                            <td><div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="weed"  value="Y"  required formControlName="weed">
+                            <label class="form-check-label" >
+                                มี
+                            </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                            <input class="form-check-input" type="radio" name="weed"  value="N"  required formControlName="weed">
+                            <label class="form-check-label" >
+                                ไม่มี
+                            </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>12. โรค/แมลง/ </td>
+                            <td><div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="bugandgerm"  value="Y"  required formControlName="bugandgerm">
+                            <label class="form-check-label" >
+                                มี
+                            </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                            <input class="form-check-input" type="radio" name="bugandgerm"  value="N"  required formControlName="bugandgerm">
+                            <label class="form-check-label" >
+                                ไม่มี
+                            </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>13. ให้น้ำ </td>
+                            <td><div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="takewater"  value="Y"  required formControlName="takewater">
+                            <label class="form-check-label" >
+                                มี
+                            </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                            <input class="form-check-input" type="radio" name="takewater"  value="N"  required formControlName="takewater">
+                            <label class="form-check-label" >
+                                ไม่มี
+                            </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>14. ซ่อมอ้อย </td>
+                            <td><div class="form-check form-check">
+                            <input class="form-check-input" type="radio" name="repaircane"  value="Y"  required formControlName="repaircane">
+                            <label class="form-check-label" >
+                                ซ่อมอ้อย
+                            </label>  &nbsp; &nbsp;&nbsp; &nbsp;
+                            <input class="form-check-input" type="radio" name="repaircane"  value="N"  required formControlName="repaircane">
+                            <label class="form-check-label" >
+                                ไม่ซ่อมอ้อย
+                            </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- <td *ngIf="orther">3.ข้อแนะนำ(หมายเหตุ)</td> -->
+                            <td>15.ข้อแนะนำ(หมายเหตุ)</td>
+                            <td><textarea name="comment" id="comment" [value]="" formControlName="comment" style="width:60%; height: 50%;"></textarea></td>
+                            <td style="color: red;">กรุณาระบุ หากไม่มีให้เว้นไว้</td>
+                        </tr>
+                        <tr>
+                            <!-- <td *ngIf="orther">4.รูปภาพประกอบ</td> -->
+                            <td>16.รูปภาพประกอบ</td>
+                            <td><input type="file" value="text" id="photoland" formControlName="photoland"  (change)="onFileUpload($event.target.files)" ></td>
+                            <td style="color: red;">หากมีภาพกรุณาอัพโหลด หากไม่มีให้เว้นไว้</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div *ngIf="uploadPercentage$ | async as percentage">
+                                <div>อัพโหลดไฟล์ {{percentage}}%</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><button class="btn btn-success" (click)="SubmitData();">บันทึกข้อมูล</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="col-md-12" id="showdata">
+        <div class="card ">
+            <div class="card-header bg-success">
+                รายการบันทึกการสำรวจกิจกรรมแปลง
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <mat-form-field>
+                        <mat-label>ค้นหา</mat-label>
+                        <input matInput (keyup)="Filterby($event)" placeholder="รหัสชาวไร่ ชื่อ โควต้า" #input>
+                    </mat-form-field>
+                    <table mat-table  [dataSource]="newsql" matSort class="mat-elevation-z8" style="width: 100%;">
+
+                        <ng-container matColumnDef="Daterec">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> วันที่บันทึกข้อมูล </th>
+                            <td mat-cell *matCellDef="let element"> {{element.Daterec}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="route">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> รูท </th>
+                            <td mat-cell *matCellDef="let element"> {{element.route}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="intlandno">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> หมายเลขแปลง </th>
+                            <td mat-cell *matCellDef="let element"> {{element.intlandno}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fmcode">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> รหัสชาวไร่ </th>
+                            <td mat-cell *matCellDef="let element"> {{element.fmcode}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fmname">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ชื่อ - สกุล </th>
+                            <td mat-cell *matCellDef="let element"> {{element.fmname}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="landvalue">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> พื้นที่ </th>
+                            <td mat-cell *matCellDef="let element"> {{element.landvalue}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dateaudit">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> วันที่สำรวจแปลง </th>
+                            <td mat-cell *matCellDef="let element"> {{element.dateaudit}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ton1">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ประเมินอ้อย (ตัน) </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ton1}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button *ngIf="element.Filepic !==''" class="btn btn-info open-AddImgDialog" data-toggle="modal" data-target="#photoshow" (click)="showimg(element.Filepic)"><mat-icon>filter_hdr</mat-icon></button>
+                                <button class="btn btn-danger" (click)="DeleteformDataid(element.dataid);"><mat-icon>delete_sweep</mat-icon></button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="datacolum; sticky: true;" ></tr>
+                        <tr mat-row *matRowDef="let element; columns: datacolum"></tr>
+                    </table>
+                    <!-- <table class="table table-head-fixed">
+                        <thead>
+                            <th>วันที่บันทึกข้อมูล</th>
+                            <th>รูท</th>
+                            <th>ชื่อชาวไร่</th>
+                            <th>หมายเลขแปลง</th>
+                            <th>พื้นที่</th>
+                            <th>วันที่สำรวจแปลง</th>
+                            <th>ประเมินอ้อย (ตัน)</th>
+                            <th>ระยะร่อง</th>
+                            <th>ระเบิดดาน</th>
+                            <th>เคมี 1</th>
+                            <th>เคมี 2</th>
+                            <th>เคมี 3</th>
+                            <th>โดโลไมท์</th>
+                            <th>ปุ๋ยอินทรีย์</th>
+                            <th>ซ่อมอ้อย</th>
+                            <th>วัชพืช</th>
+                            <th>โรคและแมลง</th>
+                            <th>ให้น้ำ</th>
+                            <th>หมายเหตุ</th>
+                            <th>รูปภาพ</th>
+                            <th>ลบข้อมูล</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of sqldata">
+                                <td>{{item.Daterec}}</td>
+                                <td>{{item.route}}</td>
+                                <td>{{item.fmname}}</td>
+                                <td>{{item.intlandno}}</td>
+                                <td>{{item.landvalue}}</td>
+                                <td>{{item.dateaudit}}</td>
+                                <td>{{item.ton1}}</td>
+                                <td>{{item.groove}}</td>
+                                <td>{{item.hardSoilBlast}}</td>
+                                <td>{{item.chemical1}}</td>
+                                <td>{{item.chemical2}}</td>
+                                <td>{{item.chemical3}}</td>
+                                <td>{{item.dolomite}}</td>
+                                <td>{{item.organic}}</td>
+                                <td>{{item.canerepair}}</td>
+                                <td>{{item.weed}}</td>
+                                <td>{{item.insect}}</td>
+                                <td>{{item.getwater}}</td>
+                                <td>{{item.Comment}}</td>
+                                <td><button *ngIf="item.Filepic !==''" class="btn btn-info open-AddImgDialog" data-toggle="modal" data-target="#photoshow" (click)="showimg(item.Filepic)"><mat-icon>filter_hdr</mat-icon></button></td>
+                                <td><button class="btn btn-danger" (click)="DeleteformDataid(item.dataid);"><mat-icon>delete_sweep</mat-icon></button></td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- end form  -->
+
+      <div class="modal fade" id="photoshow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+            <h3 class="modal-title" id="exampleModalLabel">ภาพประกอบ</h3>
+            </div>
+            <div class="modal-body">
+              <img id="photourl"  width="100%" height="100%">
+            </div>
+
+        </div>
+        </div>
+    </div>
+</section>
+<!-- แบบฟอร์มบันทึกการสำรวจกิจกรรมแปลง -->
+
+
+<!-- โรคและแมลง -->
+<section class="content" id="bugandgerm" style="display: none;">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                บันทึกโรคแมลง
+                 <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center" style="background-color: rgb(245, 255, 111);">ปัญหาที่พบ</th>
+                                <th scope="col" class="text-center" style="background-color: rgb(69, 143, 253);">การจัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td colspan="2" class="text-center" style="background-color: rgb(127, 218, 166);"> <h3>แมลงศัตรูอ้อย</h3></td>
+
+                            </tr>
+                            <tr>
+                                <td>หนอนกอลายจุดเล็ก</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>หนอนกอลายจุดใหญ่</td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>หนอนกอสีขาว</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>หนอนกอสีชมพู</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>หนอนกอลายแถบใหญ่</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>แมลงนูน</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>ปลวก</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>แมลงค่อมทอง</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>เพลี้ยนแป้งสีชมพู</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>เพลี้ยอ่อนสำลี</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>เพลี้ยสำลี</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>เพลี้ยหอย</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-center" style="background-color: rgb(127, 218, 166);"> <h3>โรคของอ้อย</h3> </td>
+
+                            </tr>
+                            <tr>
+                                <td>โรคใบขาว</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคแส้ดำ</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคเหี่ยวเน่า</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคโคนเน่า</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคเน่าคออ้อย</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคใบขีดสีน้ำตาล</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคใบลวก</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคกลิ่นสับปะรด</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคยอดใบเน่า + ใบขีดแดง</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคยอดบิด + พกกะบอง</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรครากเน่า</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>โรคราสนิม</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้ยาโกลโพเซต
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ขุดทิ้งนอกแปลง
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้เชื้อราไตรโครเดอร์มา
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                         ตัดทิ้งทำลาย
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label">
+                                         ใช้โดโลไมด์
+                                        </label>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" value="" id="">
+                                        <label class="form-check-label" >
+                                          ใช้ปูนขาว
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><button class="btn btn-succes"></button></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- โรคและแมลง -->

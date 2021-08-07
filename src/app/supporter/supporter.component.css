@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300&display=swap');
+* {
+    font-family: 'Sarabun', sans-serif;
+}
+
+้#topic {
+  font-family: 'Prompt', sans-serif;
+  font-size: large;
+  text-align: center;
+  font-family: 'Sarabun', sans-serif;
+}
+
+u{
+  font-size: medium;
+}
+
+.sticky-col {
+    position: -webkit-sticky;
+    position: sticky;
+    background-color: white;
+  }
+  
+  .first-col {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    left: 0px;
+  }
+  
+  .second-col {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    left: 100px;
+  }
+
+  #comment {
+    text-align: center;
+  }
+
+  a {
+    padding: auto;
+  }
+
+
+tr > td {
+  text-align: right;
+}
+
+/* Table Css  */
+
+.table-responsive{
+  height:1000px;  
+  overflow:scroll;
+}
+ thead tr:nth-child(2) th{
+    background: rgb(255, 255, 255);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    word-wrap: break-word;
+  }
+
+  #thead tr:nth-child(1) th{
+    background: rgb(17, 207, 255);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    word-wrap: break-word;
+  }
+/* End  */
+
+.nav-tabs .nav-item .nav-link {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  stroke:black;
+  -webkit-text-fill-color: black;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+  background-color: #39A9DB;
+  color: whitesmoke;
+}
+
+.chart-container {
+  width: 500px;
+  height:500px
+}
+
+#chartContainer
+{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+canvas {
+  font-family: 'Sarabun', sans-serif;
+}
+
+
