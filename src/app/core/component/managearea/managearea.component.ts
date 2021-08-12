@@ -4,7 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import axios from 'axios';
-import { element } from 'protractor';
+import { Router } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-managearea',
@@ -12,13 +13,13 @@ import { element } from 'protractor';
   styleUrls: ['./managearea.component.css']
 })
 export class ManageareaComponent implements OnInit {
-  @Input() supcode;
-  @Input() supzone;
+  supcode;
+  supzone;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   Formaddarea:FormGroup;
-  constructor() { 
+  constructor(private router: Router) { 
     this.Formaddarea = new FormGroup({
       fmcode: new FormControl(),
       tel: new FormControl(),
@@ -37,15 +38,23 @@ export class ManageareaComponent implements OnInit {
   displayfarmaer:string[]=['fmcode','fmname','zone','cane'];
   datacolum:string[] = ['fmcode','fmname','type_area','area_new','NAMEMOO','plant_date','date_left','supcode','note','action'];
 
-  
+  decryptedInfo;
   ngOnInit(): void {
+    if (localStorage.getItem('userdata') === null || localStorage.getItem('userdata') === undefined) {
+      this.router.navigateByUrl('/loign');
+    }
+
+    let data = localStorage.getItem('userdata');
+    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
+    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
+    this.supcode = this.decryptedInfo.alldata[0].supcode;
+    this.supzone = this.decryptedInfo.alldata[0].zonedata;
+    this.Loadselect_village_in_sugarcane();
     this.SelectAllinformarea_6566();
-    setTimeout(() => {
-      this.Select_informarea_6566();
-    }, 3000);
-    setTimeout(() => {
+   
+     
       this.Filterareabyfmcode();
-    }, 4000);
+   
     this.Selectdatainformarea6566.paginator = this.paginator;
     this.Selectdatainformarea6566.sort = this.sort;
   }
@@ -63,10 +72,16 @@ export class ManageareaComponent implements OnInit {
        this.AlldataSelectinformarea6566 = data;
      })
      .catch(error => console.log(error));
+
+     setTimeout(() => {
+      this.Select_informarea_6566();
+    }, 1500);
   }
+
   Select_informarea_6566(){
       let data = this.AlldataSelectinformarea6566.filter(el => el.supzone.trim() === this.supzone);
       this.Selectdatainformarea6566 = new MatTableDataSource(data);
+      console.log(data);
 
   }
 
@@ -91,21 +106,39 @@ export class ManageareaComponent implements OnInit {
       this.Farmerdata.paginator.firstPage();
     }
   }
+  alldatavillage;
+  // โหลดข้อมูลหมู่บ้าน
+  Loadselect_village_in_sugarcane(){
+    let url ="https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_village_in_sugarcane";
+    axios.get(url).then(res => {
+      let data = res.data.recordset;
+      this.alldatavillage = data;
+    } )
+    .catch(error => {console.log(error);}
+    )
+  }
+
+  // ใช้หมู่บ้านเดิม
+  oldvillage;
+  Olddata(){
+    this.Formaddarea.get('NAMEMOO').setValue(this.oldvillage);
+  }
+
   // เพิ่มแปลงขยาย
   Insernewarea(){
 
     let fmcode = (<HTMLInputElement>document.getElementById("fmcode")).value
     let tel = this.Formaddarea.get('tel').value;
     let area_new = this.Formaddarea.get('area_new').value;
-    let supcode = this.Formaddarea.get('supcode').value;
-    let type_area = this.Formaddarea.get('type_area').value;
+    // let supcode = this.Formaddarea.get('supcode').value;
     let note = this.Formaddarea.get('note').value;
     let plant_date = this.Formaddarea.get('plant_date').value;
     let NAMEMOO = this.Formaddarea.get('NAMEMOO').value;
-
-    if (fmcode == null || NAMEMOO == null || area_new == null || plant_date == null){ alert("กรุณากรอกข้อมูลให้ครบ");}
+    this.oldvillage = NAMEMOO;
+    if (note == null) {note ='';}
+    if (NAMEMOO == null || area_new == null){ alert("กรุณากรอกข้อมูลหมู่บ้าน พื้นที่ ");}
     else {
-      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insert_informarea?yearid=6566&supcode='" + supcode + "'&fmcode='" +fmcode+ "'&tel='"+ tel+"'&area_new="+area_new+"&type_area='er_new'&note='"+ note +"'&plant_date='"+plant_date+"'&NAMEMOO='"+NAMEMOO+"'";
+      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insert_informarea?yearid=6566&supcode='" + this.supcode + "'&fmcode='" +fmcode+ "'&tel='"+ tel+"'&area_new="+area_new+"&type_area='er_new'&note='"+ note +"'&plant_date='"+plant_date+"'&villagecode='"+NAMEMOO.slice(0,8)+"'";
       axios.post(url)
       .then(res => {
         if(res.data.code)
@@ -122,7 +155,7 @@ export class ManageareaComponent implements OnInit {
       .catch(error => {console.log(error);})
     }
    
-    this.Select_informarea_6566();
+    this.SelectAllinformarea_6566();
     $('input[type="text"]').val('');
   }
   // ยกเลิกแปลงขยาย
@@ -131,14 +164,25 @@ export class ManageareaComponent implements OnInit {
     if(confirm("ต้องการยกเลิกข้อมูลหรือไม่"))
     {
       axios.post(url)
-      .then(res => {console.log(res);})
+      .then(res => {
+        console.log(res);
+        if(res.data.code)
+        {
+          alert("อัพเดทข้อมูลไม่สำเร็จ");
+        }
+  
+        if(res.data.rowsAffected)
+        {
+          alert("ยกเลิกรายการแล้วค่ะ!");
+        }
+      })
       .catch(error => {console.log(error);})
     }
     else{
       
     }
    
-    this.Select_informarea_6566();
+    this.SelectAllinformarea_6566();
   }
   famercode='';
   test(code){
@@ -150,20 +194,26 @@ export class ManageareaComponent implements OnInit {
   newarea='';
   note='';
   mooname='';
+  oldfmcode='';
   CheckEditnewarea(dataid){
     this.Singledata = this.AlldataSelectinformarea6566.filter(element => element.dataid == dataid);
     this.newarea = this.Singledata[0].area_new;
     this.note = this.Singledata[0].note;
-    this.mooname = this.Singledata[0].NAMEMOO;
+    this.mooname = this.Singledata[0].village;
+    this.oldfmcode  = this.Singledata[0].fmcode;
   }
   // แก้ไขแปลงขยาย
 
   Editnewarea(dataid){
     let note = (<HTMLInputElement>document.getElementById('note')).value;
     let area_new = (<HTMLInputElement>document.getElementById('area_new')).value;
-    let NAMEMOO = (<HTMLInputElement>document.getElementById('NAMEMOO')).value;
-    let date = this.Formaddarea.get('plant_date').value;
-    let url="https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/update_informarea?area_new="+area_new+"&note="+note+"&plant_date="+date+"&NAMEMOO="+NAMEMOO+"&dataid="+dataid;
+
+    let newfmcode = (<HTMLInputElement>document.getElementById('newfmcode')).value;
+    let villagecode = (<HTMLInputElement>document.getElementById('villagecode')).value;
+    let date = this.Formaddarea.get('editplant_date').value;
+
+    if(newfmcode == null || villagecode == null || area_new == null) {alert("กรุณากรอก รหัสชาวไร่ หรือ หมู่บ้าน หรือ พื้นที่");}
+    let url="https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/update_informarea?dataid="+dataid+"&area_new="+area_new+"&note="+note+"&plant_date="+date+"&villagecode="+villagecode.slice(0,8)+"&fmcode="+newfmcode+"&type_area=er_new";
     if(confirm("ต้องการบันทึกข้อมูลหรือไม่ ?")){
       axios.post(url)
     .then(res => {
@@ -171,7 +221,6 @@ export class ManageareaComponent implements OnInit {
         {
           alert("อัพเดทข้อมูลไม่สำเร็จ");
         }
-  
         if(res.data.rowsAffected)
         {
           alert("save data!");
@@ -179,8 +228,9 @@ export class ManageareaComponent implements OnInit {
     })
     .catch(error => {console.log(error);})
     }
-    
-    this.Select_informarea_6566();
+    // $('#Editplantarea').modal('hide');
+    ($('#Editplantarea') as any).modal('hide');
+    this.SelectAllinformarea_6566();
     $('input[type="text"]').val('');
   }
    // สืบค้นข้อมูลชาวไร่

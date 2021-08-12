@@ -1,6 +1,5 @@
-<app-header [zone]="takedata.zonedata"></app-header>
-<app-sidebar [username]="takedata.supname" [userphoto]="takedata.suppic_url" [supcode]="takedata.supcode"
-    [userlevel]="level"></app-sidebar>
+<app-header></app-header>
+<app-sidebar></app-sidebar>
 <ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#0058ff" type="ball-scale-pulse" [fullScreen]="true">
     <p style="color: black"> กำลังโหลดข้อมูล... </p>
 </ngx-spinner>
@@ -37,7 +36,6 @@
 
     <!-- More content | Component -->
     <app-action [zone]="takedata.zonedata" [supcode]="takedata.supcode" [userlevel]="level"></app-action>
-    <app-kpiall [usercode]="takedata.supcode"></app-kpiall>
     <app-findlanddata></app-findlanddata>
     <app-accept [zone]="takedata.zonedata" [supcode]="takedata.supcode" [userlevel]="level"></app-accept>
     <app-myprofile [supcode]="takedata.supcode"></app-myprofile>
@@ -47,8 +45,7 @@
     <app-prbrd></app-prbrd>
     <app-groupcut></app-groupcut>
     <app-credit [zone]="takedata.zonedata"></app-credit>
-    <app-managearea [supcode]="takedata.supcode"  [supzone]="takedata.zonedata"></app-managearea>
-    <app-docforgroupcut></app-docforgroupcut>
+    <!-- <app-docforgroupcut></app-docforgroupcut> -->
     <!-- More content | Component -->
 
     <section class="content" id="main" style="display: block;">

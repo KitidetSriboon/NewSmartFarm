@@ -71,7 +71,7 @@ export class KpiallComponent implements OnInit {
         return this.alldatas;
       })
       .catch(err => { throw err });
-    setTimeout(() => {
+    setTimeout(() => {  
       this.spinner.hide();
     }, 7000);
   }

@@ -80,20 +80,17 @@ export class SupporterComponent implements OnInit {
       let data = localStorage.getItem('userdata');
       var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
       this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
-      ($('#openmodal') as any).modal('toggle');
-      setTimeout(() => {
-        ($('#openmodal') as any).modal('hide');
-      }, 3000);
+      // ($('#openmodal') as any).modal('toggle');
+      // setTimeout(() => {
+      //   ($('#openmodal') as any).modal('hide');
+      // }, 3000);
       this.takedata = this.decryptedInfo.alldata[0];
       this.code = this.takedata.supcode;
       this.level = this.takedata.userlevel
-      this.spinner.show();
     
       this.Allchart();
   
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 1000);
+      
       if (this.code !== '923') {
         this.manager = true;
       }
@@ -279,6 +276,7 @@ export class SupporterComponent implements OnInit {
     let time = (new Date(this.Timecheck.get('selettime').value).getTime() / 1000);
     let zone = this.Timecheck.get('seletzone').value;
     let url = 'https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/informarea6465ByDate?lastdate=' + time;
+    this.spinner.show();
     fetch(url)
       .then(res => res.json())
       .then((out: any) => {
@@ -293,19 +291,9 @@ export class SupporterComponent implements OnInit {
           else { this.maindata = zonebrd; }
           console.log(this.maindata)
         }
-        // return this.maindata;
+        this.spinner.hide();
       })
       .catch(err => { throw err });
-
-
-    // document.getElementById('date_value').value));
-    // var timestamp = time.getTime();
-    console.log(time);
-    this.spinner.show();
-
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1500);
   }
 
 

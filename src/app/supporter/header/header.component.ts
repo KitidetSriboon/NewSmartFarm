@@ -1,18 +1,26 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import axios from 'axios';
+import * as CryptoJS from 'crypto-js';
+
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  @Input() zone;
   constructor(private router: Router) { }
-
+  decryptedInfo;
+  zone;
   ngOnInit(): void {
+    let data = localStorage.getItem('userdata');
+    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
+    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
+    
+
+    this.zone = this.decryptedInfo.alldata[0].zonedata;
     this.Loadtopbar();
-    console.log(this.zone);
   }
 
   ClickMain() {

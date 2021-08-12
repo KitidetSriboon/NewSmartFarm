@@ -53,6 +53,7 @@ import { ManageareaComponent } from './core/component/managearea/managearea.comp
 import { MatSortModule } from '@angular/material/sort';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DocforgroupcutComponent } from './core/component/docforgroupcut/docforgroupcut.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +75,7 @@ import { DocforgroupcutComponent } from './core/component/docforgroupcut/docforg
     GroupcutComponent,
     CreditComponent,
     ManageareaComponent,
-    DocforgroupcutComponent
+    DocforgroupcutComponent,
   ],
   imports: [
     FormsModule,

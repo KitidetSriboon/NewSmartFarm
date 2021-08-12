@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'supporter', component: SupporterComponent, 
     children:[
       { path:'action6464', component: ActionComponent },
-      { path:'kpiall', component: KpiallComponent },
+    
       { path:'findlanddata', component: FindlanddataComponent },
       { path:'accept', component: AcceptComponent },
       { path:'myprofile', component: MyprofileComponent},
@@ -36,10 +36,13 @@ const routes: Routes = [
       { path:'prbrd', component: PrbrdComponent },
       { path:'groupcup', component: GroupcutComponent },
       { path:'credit', component: CreditComponent },
-      { path:'managearea', component:ManageareaComponent},
-      { path:'docforgroupcut', component:DocforgroupcutComponent}
+      // { path:'managearea', component:ManageareaComponent},
+      // { path:'docforgroupcut', component:DocforgroupcutComponent}
     ]
   },
+  { path:'kpiall', component: KpiallComponent },
+  {path:'docforgroupcut', component: DocforgroupcutComponent},
+  {path:'managearea', component: ManageareaComponent},
  
   // { path: 'supporter', loadChildren: './app.module#AppModule' },
   { path: '**', redirectTo: 'login', pathMatch: 'full'}

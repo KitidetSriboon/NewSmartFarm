@@ -197,7 +197,7 @@ export class CreditComponent implements OnInit {
       {
         alert("บันทึกข้อมูลแล้วค่ะ");
       }
-      else { alert("บันทึกข้อมูลไม่สำเร็จ");}
+      else if(res.data.code) { alert("บันทึกข้อมูลไม่สำเร็จ");}
       console.log(res);
     }).catch(error => console.log(error))
     this.Loadtendata();

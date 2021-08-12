@@ -1,3 +1,856 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper" style="min-height: 307px">
+    <section class="content" id="singeldata" style="display: block;">
+        <div class="card">
+            <div class="card-header">
+                <form [formGroup]="Formsupport">
+                    <div class="input-group">
+                        <span class="input-group-text">: เลือกงวดงาน : </span>
+                        <select formControlName="selettime" class="form-control">
+                           <option *ngFor="let item of selecttime" [ngValue]="[item.set,item.time]">
+                               {{ item.time }}
+                           </option>
+                       </select>
+                       <button class="btn btn-info" (click)="Getsupportdata()">แสดงข้อมูล KPI</button>
+                   </div>
+               </form>
+           </div>
+           <div class="card-body" *ngFor="let itemdata of kpi402">
+               <h2 class="text-center"> <b>เป้าหมายงานส่งเสริมการปลูกอ้อย</b> </h2>
+               <h2 class="text-center"><b> ปีการผลิต 2564/2565</b></h2>
+               <h2 class="text-center"><b>เป้าหมายปริมาณอ้อย <u>{{itemdata.targetTon}} </u>ตัน เป้าหมายผลผลิต
+                       <u>{{itemdata.targetYield}} </u>ตัน/ไร่</b></h2>
+               <table class="table">
+                   <thead>
+                       <tr>
+                           <th colspan="2" id="topic" class="table-success"> นักส่งเสริม โซน {{itemdata.Supzone}} ส่วน
+                               {{itemdata.Partcode}}
+                           </th>
+                           <th colspan="7" class="table-info text-center"> KPI ปี 64/65 {{time}}</th>
+                       </tr>
+                       <tr>
+                           <th colspan="2" id="topic">{{itemdata.Supcode}} {{itemdata.SUPNAME}} </th>
+                           <th style="background-color: yellow;">เป้าหมาย</th>
+                           <th style="background-color: yellow;">ผลงาน</th>
+                           <th style="background-color: palevioletred;">% ผลงาน</th>
+                           <th style="background-color: yellow;">ตัวถ่วง 1</th>
+                           <th style="background-color: palevioletred;">คะแนน</th>
+                           <th style="background-color: palevioletred;">% ผลงาน KPI</th>
+    
+                           <th style="background-color: #1FA2FF;">ตัวถ่วง 2</th>
+                           <th *ngIf="after" class="text-center" style="background-color: #1fffa9;">หมายเหตุ</th>
+                       </tr>
+                   </thead>
+    
+                   <tbody *ngIf="before">
+                       <!-- Topic 1  -->
+                       <tr>
+                           <th scope="row" style="background-color: orange;">1. เชิงปริมาณ</th>
+                           <th scope="row" class="text-right" style="background-color: orange;"></th>
+                           <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
+                               <u>{{itemdata.Barrier21}}</u>
+                           </th>
+                       </tr>
+                       <!-- 1.1  -->
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">1.1 ปริมาณอ้อยรวม ปี 64/65</td>
+                           <td>{{itemdata.Target1}}</td>
+                           <td>{{itemdata.Success1}}</td>
+                           <td>{{itemdata.pc_Target1}}</td>
+                           <td>{{itemdata.Barrier11}}</td>
+                           <td>{{itemdata.score1}}</td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">พื้นที่ปลูกอ้อย ปี 64/65</td>
+                           <td>{{itemdata.Target2}}</td>
+                           <td>{{itemdata.Success2}}</td>
+                           <td>{{itemdata.pc_Target2}}</td>
+                           <td>{{itemdata.Barrier12}}</td>
+                           <td>{{itemdata.score2}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">Yield 64/65</td>
+                           <td>{{itemdata.Target3}}</td>
+                           <td>{{itemdata.Success3}}</td>
+                           <td>{{itemdata.pc_Target3}}</td>
+                           <td>{{itemdata.Barrier13}}</td>
+                           <td>{{itemdata.score3}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">Yield อ้อยปลายฝน</td>
+                           <td>{{itemdata.Target4}}</td>
+                           <td>{{itemdata.Success4}}</td>
+                           <td>{{itemdata.pc_Target4}}</td>
+                           <td>{{itemdata.Barrier14}}</td>
+                           <td>{{itemdata.score4}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">Yield อ้อยตอ</td>
+                           <td>{{itemdata.Target5 }}</td>
+                           <td>{{itemdata.Success5 }}</td>
+                           <td>{{itemdata.pc_Target5 }}</td>
+                           <td>{{itemdata.Barrier15 }}</td>
+                           <td>{{itemdata.score5 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">Yield อ้อยต้นฝน</td>
+                           <td>{{itemdata.Target6 }}</td>
+                           <td>{{itemdata.Success6 }}</td>
+                           <td>{{itemdata.pc_Target6 }}</td>
+                           <td>{{itemdata.Barrier16 }}</td>
+                           <td>{{itemdata.score6 }}</td>
+                           <td></td>
+                       </tr>
+                       <!-- 1.1  -->
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">1.2 พิ้นที่อ้อยปลายฝน</td>
+                           <td>{{itemdata.Target7 }}</td>
+                           <td>{{itemdata.Success7 }}</td>
+                           <td>{{itemdata.pc_Target7 }}</td>
+                           <td>{{itemdata.Barrier17 }}</td>
+                           <td>{{itemdata.score7 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">อ้อยปลายฝนขยาย</td>
+                           <td>{{itemdata.Target8 }}</td>
+                           <td>{{itemdata.Success8 }}</td>
+                           <td>{{itemdata.pc_Target8 }}</td>
+                           <td>{{itemdata.Barrier18 }}</td>
+                           <td>{{itemdata.score8 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">อ้อยปลายฝนรื้อตอ</td>
+                           <td>{{itemdata.Target9 }}</td>
+                           <td>{{itemdata.Success9 }}</td>
+                           <td>{{itemdata.pc_Target9 }}</td>
+                           <td>{{itemdata.Barrier19 }}</td>
+                           <td>{{itemdata.score9 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">1.3 พื้นที่อ้อยตอรวม</td>
+                           <td>{{itemdata.Target10 }}</td>
+                           <td>{{itemdata.Success10 }}</td>
+                           <td>{{itemdata.pc_Target10 }}</td>
+                           <td>{{itemdata.Barrier110 }}</td>
+                           <td>{{itemdata.score10 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">อ้อยตอ 1</td>
+                           <td>{{itemdata.Target11 }}</td>
+                           <td>{{itemdata.Success11 }}</td>
+                           <td>{{itemdata.pc_Target11 }}</td>
+                           <td>{{itemdata.Barrier111 }}</td>
+                           <td>{{itemdata.score11 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">อ้อยตอ 2</td>
+                           <td>{{itemdata.Target12 }}</td>
+                           <td>{{itemdata.Success12 }}</td>
+                           <td>{{itemdata.pc_Target12 }}</td>
+                           <td>{{itemdata.Barrier112 }}</td>
+                           <td>{{itemdata.score12 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">อ้อยตอ 3</td>
+                           <td>{{itemdata.Target13 }}</td>
+                           <td>{{itemdata.Success13 }}</td>
+                           <td>{{itemdata.pc_Target13 }}</td>
+                           <td>{{itemdata.Barrier113 }}</td>
+                           <td>{{itemdata.score13 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">อ้อยตอ > 3</td>
+                           <td>{{itemdata.Target14 }}</td>
+                           <td>{{itemdata.Success14 }}</td>
+                           <td>{{itemdata.pc_Target14 }}</td>
+                           <td>{{itemdata.Barrier114 }}</td>
+                           <td>{{itemdata.score14 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">1.4 พื้นที่อ้อยต้นฝน</td>
+                           <td>{{itemdata.Target15 }}</td>
+                           <td>{{itemdata.Success15 }}</td>
+                           <td>{{itemdata.pc_Target15 }}</td>
+                           <td>{{itemdata.Barrier115 }}</td>
+                           <td>{{itemdata.score15 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">อ้อยต้นฝนขยาย</td>
+                           <td>{{itemdata.Target16 }}</td>
+                           <td>{{itemdata.Success16 }}</td>
+                           <td>{{itemdata.pc_Target16 }}</td>
+                           <td>{{itemdata.Barrier116 }}</td>
+                           <td>{{itemdata.score16 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">อ้อยต้นฝนรื้อตอ</td>
+                           <td>{{itemdata.Target17 }}</td>
+                           <td>{{itemdata.Success17 }}</td>
+                           <td>{{itemdata.pc_Target17 }}</td>
+                           <td>{{itemdata.Barrier117 }}</td>
+                           <td>{{itemdata.score17 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr class="table-warning">
+                           <td colspan="2"> <b>รวมข้อ 1</b></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>{{itemdata.sumbarrier1}}</td>
+                           <td>{{itemdata.scoresum1 }}</td>
+                           <td>{{itemdata.score1get }}</td>
+                       </tr>
+                       <!-- Topic 1  End-->
+                       <!-- Topic 2  -->
+                       <tr>
+                           <th scope="row" style="background-color: orange;">2. งานคุณภาพ </th>
+                           <th scope="row" class="text-right" style="background-color: orange;"></th>
+                           <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
+                               <u>{{itemdata.Barrier22}}</u>
+                           </th>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">2.1 อ้อยปลายฝน</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;"> พื้นที่ระเบิดดินดาน</td>
+                           <td>{{itemdata.Target19 }}</td>
+                           <td>{{itemdata.Success19 }}</td>
+                           <td>{{itemdata.pc_Target19 }}</td>
+                           <td>{{itemdata.Barrier119 }}</td>
+                           <td>{{itemdata.score19 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">การใส่ปุ๋ยอินทรีย์</td>
+                           <td>{{itemdata.Target20 }}</td>
+                           <td>{{itemdata.Success20 }}</td>
+                           <td>{{itemdata.pc_Target20 }}</td>
+                           <td>{{itemdata.Barrier120 }}</td>
+                           <td>{{itemdata.score20 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;"> การใส่โดโลไมท์</td>
+                           <td>{{itemdata.Target21 }}</td>
+                           <td>{{itemdata.Success21 }}</td>
+                           <td>{{itemdata.pc_Target21 }}</td>
+                           <td>{{itemdata.Barrier121 }}</td>
+                           <td>{{itemdata.score21 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;"> ปุ๋ยเคมี</td>
+                           <td>{{itemdata.Target22 }}</td>
+                           <td>{{itemdata.Success22 }}</td>
+                           <td>{{itemdata.pc_Target22 }}</td>
+                           <td>{{itemdata.Barrier122 }}</td>
+                           <td>{{itemdata.score22 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;"> อ้อยงอก 100 เปอร์เซ็นต์</td>
+                           <td>{{itemdata.Target25 }}</td>
+                           <td>{{itemdata.Success25 }}</td>
+                           <td>{{itemdata.pc_Target25 }}</td>
+                           <td>{{itemdata.Barrier125 }}</td>
+                           <td>{{itemdata.score25 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">การจัดการวัชพืช (คุมแห้ง,
+                               คุมเปียก,วิธีกล)
+                           </td>
+                           <td>{{itemdata.Target26 }}</td>
+                           <td>{{itemdata.Success26 }}</td>
+                           <td>{{itemdata.pc_Target26 }}</td>
+                           <td>{{itemdata.Barrier126 }}</td>
+                           <td>{{itemdata.score26 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">ระบบน้ำ</td>
+                           <td>{{itemdata.Target27 }}</td>
+                           <td>{{itemdata.Success27 }}</td>
+                           <td>{{itemdata.pc_Target27 }}</td>
+                           <td>{{itemdata.Barrier127 }}</td>
+                           <td>{{itemdata.score27 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">2.2 อ้อยตอ</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;"> พื้นที่ระเบิดดินดาน</td>
+                           <td>{{itemdata.Target28 }}</td>
+                           <td>{{itemdata.Success28 }}</td>
+                           <td>{{itemdata.pc_Target28 }}</td>
+                           <td>{{itemdata.Barrier128 }}</td>
+                           <td>{{itemdata.score28 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">การใส่ปุ๋ยอินทรีย์</td>
+                           <td>{{itemdata.Target29 }}</td>
+                           <td>{{itemdata.Success29 }}</td>
+                           <td>{{itemdata.pc_Target29 }}</td>
+                           <td>{{itemdata.Barrier129 }}</td>
+                           <td>{{itemdata.score29 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;"> การใส่โดโลไมท์</td>
+                           <td>{{itemdata.Target30 }}</td>
+                           <td>{{itemdata.Success30 }}</td>
+                           <td>{{itemdata.pc_Target30 }}</td>
+                           <td>{{itemdata.Barrier130 }}</td>
+                           <td>{{itemdata.score30 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;"> ปุ๋ยเคมี</td>
+                           <td>{{itemdata.Target31 }}</td>
+                           <td>{{itemdata.Success31 }}</td>
+                           <td>{{itemdata.pc_Target31 }}</td>
+                           <td>{{itemdata.Barrier131 }}</td>
+                           <td>{{itemdata.score31 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;"> อ้อยงอก 100 เปอร์เซ็นต์</td>
+                           <td>{{itemdata.Target34 }}</td>
+                           <td>{{itemdata.Success34 }}</td>
+                           <td>{{itemdata.pc_Target34 }}</td>
+                           <td>{{itemdata.Barrier134 }}</td>
+                           <td>{{itemdata.score34 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">การจัดการวัชพืช (คุมแห้ง,
+                               คุมเปียก,วิธีกล)
+                           </td>
+                           <td>{{itemdata.Target35}}</td>
+                           <td>{{itemdata.Success35}}</td>
+                           <td>{{itemdata.pc_Target35}}</td>
+                           <td>{{itemdata.Barrier135}}</td>
+                           <td>{{itemdata.score35}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">ระบบน้ำ</td>
+                           <td>{{itemdata.Target36}}</td>
+                           <td>{{itemdata.Success36}}</td>
+                           <td>{{itemdata.pc_Target36}}</td>
+                           <td>{{itemdata.Barrier136}}</td>
+                           <td>{{itemdata.score36}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">2.3 แปลงอ้อย AAAAA</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">2.4 แปลงอ้อย AAA</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr class="table-warning">
+                           <td colspan="2"> <b>รวมข้อ 2</b></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>{{itemdata.sumbarrier2}}</td>
+                           <td>{{itemdata.scoresum2 }}</td>
+                           <td>{{itemdata.score2get }}</td>
+                       </tr>
+                       <!-- Topic 2  End-->
+                       <!-- Topic 3  -->
+                       <tr>
+                           <th scope="row" style="background-color: orange;">3.งานพัฒนา </th>
+                           <th scope="row" class="text-right" style="background-color: orange;"></th>
+                           <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
+                               <u>{{itemdata.Barrier23}}</u>
+                           </th>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">3.1 งานพัฒนาเกรดชาวไร่</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">- ชาวไร่เกรด A</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">- ชาวไร่เกรด A 20 ตัน/ไร่</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">- ชาวไร่เกรด B 15-19 ตัน/ไร่</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">- ชาวไร่เกรด C น้อยกว่า 15 ตัน/ไร่ </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">โครงการ 1 คน 1 แปลงต้นแบบ A5 ผลผลิตสูง
+                           </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">3.2 ประชุมชาวไร่วางครบทุกหมู่บ้าน</td>
+                           <td>{{itemdata.Target45}}</td>
+                           <td>{{itemdata.Success45}}</td>
+                           <td>{{itemdata.pc_Target45}}</td>
+                           <td>{{itemdata.Barrier145}}</td>
+                           <td>{{itemdata.score45}}</td>
+                           <td>{{itemdata.Barrier23}}</td>
+                       </tr>
+                       <tr class="table-warning">
+                           <td colspan="2"> <b>รวมข้อ 3</b></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>{{itemdata.sumbarrier3}}</td>
+                           <td>{{itemdata.scoresum3 }}</td>
+                           <td>{{itemdata.score3get }}</td>
+                       </tr>
+                       <!-- Topic 3  End-->
+                       <!-- Topic 4  -->
+                       <tr>
+                           <th scope="row" style="background-color: orange;">4.งานบริหาร </th>
+                           <th scope="row" class="text-right" style="background-color: orange;"></th>
+                           <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
+                               <u>{{itemdata.Barrier24}}</u>
+                           </th>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">4.1 การจ่ายโดโลไมท์ตามความต้องการ Ca,Mg
+                           </td>
+                           <td>{{itemdata.Target37}}</td>
+                           <td>{{itemdata.Success37}}</td>
+                           <td>{{itemdata.pc_Target37}}</td>
+                           <td>{{itemdata.Barrier137}}</td>
+                           <td>{{itemdata.score37}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">4.2 การจ่ายปุ๋ยอินทรีย์</td>
+                           <td>{{itemdata.Target38}}</td>
+                           <td>{{itemdata.Success38}}</td>
+                           <td>{{itemdata.pc_Target38}}</td>
+                           <td>{{itemdata.Barrier138}}</td>
+                           <td>{{itemdata.score38}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">4.3 การจ่ายปุ๋ยเคมีตามผลผลิต</td>
+                           <td>{{itemdata.Target39}}</td>
+                           <td>{{itemdata.Success39}}</td>
+                           <td>{{itemdata.pc_Target39}}</td>
+                           <td>{{itemdata.Barrier139}}</td>
+                           <td>{{itemdata.score39}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">รอบที่ 1 สูตร 21-10-18 TE , 18-8-18TE ,
+                               22-8-18 , อื่นๆ</td>
+                           <td>{{itemdata.Target40 }}</td>
+                           <td>{{itemdata.Success40 }}</td>
+                           <td>{{itemdata.pc_Target40 }}</td>
+                           <td>{{itemdata.Barrier140 }}</td>
+                           <td>{{itemdata.score40 }}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">รอบที่ 2 สูตร 21-10-18 TE , 18-8-18TE ,
+                               22-8-18 , อื่นๆ</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">รอบที่ 3 สูตร 3-0-20,10-0-10</td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                           <td> - </td>
+                       </tr>
+                       <tr class="table-warning">
+                           <td colspan="2"> <b>รวมข้อ 4</b></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>{{itemdata.sumbarrier4}}</td>
+                           <td>{{itemdata.scoresum4 }}</td>
+                           <td>{{itemdata.score4get }}</td>
+                       </tr>
+                       <!-- Topic 4  End-->
+                       <!-- Topic 5 -->
+                       <tr>
+                           <th scope="row" style="background-color: orange;">5. งานอื่น ๆ </th>
+                           <th scope="row" class="text-right" style="background-color: orange;"></th>
+                           <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
+                               <u>{{itemdata.Barrier25}}</u>
+                           </th>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">5.1 คะแนนจาก Audit</td>
+                           <td>{{itemdata.Target43}}</td>
+                           <td>{{itemdata.Success43}}</td>
+                           <td>{{itemdata.pc_Target43}}</td>
+                           <td>{{itemdata.Barrier143}}</td>
+                           <td>{{itemdata.score43}}</td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2" style="background-color: #97BC4E;">5.2 คะแนนจาก หัวหน้าส่วนเขตส่งเสริม
+                               (แบบฟอร์มการให้คะแนน)
+                           </td>
+                           <td>{{itemdata.Target44}}</td>
+                           <td>{{itemdata.Success44}}</td>
+                           <td>{{itemdata.pc_Target44}}</td>
+                           <td>{{itemdata.Barrier144}}</td>
+                           <td>{{itemdata.score44}}</td>
+                           <td></td>
+                       </tr>
+                       <tr class="table-warning">
+                           <td colspan="2"> <b>รวมข้อ 5</b></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>{{itemdata.sumbarrier5}}</td>
+                           <td>{{itemdata.scoresum5}}</td>
+                           <td>{{itemdata.score5get}}</td>
+                       </tr>
+    
+                       <!-- Topic 5  End-->
+                       <!-- Sum  -->
+                       <tr>
+                           <th class="table-info" colspan="4" style="background-color: orange;">รวม</th>
+                           <td colspan="4" class="text-center" style="font-size: large; background-color: #97BC4E;">
+                               <b><u>*** รวมทั้งหมด {{itemdata.scoretotal}}</u></b>
+                           </td>
+                       </tr>
+                       <tr>
+                       </tr>
+                   </tbody>
+                   <!-- Sum  -->
+                   <tbody *ngIf="after" id="supporterdata">
+                       <tr>
+                           <td colspan="8">1.เชิงปริมาณ</td>
+                           <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier21}}</td>
+    
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;<u>พื้นที่ปลูกเสร็จ</u></td>
+                           <td>{{itemdata.Target1}}</td>
+                           <td>{{itemdata.Success1}}</td>
+                           <td>
+                               <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
+                                   aria-valuenow="{{itemdata.pc_Target1}}" aria-valuemin="0" aria-valuemax="100">
+                                   {{itemdata.pc_Target1}}</div>
+                           </td>
+                           <td>{{itemdata.Barrier1}}</td>
+                           <td>{{itemdata.score1}}</td>
+                           <td></td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;&nbsp;อ้อยปลายฝน </td>
+                           <td>{{itemdata.Target2}}</td>
+                           <td>{{itemdata.Success2}}</td>
+                           <td>{{itemdata.pc_Target2}}</td>
+                           <td>{{itemdata.Barrier2}}</td>
+                           <td>{{itemdata.score2}}</td>
+                           <td></td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;&nbsp;อ้อยต้นฝน</td>
+                           <td>{{itemdata.Target3}}</td>
+                           <td>{{itemdata.Success3}}</td>
+                           <td>{{itemdata.pc_Target3}}</td>
+                           <td>{{itemdata.Barrier3}}</td>
+                           <td>{{itemdata.score3}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ตามไดอะรี่ ปลูกรายแปลง 30 เม.ย.ตามเป้าหมาย</td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;&nbsp;อ้อยตอ</td>
+                           <td>{{itemdata.Target4}}</td>
+                           <td>{{itemdata.Success4}}</td>
+                           <td>{{itemdata.pc_Target4}}</td>
+                           <td>{{itemdata.Barrier4}}</td>
+                           <td>{{itemdata.score4}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ปิดงวดงาน 30 เม.ย.ตามเป้าหมาย</td>
+                       </tr>
+    
+                       <tr>
+                           <td colspan="8">2.เชิงคุณภาพ</td>
+                           <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier22}}</td>
+    
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp; <u>อ้อยปลายฝน (ยุทธศาสตร์ 10 ข้อ)</u> </td>
+                           <td>{{itemdata.Target1}}</td>
+                           <td>{{itemdata.Success1}}</td>
+                           <td>{{itemdata.pc_Target1}}</td>
+                           <td>{{itemdata.Barrier11}}</td>
+                           <td>{{itemdata.score1}}</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp; <u>อ้อยตอ (ยุทธศาสตร์ 10 ข้อ)</u></td>
+                           <td>{{itemdata.Target1}}</td>
+                           <td>{{itemdata.Success1}}</td>
+                           <td>{{itemdata.pc_Target1}}</td>
+                           <td>{{itemdata.Barrier11}}</td>
+                           <td>{{itemdata.score1}}</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                       </tr>
+                       <tr *ngFor="let item402 of kpi402">
+                        <td colspan="2">&nbsp; <u>แปลงเกรด A (%)</u></td>
+                        <td>{{item402.Target45}}</td>
+                        <td>{{item402.Success45}}</td>
+                        <td>{{item402.pc_Target45}}</td>
+                        <td>{{item402.Barrier145}}</td>
+                        <td>{{item402.score45}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+    
+                       <tr>
+                           <td colspan="8">3.การพัฒนา/การเรียนรู้ การมีส่วนร่วม</td>
+                           <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier23}}</td>
+    
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;ชาวไร่เกรดC เป็นA</td>
+                           <td>{{itemdata.Target25}}</td>
+                           <td>{{itemdata.Success25}}</td>
+                           <td>{{itemdata.pc_Target25}}</td>
+                           <td>{{itemdata.Barrier25}}</td>
+                           <td>{{itemdata.score25}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ตามแผนงาน</td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;ชาวไร่เกรดB เป็นA</td>
+                           <td>{{itemdata.Target26}}</td>
+                           <td>{{itemdata.Success26}}</td>
+                           <td>{{itemdata.pc_Target26}}</td>
+                           <td>{{itemdata.Barrier26}}</td>
+                           <td>{{itemdata.score26}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ตามแผนงาน</td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp; งานประชุมตั้งเป้าหมายรายชาวไร่</td>
+                           <td>{{itemdata.Target27}}</td>
+                           <td>{{itemdata.Success27}}</td>
+                           <td>{{itemdata.pc_Target27}}</td>
+                           <td>{{itemdata.Barrier27}}</td>
+                           <td>{{itemdata.score27}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ตามแผนงาน (คงเหลือจากเป้าหมาย) 30 เม.ย.</td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;การจัดงาน Field day</td>
+                           <td>{{itemdata.Target28}}</td>
+                           <td>{{itemdata.Success28}}</td>
+                           <td>{{itemdata.pc_Target28}}</td>
+                           <td>{{itemdata.Barrier28}}</td>
+                           <td>{{itemdata.score28}}</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp; - ชุดเจ้าของเครื่องมือ</td>
+                           <td>{{itemdata.Target29}}</td>
+                           <td>{{itemdata.Success29}}</td>
+                           <td>{{itemdata.pc_Target29}}</td>
+                           <td>{{itemdata.Barrier29}}</td>
+                           <td>{{itemdata.score29}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ตามแผนงาน 30 เม.ย.</td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp; - แยกกลุ่มปัญหา รายชาวไร่</td>
+                           <td>{{itemdata.Target30}}</td>
+                           <td>{{itemdata.Success30}}</td>
+                           <td>{{itemdata.pc_Target30}}</td>
+                           <td>{{itemdata.Barrier30}}</td>
+                           <td>{{itemdata.score30}}</td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                       </tr>
+    
+                       <tr>
+                           <td colspan="8">4.บริหาร</td>
+                           <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier24}}</td>
+    
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;ปุ๋ยเคมี</td>
+                           <td>{{itemdata.Target31}}</td>
+                           <td>{{itemdata.Success31}} กระสอบ</td>
+                           <td>{{itemdata.pc_Target31}}</td>
+                           <td>{{itemdata.Barrier31}}</td>
+                           <td>{{itemdata.score31}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ตามแผนงานเป้าหมาย</td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;อินทรีย์</td>
+                           <td>{{itemdata.Target32}}</td>
+                           <td>{{itemdata.Success32}} ตัน</td>
+                           <td>{{itemdata.pc_Target32}}</td>
+                           <td>{{itemdata.Barrier32}}</td>
+                           <td>{{itemdata.score32}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ตามแผนงานเป้าหมาย</td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;โดโลไมท์</td>
+                           <td>{{itemdata.Target33}}</td>
+                           <td>{{itemdata.Success33}} กระสอบ</td>
+                           <td>{{itemdata.pc_Target33}}</td>
+                           <td>{{itemdata.Barrier33}}</td>
+                           <td>{{itemdata.score33}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ตามแผนงานเป้าหมาย</td>
+                       </tr>
+    
+                       <tr>
+                           <td colspan="8">5.งานอื่นๆ</td>
+                           <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier25}}</td>
+    
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;คะแนนจาก Audit</td>
+                           <td>{{itemdata.Target43}}</td>
+                           <td>{{itemdata.Success43}}</td>
+                           <td>{{itemdata.pc_Target43}}</td>
+                           <td>{{itemdata.Barrier143}}</td>
+                           <td>{{itemdata.score43}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>คะแนนจากหน่วย ออดิต ส่วนกลาง</td>
+                       </tr>
+                       <tr>
+                           <td colspan="2">&nbsp;คะแนนจาก ผู้จัดการเขตส่งเสริม</td>
+                           <td>{{itemdata.Target44}}</td>
+                           <td>{{itemdata.Success44}}</td>
+                           <td>{{itemdata.pc_Target44}}</td>
+                           <td>{{itemdata.Barrier144}}</td>
+                           <td>{{itemdata.score44}}</td>
+                           <td></td>
+                           <td></td>
+                           <td>ผจก.ให้คะแนน</td>
+                       </tr>
+                       <tr>
+                           <th class="table-info" colspan="4" style="background-color: orange;">รวม</th>
+                           <td colspan="5" class="text-center" style="font-size: large; background-color: #cfff70;">
+                               <b><u>*** รวมทั้งหมด {{itemdata.scoretotal}}</u></b>
+                           </td>
+                       </tr>
+    
+                   </tbody>
+               </table>
+           </div>
+       </div>
+    </section>
+
 <section class="content" id="kpimanager" style="display: none;">
     <div class="container-fluid">
         <div class="card">
@@ -1064,852 +1917,7 @@
     </div>
 </section>
 
-<section class="content" id="singeldata" style="display: none;">
-    <div class="card">
-        <div class="card-header">
-            <form [formGroup]="Formsupport">
-                <div class="input-group">
-                    <span class="input-group-text">: เลือกงวดงาน : </span>
-                    <select formControlName="selettime" class="form-control">
-                       <option *ngFor="let item of selecttime" [ngValue]="[item.set,item.time]">
-                           {{ item.time }}
-                       </option>
-                   </select>
-                   <button class="btn btn-info" (click)="Getsupportdata()">แสดงข้อมูล KPI</button>
-               </div>
-           </form>
-       </div>
-       <div class="card-body" *ngFor="let itemdata of kpi402">
-           <h2 class="text-center"> <b>เป้าหมายงานส่งเสริมการปลูกอ้อย</b> </h2>
-           <h2 class="text-center"><b> ปีการผลิต 2564/2565</b></h2>
-           <h2 class="text-center"><b>เป้าหมายปริมาณอ้อย <u>{{itemdata.targetTon}} </u>ตัน เป้าหมายผลผลิต
-                   <u>{{itemdata.targetYield}} </u>ตัน/ไร่</b></h2>
-           <table class="table">
-               <thead>
-                   <tr>
-                       <th colspan="2" id="topic" class="table-success"> นักส่งเสริม โซน {{itemdata.Supzone}} ส่วน
-                           {{itemdata.Partcode}}
-                       </th>
-                       <th colspan="7" class="table-info text-center"> KPI ปี 64/65 {{time}}</th>
-                   </tr>
-                   <tr>
-                       <th colspan="2" id="topic">{{itemdata.Supcode}} {{itemdata.SUPNAME}} </th>
-                       <th style="background-color: yellow;">เป้าหมาย</th>
-                       <th style="background-color: yellow;">ผลงาน</th>
-                       <th style="background-color: palevioletred;">% ผลงาน</th>
-                       <th style="background-color: yellow;">ตัวถ่วง 1</th>
-                       <th style="background-color: palevioletred;">คะแนน</th>
-                       <th style="background-color: palevioletred;">% ผลงาน KPI</th>
 
-                       <th style="background-color: #1FA2FF;">ตัวถ่วง 2</th>
-                       <th *ngIf="after" class="text-center" style="background-color: #1fffa9;">หมายเหตุ</th>
-                   </tr>
-               </thead>
 
-               <tbody *ngIf="before">
-                   <!-- Topic 1  -->
-                   <tr>
-                       <th scope="row" style="background-color: orange;">1. เชิงปริมาณ</th>
-                       <th scope="row" class="text-right" style="background-color: orange;"></th>
-                       <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
-                           <u>{{itemdata.Barrier21}}</u>
-                       </th>
-                   </tr>
-                   <!-- 1.1  -->
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">1.1 ปริมาณอ้อยรวม ปี 64/65</td>
-                       <td>{{itemdata.Target1}}</td>
-                       <td>{{itemdata.Success1}}</td>
-                       <td>{{itemdata.pc_Target1}}</td>
-                       <td>{{itemdata.Barrier11}}</td>
-                       <td>{{itemdata.score1}}</td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">พื้นที่ปลูกอ้อย ปี 64/65</td>
-                       <td>{{itemdata.Target2}}</td>
-                       <td>{{itemdata.Success2}}</td>
-                       <td>{{itemdata.pc_Target2}}</td>
-                       <td>{{itemdata.Barrier12}}</td>
-                       <td>{{itemdata.score2}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">Yield 64/65</td>
-                       <td>{{itemdata.Target3}}</td>
-                       <td>{{itemdata.Success3}}</td>
-                       <td>{{itemdata.pc_Target3}}</td>
-                       <td>{{itemdata.Barrier13}}</td>
-                       <td>{{itemdata.score3}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">Yield อ้อยปลายฝน</td>
-                       <td>{{itemdata.Target4}}</td>
-                       <td>{{itemdata.Success4}}</td>
-                       <td>{{itemdata.pc_Target4}}</td>
-                       <td>{{itemdata.Barrier14}}</td>
-                       <td>{{itemdata.score4}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">Yield อ้อยตอ</td>
-                       <td>{{itemdata.Target5 }}</td>
-                       <td>{{itemdata.Success5 }}</td>
-                       <td>{{itemdata.pc_Target5 }}</td>
-                       <td>{{itemdata.Barrier15 }}</td>
-                       <td>{{itemdata.score5 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">Yield อ้อยต้นฝน</td>
-                       <td>{{itemdata.Target6 }}</td>
-                       <td>{{itemdata.Success6 }}</td>
-                       <td>{{itemdata.pc_Target6 }}</td>
-                       <td>{{itemdata.Barrier16 }}</td>
-                       <td>{{itemdata.score6 }}</td>
-                       <td></td>
-                   </tr>
-                   <!-- 1.1  -->
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">1.2 พิ้นที่อ้อยปลายฝน</td>
-                       <td>{{itemdata.Target7 }}</td>
-                       <td>{{itemdata.Success7 }}</td>
-                       <td>{{itemdata.pc_Target7 }}</td>
-                       <td>{{itemdata.Barrier17 }}</td>
-                       <td>{{itemdata.score7 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">อ้อยปลายฝนขยาย</td>
-                       <td>{{itemdata.Target8 }}</td>
-                       <td>{{itemdata.Success8 }}</td>
-                       <td>{{itemdata.pc_Target8 }}</td>
-                       <td>{{itemdata.Barrier18 }}</td>
-                       <td>{{itemdata.score8 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">อ้อยปลายฝนรื้อตอ</td>
-                       <td>{{itemdata.Target9 }}</td>
-                       <td>{{itemdata.Success9 }}</td>
-                       <td>{{itemdata.pc_Target9 }}</td>
-                       <td>{{itemdata.Barrier19 }}</td>
-                       <td>{{itemdata.score9 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">1.3 พื้นที่อ้อยตอรวม</td>
-                       <td>{{itemdata.Target10 }}</td>
-                       <td>{{itemdata.Success10 }}</td>
-                       <td>{{itemdata.pc_Target10 }}</td>
-                       <td>{{itemdata.Barrier110 }}</td>
-                       <td>{{itemdata.score10 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">อ้อยตอ 1</td>
-                       <td>{{itemdata.Target11 }}</td>
-                       <td>{{itemdata.Success11 }}</td>
-                       <td>{{itemdata.pc_Target11 }}</td>
-                       <td>{{itemdata.Barrier111 }}</td>
-                       <td>{{itemdata.score11 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">อ้อยตอ 2</td>
-                       <td>{{itemdata.Target12 }}</td>
-                       <td>{{itemdata.Success12 }}</td>
-                       <td>{{itemdata.pc_Target12 }}</td>
-                       <td>{{itemdata.Barrier112 }}</td>
-                       <td>{{itemdata.score12 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">อ้อยตอ 3</td>
-                       <td>{{itemdata.Target13 }}</td>
-                       <td>{{itemdata.Success13 }}</td>
-                       <td>{{itemdata.pc_Target13 }}</td>
-                       <td>{{itemdata.Barrier113 }}</td>
-                       <td>{{itemdata.score13 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">อ้อยตอ > 3</td>
-                       <td>{{itemdata.Target14 }}</td>
-                       <td>{{itemdata.Success14 }}</td>
-                       <td>{{itemdata.pc_Target14 }}</td>
-                       <td>{{itemdata.Barrier114 }}</td>
-                       <td>{{itemdata.score14 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">1.4 พื้นที่อ้อยต้นฝน</td>
-                       <td>{{itemdata.Target15 }}</td>
-                       <td>{{itemdata.Success15 }}</td>
-                       <td>{{itemdata.pc_Target15 }}</td>
-                       <td>{{itemdata.Barrier115 }}</td>
-                       <td>{{itemdata.score15 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">อ้อยต้นฝนขยาย</td>
-                       <td>{{itemdata.Target16 }}</td>
-                       <td>{{itemdata.Success16 }}</td>
-                       <td>{{itemdata.pc_Target16 }}</td>
-                       <td>{{itemdata.Barrier116 }}</td>
-                       <td>{{itemdata.score16 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">อ้อยต้นฝนรื้อตอ</td>
-                       <td>{{itemdata.Target17 }}</td>
-                       <td>{{itemdata.Success17 }}</td>
-                       <td>{{itemdata.pc_Target17 }}</td>
-                       <td>{{itemdata.Barrier117 }}</td>
-                       <td>{{itemdata.score17 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr class="table-warning">
-                       <td colspan="2"> <b>รวมข้อ 1</b></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td>{{itemdata.sumbarrier1}}</td>
-                       <td>{{itemdata.scoresum1 }}</td>
-                       <td>{{itemdata.score1get }}</td>
-                   </tr>
-                   <!-- Topic 1  End-->
-                   <!-- Topic 2  -->
-                   <tr>
-                       <th scope="row" style="background-color: orange;">2. งานคุณภาพ </th>
-                       <th scope="row" class="text-right" style="background-color: orange;"></th>
-                       <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
-                           <u>{{itemdata.Barrier22}}</u>
-                       </th>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">2.1 อ้อยปลายฝน</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;"> พื้นที่ระเบิดดินดาน</td>
-                       <td>{{itemdata.Target19 }}</td>
-                       <td>{{itemdata.Success19 }}</td>
-                       <td>{{itemdata.pc_Target19 }}</td>
-                       <td>{{itemdata.Barrier119 }}</td>
-                       <td>{{itemdata.score19 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">การใส่ปุ๋ยอินทรีย์</td>
-                       <td>{{itemdata.Target20 }}</td>
-                       <td>{{itemdata.Success20 }}</td>
-                       <td>{{itemdata.pc_Target20 }}</td>
-                       <td>{{itemdata.Barrier120 }}</td>
-                       <td>{{itemdata.score20 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;"> การใส่โดโลไมท์</td>
-                       <td>{{itemdata.Target21 }}</td>
-                       <td>{{itemdata.Success21 }}</td>
-                       <td>{{itemdata.pc_Target21 }}</td>
-                       <td>{{itemdata.Barrier121 }}</td>
-                       <td>{{itemdata.score21 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;"> ปุ๋ยเคมี</td>
-                       <td>{{itemdata.Target22 }}</td>
-                       <td>{{itemdata.Success22 }}</td>
-                       <td>{{itemdata.pc_Target22 }}</td>
-                       <td>{{itemdata.Barrier122 }}</td>
-                       <td>{{itemdata.score22 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;"> อ้อยงอก 100 เปอร์เซ็นต์</td>
-                       <td>{{itemdata.Target25 }}</td>
-                       <td>{{itemdata.Success25 }}</td>
-                       <td>{{itemdata.pc_Target25 }}</td>
-                       <td>{{itemdata.Barrier125 }}</td>
-                       <td>{{itemdata.score25 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">การจัดการวัชพืช (คุมแห้ง,
-                           คุมเปียก,วิธีกล)
-                       </td>
-                       <td>{{itemdata.Target26 }}</td>
-                       <td>{{itemdata.Success26 }}</td>
-                       <td>{{itemdata.pc_Target26 }}</td>
-                       <td>{{itemdata.Barrier126 }}</td>
-                       <td>{{itemdata.score26 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">ระบบน้ำ</td>
-                       <td>{{itemdata.Target27 }}</td>
-                       <td>{{itemdata.Success27 }}</td>
-                       <td>{{itemdata.pc_Target27 }}</td>
-                       <td>{{itemdata.Barrier127 }}</td>
-                       <td>{{itemdata.score27 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">2.2 อ้อยตอ</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;"> พื้นที่ระเบิดดินดาน</td>
-                       <td>{{itemdata.Target28 }}</td>
-                       <td>{{itemdata.Success28 }}</td>
-                       <td>{{itemdata.pc_Target28 }}</td>
-                       <td>{{itemdata.Barrier128 }}</td>
-                       <td>{{itemdata.score28 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">การใส่ปุ๋ยอินทรีย์</td>
-                       <td>{{itemdata.Target29 }}</td>
-                       <td>{{itemdata.Success29 }}</td>
-                       <td>{{itemdata.pc_Target29 }}</td>
-                       <td>{{itemdata.Barrier129 }}</td>
-                       <td>{{itemdata.score29 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;"> การใส่โดโลไมท์</td>
-                       <td>{{itemdata.Target30 }}</td>
-                       <td>{{itemdata.Success30 }}</td>
-                       <td>{{itemdata.pc_Target30 }}</td>
-                       <td>{{itemdata.Barrier130 }}</td>
-                       <td>{{itemdata.score30 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;"> ปุ๋ยเคมี</td>
-                       <td>{{itemdata.Target31 }}</td>
-                       <td>{{itemdata.Success31 }}</td>
-                       <td>{{itemdata.pc_Target31 }}</td>
-                       <td>{{itemdata.Barrier131 }}</td>
-                       <td>{{itemdata.score31 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;"> อ้อยงอก 100 เปอร์เซ็นต์</td>
-                       <td>{{itemdata.Target34 }}</td>
-                       <td>{{itemdata.Success34 }}</td>
-                       <td>{{itemdata.pc_Target34 }}</td>
-                       <td>{{itemdata.Barrier134 }}</td>
-                       <td>{{itemdata.score34 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">การจัดการวัชพืช (คุมแห้ง,
-                           คุมเปียก,วิธีกล)
-                       </td>
-                       <td>{{itemdata.Target35}}</td>
-                       <td>{{itemdata.Success35}}</td>
-                       <td>{{itemdata.pc_Target35}}</td>
-                       <td>{{itemdata.Barrier135}}</td>
-                       <td>{{itemdata.score35}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">ระบบน้ำ</td>
-                       <td>{{itemdata.Target36}}</td>
-                       <td>{{itemdata.Success36}}</td>
-                       <td>{{itemdata.pc_Target36}}</td>
-                       <td>{{itemdata.Barrier136}}</td>
-                       <td>{{itemdata.score36}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">2.3 แปลงอ้อย AAAAA</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">2.4 แปลงอ้อย AAA</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr class="table-warning">
-                       <td colspan="2"> <b>รวมข้อ 2</b></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td>{{itemdata.sumbarrier2}}</td>
-                       <td>{{itemdata.scoresum2 }}</td>
-                       <td>{{itemdata.score2get }}</td>
-                   </tr>
-                   <!-- Topic 2  End-->
-                   <!-- Topic 3  -->
-                   <tr>
-                       <th scope="row" style="background-color: orange;">3.งานพัฒนา </th>
-                       <th scope="row" class="text-right" style="background-color: orange;"></th>
-                       <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
-                           <u>{{itemdata.Barrier23}}</u>
-                       </th>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">3.1 งานพัฒนาเกรดชาวไร่</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">- ชาวไร่เกรด A</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">- ชาวไร่เกรด A 20 ตัน/ไร่</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">- ชาวไร่เกรด B 15-19 ตัน/ไร่</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">- ชาวไร่เกรด C น้อยกว่า 15 ตัน/ไร่ </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">โครงการ 1 คน 1 แปลงต้นแบบ A5 ผลผลิตสูง
-                       </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">3.2 ประชุมชาวไร่วางครบทุกหมู่บ้าน</td>
-                       <td>{{itemdata.Target45}}</td>
-                       <td>{{itemdata.Success45}}</td>
-                       <td>{{itemdata.pc_Target45}}</td>
-                       <td>{{itemdata.Barrier145}}</td>
-                       <td>{{itemdata.score45}}</td>
-                       <td>{{itemdata.Barrier23}}</td>
-                   </tr>
-                   <tr class="table-warning">
-                       <td colspan="2"> <b>รวมข้อ 3</b></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td>{{itemdata.sumbarrier3}}</td>
-                       <td>{{itemdata.scoresum3 }}</td>
-                       <td>{{itemdata.score3get }}</td>
-                   </tr>
-                   <!-- Topic 3  End-->
-                   <!-- Topic 4  -->
-                   <tr>
-                       <th scope="row" style="background-color: orange;">4.งานบริหาร </th>
-                       <th scope="row" class="text-right" style="background-color: orange;"></th>
-                       <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
-                           <u>{{itemdata.Barrier24}}</u>
-                       </th>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">4.1 การจ่ายโดโลไมท์ตามความต้องการ Ca,Mg
-                       </td>
-                       <td>{{itemdata.Target37}}</td>
-                       <td>{{itemdata.Success37}}</td>
-                       <td>{{itemdata.pc_Target37}}</td>
-                       <td>{{itemdata.Barrier137}}</td>
-                       <td>{{itemdata.score37}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">4.2 การจ่ายปุ๋ยอินทรีย์</td>
-                       <td>{{itemdata.Target38}}</td>
-                       <td>{{itemdata.Success38}}</td>
-                       <td>{{itemdata.pc_Target38}}</td>
-                       <td>{{itemdata.Barrier138}}</td>
-                       <td>{{itemdata.score38}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">4.3 การจ่ายปุ๋ยเคมีตามผลผลิต</td>
-                       <td>{{itemdata.Target39}}</td>
-                       <td>{{itemdata.Success39}}</td>
-                       <td>{{itemdata.pc_Target39}}</td>
-                       <td>{{itemdata.Barrier139}}</td>
-                       <td>{{itemdata.score39}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">รอบที่ 1 สูตร 21-10-18 TE , 18-8-18TE ,
-                           22-8-18 , อื่นๆ</td>
-                       <td>{{itemdata.Target40 }}</td>
-                       <td>{{itemdata.Success40 }}</td>
-                       <td>{{itemdata.pc_Target40 }}</td>
-                       <td>{{itemdata.Barrier140 }}</td>
-                       <td>{{itemdata.score40 }}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">รอบที่ 2 สูตร 21-10-18 TE , 18-8-18TE ,
-                           22-8-18 , อื่นๆ</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">รอบที่ 3 สูตร 3-0-20,10-0-10</td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                       <td> - </td>
-                   </tr>
-                   <tr class="table-warning">
-                       <td colspan="2"> <b>รวมข้อ 4</b></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td>{{itemdata.sumbarrier4}}</td>
-                       <td>{{itemdata.scoresum4 }}</td>
-                       <td>{{itemdata.score4get }}</td>
-                   </tr>
-                   <!-- Topic 4  End-->
-                   <!-- Topic 5 -->
-                   <tr>
-                       <th scope="row" style="background-color: orange;">5. งานอื่น ๆ </th>
-                       <th scope="row" class="text-right" style="background-color: orange;"></th>
-                       <th colspan="7" class="text-right" style="background-color: #1FA2FF;">
-                           <u>{{itemdata.Barrier25}}</u>
-                       </th>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">5.1 คะแนนจาก Audit</td>
-                       <td>{{itemdata.Target43}}</td>
-                       <td>{{itemdata.Success43}}</td>
-                       <td>{{itemdata.pc_Target43}}</td>
-                       <td>{{itemdata.Barrier143}}</td>
-                       <td>{{itemdata.score43}}</td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2" style="background-color: #97BC4E;">5.2 คะแนนจาก หัวหน้าส่วนเขตส่งเสริม
-                           (แบบฟอร์มการให้คะแนน)
-                       </td>
-                       <td>{{itemdata.Target44}}</td>
-                       <td>{{itemdata.Success44}}</td>
-                       <td>{{itemdata.pc_Target44}}</td>
-                       <td>{{itemdata.Barrier144}}</td>
-                       <td>{{itemdata.score44}}</td>
-                       <td></td>
-                   </tr>
-                   <tr class="table-warning">
-                       <td colspan="2"> <b>รวมข้อ 5</b></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td>{{itemdata.sumbarrier5}}</td>
-                       <td>{{itemdata.scoresum5}}</td>
-                       <td>{{itemdata.score5get}}</td>
-                   </tr>
-
-                   <!-- Topic 5  End-->
-                   <!-- Sum  -->
-                   <tr>
-                       <th class="table-info" colspan="4" style="background-color: orange;">รวม</th>
-                       <td colspan="4" class="text-center" style="font-size: large; background-color: #97BC4E;">
-                           <b><u>*** รวมทั้งหมด {{itemdata.scoretotal}}</u></b>
-                       </td>
-                   </tr>
-                   <tr>
-                   </tr>
-               </tbody>
-               <!-- Sum  -->
-               <tbody *ngIf="after" id="supporterdata">
-                   <tr>
-                       <td colspan="8">1.เชิงปริมาณ</td>
-                       <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier21}}</td>
-
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;<u>พื้นที่ปลูกเสร็จ</u></td>
-                       <td>{{itemdata.Target1}}</td>
-                       <td>{{itemdata.Success1}}</td>
-                       <td>
-                           <div class="progress-bar bg-success" role="progressbar" style="width: 25%"
-                               aria-valuenow="{{itemdata.pc_Target1}}" aria-valuemin="0" aria-valuemax="100">
-                               {{itemdata.pc_Target1}}</div>
-                       </td>
-                       <td>{{itemdata.Barrier1}}</td>
-                       <td>{{itemdata.score1}}</td>
-                       <td></td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;&nbsp;อ้อยปลายฝน </td>
-                       <td>{{itemdata.Target2}}</td>
-                       <td>{{itemdata.Success2}}</td>
-                       <td>{{itemdata.pc_Target2}}</td>
-                       <td>{{itemdata.Barrier2}}</td>
-                       <td>{{itemdata.score2}}</td>
-                       <td></td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;&nbsp;อ้อยต้นฝน</td>
-                       <td>{{itemdata.Target3}}</td>
-                       <td>{{itemdata.Success3}}</td>
-                       <td>{{itemdata.pc_Target3}}</td>
-                       <td>{{itemdata.Barrier3}}</td>
-                       <td>{{itemdata.score3}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ตามไดอะรี่ ปลูกรายแปลง 30 เม.ย.ตามเป้าหมาย</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;&nbsp;อ้อยตอ</td>
-                       <td>{{itemdata.Target4}}</td>
-                       <td>{{itemdata.Success4}}</td>
-                       <td>{{itemdata.pc_Target4}}</td>
-                       <td>{{itemdata.Barrier4}}</td>
-                       <td>{{itemdata.score4}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ปิดงวดงาน 30 เม.ย.ตามเป้าหมาย</td>
-                   </tr>
-
-                   <tr>
-                       <td colspan="8">2.เชิงคุณภาพ</td>
-                       <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier22}}</td>
-
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp; <u>อ้อยปลายฝน (ยุทธศาสตร์ 10 ข้อ)</u> </td>
-                       <td>{{itemdata.Target1}}</td>
-                       <td>{{itemdata.Success1}}</td>
-                       <td>{{itemdata.pc_Target1}}</td>
-                       <td>{{itemdata.Barrier11}}</td>
-                       <td>{{itemdata.score1}}</td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp; <u>อ้อยตอ (ยุทธศาสตร์ 10 ข้อ)</u></td>
-                       <td>{{itemdata.Target1}}</td>
-                       <td>{{itemdata.Success1}}</td>
-                       <td>{{itemdata.pc_Target1}}</td>
-                       <td>{{itemdata.Barrier11}}</td>
-                       <td>{{itemdata.score1}}</td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                   </tr>
-                   <tr *ngFor="let item402 of kpi402">
-                    <td colspan="2">&nbsp; <u>แปลงเกรด A (%)</u></td>
-                    <td>{{item402.Target45}}</td>
-                    <td>{{item402.Success45}}</td>
-                    <td>{{item402.pc_Target45}}</td>
-                    <td>{{item402.Barrier145}}</td>
-                    <td>{{item402.score45}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                   <tr>
-                       <td colspan="8">3.การพัฒนา/การเรียนรู้ การมีส่วนร่วม</td>
-                       <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier23}}</td>
-
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;ชาวไร่เกรดC เป็นA</td>
-                       <td>{{itemdata.Target25}}</td>
-                       <td>{{itemdata.Success25}}</td>
-                       <td>{{itemdata.pc_Target25}}</td>
-                       <td>{{itemdata.Barrier25}}</td>
-                       <td>{{itemdata.score25}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ตามแผนงาน</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;ชาวไร่เกรดB เป็นA</td>
-                       <td>{{itemdata.Target26}}</td>
-                       <td>{{itemdata.Success26}}</td>
-                       <td>{{itemdata.pc_Target26}}</td>
-                       <td>{{itemdata.Barrier26}}</td>
-                       <td>{{itemdata.score26}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ตามแผนงาน</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp; งานประชุมตั้งเป้าหมายรายชาวไร่</td>
-                       <td>{{itemdata.Target27}}</td>
-                       <td>{{itemdata.Success27}}</td>
-                       <td>{{itemdata.pc_Target27}}</td>
-                       <td>{{itemdata.Barrier27}}</td>
-                       <td>{{itemdata.score27}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ตามแผนงาน (คงเหลือจากเป้าหมาย) 30 เม.ย.</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;การจัดงาน Field day</td>
-                       <td>{{itemdata.Target28}}</td>
-                       <td>{{itemdata.Success28}}</td>
-                       <td>{{itemdata.pc_Target28}}</td>
-                       <td>{{itemdata.Barrier28}}</td>
-                       <td>{{itemdata.score28}}</td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp; - ชุดเจ้าของเครื่องมือ</td>
-                       <td>{{itemdata.Target29}}</td>
-                       <td>{{itemdata.Success29}}</td>
-                       <td>{{itemdata.pc_Target29}}</td>
-                       <td>{{itemdata.Barrier29}}</td>
-                       <td>{{itemdata.score29}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ตามแผนงาน 30 เม.ย.</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp; - แยกกลุ่มปัญหา รายชาวไร่</td>
-                       <td>{{itemdata.Target30}}</td>
-                       <td>{{itemdata.Success30}}</td>
-                       <td>{{itemdata.pc_Target30}}</td>
-                       <td>{{itemdata.Barrier30}}</td>
-                       <td>{{itemdata.score30}}</td>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                   </tr>
-
-                   <tr>
-                       <td colspan="8">4.บริหาร</td>
-                       <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier24}}</td>
-
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;ปุ๋ยเคมี</td>
-                       <td>{{itemdata.Target31}}</td>
-                       <td>{{itemdata.Success31}} กระสอบ</td>
-                       <td>{{itemdata.pc_Target31}}</td>
-                       <td>{{itemdata.Barrier31}}</td>
-                       <td>{{itemdata.score31}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ตามแผนงานเป้าหมาย</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;อินทรีย์</td>
-                       <td>{{itemdata.Target32}}</td>
-                       <td>{{itemdata.Success32}} ตัน</td>
-                       <td>{{itemdata.pc_Target32}}</td>
-                       <td>{{itemdata.Barrier32}}</td>
-                       <td>{{itemdata.score32}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ตามแผนงานเป้าหมาย</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;โดโลไมท์</td>
-                       <td>{{itemdata.Target33}}</td>
-                       <td>{{itemdata.Success33}} กระสอบ</td>
-                       <td>{{itemdata.pc_Target33}}</td>
-                       <td>{{itemdata.Barrier33}}</td>
-                       <td>{{itemdata.score33}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ตามแผนงานเป้าหมาย</td>
-                   </tr>
-
-                   <tr>
-                       <td colspan="8">5.งานอื่นๆ</td>
-                       <td colspan="1" style="background-color: yellow;">{{itemdata.Barrier25}}</td>
-
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;คะแนนจาก Audit</td>
-                       <td>{{itemdata.Target43}}</td>
-                       <td>{{itemdata.Success43}}</td>
-                       <td>{{itemdata.pc_Target43}}</td>
-                       <td>{{itemdata.Barrier143}}</td>
-                       <td>{{itemdata.score43}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>คะแนนจากหน่วย ออดิต ส่วนกลาง</td>
-                   </tr>
-                   <tr>
-                       <td colspan="2">&nbsp;คะแนนจาก ผู้จัดการเขตส่งเสริม</td>
-                       <td>{{itemdata.Target44}}</td>
-                       <td>{{itemdata.Success44}}</td>
-                       <td>{{itemdata.pc_Target44}}</td>
-                       <td>{{itemdata.Barrier144}}</td>
-                       <td>{{itemdata.score44}}</td>
-                       <td></td>
-                       <td></td>
-                       <td>ผจก.ให้คะแนน</td>
-                   </tr>
-                   <tr>
-                       <th class="table-info" colspan="4" style="background-color: orange;">รวม</th>
-                       <td colspan="5" class="text-center" style="font-size: large; background-color: #cfff70;">
-                           <b><u>*** รวมทั้งหมด {{itemdata.scoretotal}}</u></b>
-                       </td>
-                   </tr>
-
-               </tbody>
-           </table>
-       </div>
-   </div>
-</section>
+</div>
+<app-footer></app-footer>
