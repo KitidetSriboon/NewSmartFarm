@@ -23,23 +23,17 @@ import { DocforgroupcutComponent } from './core/component/docforgroupcut/docforg
 const routes: Routes = [
   
   { path: 'login', component: LoginComponent },
-  { path: 'supporter', component: SupporterComponent, 
-    children:[
-      { path:'action6464', component: ActionComponent },
-    
-      { path:'findlanddata', component: FindlanddataComponent },
-      { path:'accept', component: AcceptComponent },
-      { path:'myprofile', component: MyprofileComponent},
-      { path:'repairgroup', component: RepairgroupComponent},
-      { path:'stockonline', component: StockonlineComponent},
-      { path:'plantaction', component: PlantactionComponent},
-      { path:'prbrd', component: PrbrdComponent },
-      { path:'groupcup', component: GroupcutComponent },
-      { path:'credit', component: CreditComponent },
-      // { path:'managearea', component:ManageareaComponent},
-      // { path:'docforgroupcut', component:DocforgroupcutComponent}
-    ]
-  },
+  { path: 'supporter', component: SupporterComponent },
+  { path:'credit', component: CreditComponent },
+  { path:'accept', component: AcceptComponent },
+  { path:'action6464', component: ActionComponent },
+  { path:'myprofile', component: MyprofileComponent},
+  { path:'plantaction', component: PlantactionComponent},
+  { path:'findlanddata', component: FindlanddataComponent },
+  { path:'repairgroup', component: RepairgroupComponent},
+  { path:'groupcup', component: GroupcutComponent },
+  { path:'prbrd', component: PrbrdComponent },
+  { path:'stockonline', component: StockonlineComponent},
   { path:'kpiall', component: KpiallComponent },
   {path:'docforgroupcut', component: DocforgroupcutComponent},
   {path:'managearea', component: ManageareaComponent},

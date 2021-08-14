@@ -53,6 +53,7 @@ import { ManageareaComponent } from './core/component/managearea/managearea.comp
 import { MatSortModule } from '@angular/material/sort';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DocforgroupcutComponent } from './core/component/docforgroupcut/docforgroupcut.component';
+import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { DocforgroupcutComponent } from './core/component/docforgroupcut/docforg
     DocforgroupcutComponent,
   ],
   imports: [
+    NgSelect2Module,
     FormsModule,
     BrowserModule,
     AppRoutingModule,

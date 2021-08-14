@@ -9,7 +9,7 @@ import { FirebaseService } from '../../services/firebase.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-accept',
@@ -122,7 +122,15 @@ export class AcceptComponent implements OnInit {
   Alldataaollowfert3;
   dataSource;
   // ระบบหลัก 
+  decryptedInfo;
   ngOnInit(): void {
+    let data = localStorage.getItem('userdata');
+    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
+    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
+    this.supcode = this.decryptedInfo.alldata[0].supcode;
+    this.zone = this.decryptedInfo.alldata[0].zonedata;
+    this.userlevel =  this.decryptedInfo.alldata[0].userlevel;
+
     if (this.userlevel === '14' || this.userlevel === '15') {
       this.manager = false;
       this.orther = false;

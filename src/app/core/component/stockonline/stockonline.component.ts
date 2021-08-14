@@ -1,7 +1,6 @@
 import { Component, OnInit , ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import axios from 'axios';
-import { element } from 'protractor';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';

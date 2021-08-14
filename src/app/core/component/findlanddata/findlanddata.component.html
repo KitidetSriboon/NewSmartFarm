@@ -1,4 +1,7 @@
-<section class="content" id="findlanddata" style="display: none;">
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="content-wrapper" style="min-height: 307px">
+<section class="content" id="findlanddata" style="display: block;">
   <div class="col-md-6">
     <div class="input-group mb-3" [formGroup]="FormCode">
       <input type="text" class="form-control" formControlName="farmmercode" placeholder="กรอกรหัสชาวไร่"
@@ -236,3 +239,6 @@
 </section>
 
 <!-- สืบค้นข้อมูลชาวไร่  -->
+</div>
+
+<app-footer></app-footer>

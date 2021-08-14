@@ -4,7 +4,7 @@ import axios from 'axios';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-credit',
   templateUrl: './credit.component.html',
@@ -15,7 +15,7 @@ export class CreditComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   
   @ViewChild(MatSort) sort: MatSort;
-  @Input() zone;
+  
   FormFirst:FormGroup;
   FormCredit: FormGroup;
   constructor() { 
@@ -39,12 +39,15 @@ export class CreditComponent implements OnInit {
   }
   displayfarmaer:string[]=['fmcode','fmname','zone','cane'];
   
-
+  zone;decryptedInfo;
   ngOnInit(): void {
-  setTimeout(() => {
+    let data = localStorage.getItem('userdata');
+    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
+    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
+    this.zone = this.decryptedInfo.alldata[0].zonedata;
     this.Loaddatacontact();
     this.Loadtendata();
-  }, 5000);
+  
   }
 
   Farmerdata;

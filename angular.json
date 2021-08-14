@@ -29,15 +29,15 @@
                             "node_modules/material-design-icons/iconfont/material-icons.css",
                             "node_modules/datatables.net-dt/css/jquery.dataTables.css",
                             "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+                            "node_modules/select2/dist/css/select2.min.css"
                         ],
                         "scripts": [
-                            "src/assets/js/main.js",
-                            "src/assets/js/wow.min.js",
-                            "src/assets/js/glide.min.js",
-                            "src/assets/js/contact-form.js",
-                            "src/assets/js/bootstrap.bundle-5.0.0.alpha-min.js",
+                          
+                            "src/custom.js",
                             "node_modules/jquery/dist/jquery.js",
                             "node_modules/datatables.net/js/jquery.dataTables.js",
+                            "node_modules/select2/dist/js/select2.min.js"
+                            
                         ],
                         "vendorChunk": true,
                         "extractLicenses": false,

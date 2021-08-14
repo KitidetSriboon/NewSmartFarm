@@ -10,7 +10,7 @@ import { get } from 'scriptjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
+import * as CryptoJS from 'crypto-js';
 declare var klokantech;
 
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -25,9 +25,7 @@ declare const google: any;
 })
 @Injectable()
 export class ActionComponent implements OnInit {
-  @Input() zone;
-  @Input() supcode;
-  @Input() userlevel;
+ 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -133,8 +131,17 @@ export class ActionComponent implements OnInit {
 
 
   }
-
+  decryptedInfo;
+  zone;
+  supcode;
+  userlevel;
   ngOnInit(): void {
+    let data = localStorage.getItem('userdata');
+    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
+    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
+    this.supcode = this.decryptedInfo.alldata[0].supcode;
+    this.zone = this.decryptedInfo.alldata[0].zonedata;
+    this.userlevel =  this.decryptedInfo.alldata[0].userlevel;
     // this.GetTarget();
     // this.GetGradePlant();
     setTimeout(() => {

@@ -6,9 +6,8 @@ import axios from "axios"
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ThrowStmt } from '@angular/compiler';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-repairgroup',
@@ -18,7 +17,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 export class RepairgroupComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @Input() supcode;
   dataGroupSource;
   ColumGroupSource: string[] = ['categoryGroup', 'category_docs', 'groupname', 'qdesc', 'h_fmcode', 'h_fmname', 'position_docs', 'supzone', 'supcode','canePerDay', 'dateAdd_th', 'dateUpdate_th', 'editdata'];
   // ColumsGroup: string [] = ['groupcode','grouptype','groupname','headercode','headername','positioningroup','supcode'];
@@ -73,6 +71,7 @@ export class RepairgroupComponent implements OnInit {
       product_year: new FormControl(),
       possess_year: new FormControl(),
       carboardnumber: new FormControl(),
+      swapwork:new FormControl(),
     });
 
     // สำหรับแก้ไขกลุ่ม
@@ -119,14 +118,19 @@ export class RepairgroupComponent implements OnInit {
   //// ข้อมูลชาวไร่
   farmername; farmernamecode; fmhomeno;
   fmmoo; fmnamemoo; fmdistrict; fmcounty;
-  fmprovince; fmtel; fmzip;
+  fmprovince; fmtel; fmzip;decryptedInfo;
+  supcode;
   ngOnInit(): void {
+    let data = localStorage.getItem('userdata');
+    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
+    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
+    this.supcode = this.decryptedInfo.alldata[0].supcode;
     this.FormRepair.get('groupcheck').setValue(1);
     this.FormRepair.get('grouptype').setValue('N');
     this.FormEditRepair.get('subworker').setValue(0);
 
     setTimeout(() => {
-      this.Loadzonegroup();
+    this.Loadzonegroup();
     this.Getdatagrouptype();
     this.LoadBrandCar();
     this.Getsupgroupdate();
@@ -137,7 +141,7 @@ export class RepairgroupComponent implements OnInit {
     this.GetCanperday();
     this.GetAllGroup();
     this.Loadchart();
-    }, 6000);
+    }, 3000);
     
   }
 
@@ -206,6 +210,31 @@ export class RepairgroupComponent implements OnInit {
     else if (value == 3) { this.showzoneH = true; this.showzoneM = false; this.showAllZone = true; }
     else { this.showzoneH = true; this.showzoneM = true; this.showAllZone = false; }
   }
+  // จัดการข้อมูลกลุ่ม 
+  alltypegroup=false;
+  addgroupmain=true;
+  addsubgroup=true;
+  swapwork(){
+    let id = this.FormRepair.get('swapwork').value;
+    if (id === '1')
+    {
+      this.alltypegroup = false;
+      this.addgroupmain = true;
+      this.addsubgroup = true;
+    }
+    if (id === '2')
+    {
+      this.alltypegroup = true;
+      this.addgroupmain = false;
+      this.addsubgroup = true;
+    }
+    if (id === '3')
+    {
+      this.alltypegroup = true;
+      this.addgroupmain = true;
+      this.addsubgroup = false;
+    }
+  }
   // สลับข้อมูลตารางแสดงหลักย่อย
   Swaptab(check) {
     if (check == 4) {
@@ -213,11 +242,8 @@ export class RepairgroupComponent implements OnInit {
       this.addgroup = false;
       this.allsubgroup = false;
       this.repairgroup = false;
-
       document.getElementById("homegroup").style.display = "block";
       document.getElementById("addgroup").style.display = "none";
-      document.getElementById('allsubgroup').style.display = "none";
-
     }
     else if (check == 1) {
       this.homegroup = false;
@@ -226,19 +252,8 @@ export class RepairgroupComponent implements OnInit {
       this.repairgroup = false;
       document.getElementById("homegroup").style.display = "none";
       document.getElementById("addgroup").style.display = "block";
-      document.getElementById('allsubgroup').style.display = "none";
-
     }
-    else if (check == 2) {
-      this.homegroup = false;
-      this.addgroup = false;
-      this.allsubgroup = true
-      this.repairgroup = false;
-      document.getElementById("homegroup").style.display = "none";
-      document.getElementById("addgroup").style.display = "none";
-      document.getElementById('allsubgroup').style.display = "block";
-
-    }
+    
 
   }
   // แสดงกลุ่มตัด หรือ กลุ่มบำรุง

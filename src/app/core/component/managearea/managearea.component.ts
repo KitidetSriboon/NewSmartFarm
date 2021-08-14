@@ -33,11 +33,12 @@ export class ManageareaComponent implements OnInit {
       supcode:new FormControl(),
       editplant_date:new FormControl(),
 
+      lat:new FormControl(),
+      long:new FormControl(),
     })
   }
   displayfarmaer:string[]=['fmcode','fmname','zone','cane'];
   datacolum:string[] = ['fmcode','fmname','type_area','area_new','NAMEMOO','plant_date','date_left','supcode','note','action'];
-
   decryptedInfo;
   ngOnInit(): void {
     if (localStorage.getItem('userdata') === null || localStorage.getItem('userdata') === undefined) {
@@ -57,6 +58,8 @@ export class ManageareaComponent implements OnInit {
    
     this.Selectdatainformarea6566.paginator = this.paginator;
     this.Selectdatainformarea6566.sort = this.sort;
+
+  
   }
   panelOpenState = false;
 
@@ -75,14 +78,12 @@ export class ManageareaComponent implements OnInit {
 
      setTimeout(() => {
       this.Select_informarea_6566();
-    }, 1500);
+    }, 2500);
   }
 
   Select_informarea_6566(){
       let data = this.AlldataSelectinformarea6566.filter(el => el.supzone.trim() === this.supzone);
       this.Selectdatainformarea6566 = new MatTableDataSource(data);
-      console.log(data);
-
   }
 
   Filterareabyfmcode(){
@@ -107,6 +108,7 @@ export class ManageareaComponent implements OnInit {
     }
   }
   alldatavillage;
+
   // โหลดข้อมูลหมู่บ้าน
   Loadselect_village_in_sugarcane(){
     let url ="https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_village_in_sugarcane";
@@ -134,11 +136,15 @@ export class ManageareaComponent implements OnInit {
     let note = this.Formaddarea.get('note').value;
     let plant_date = this.Formaddarea.get('plant_date').value;
     let NAMEMOO = this.Formaddarea.get('NAMEMOO').value;
+    let lat = this.Formaddarea.get('lat').value;
+    let long= this.Formaddarea.get('long').value;
+
     this.oldvillage = NAMEMOO;
+    if (plant_date == null) {plant_date = null;}
     if (note == null) {note ='';}
     if (NAMEMOO == null || area_new == null){ alert("กรุณากรอกข้อมูลหมู่บ้าน พื้นที่ ");}
     else {
-      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insert_informarea?yearid=6566&supcode='" + this.supcode + "'&fmcode='" +fmcode+ "'&tel='"+ tel+"'&area_new="+area_new+"&type_area='er_new'&note='"+ note +"'&plant_date='"+plant_date+"'&villagecode='"+NAMEMOO.slice(0,8)+"'";
+      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insert_informarea?yearid=6566&supcode='" + this.supcode + "'&fmcode='" +fmcode+ "'&tel='"+ tel+"'&area_new="+area_new+"&type_area='er_new'&note='"+ note +"'&plant_date="+plant_date+"&villagecode='"+NAMEMOO.slice(0,8)+"'&lat="+lat+"&long="+long;
       axios.post(url)
       .then(res => {
         if(res.data.code)
@@ -199,7 +205,7 @@ export class ManageareaComponent implements OnInit {
     this.Singledata = this.AlldataSelectinformarea6566.filter(element => element.dataid == dataid);
     this.newarea = this.Singledata[0].area_new;
     this.note = this.Singledata[0].note;
-    this.mooname = this.Singledata[0].village;
+    this.mooname = this.Singledata[0].villagecode+ "  บ." + this.Singledata[0].village;
     this.oldfmcode  = this.Singledata[0].fmcode;
   }
   // แก้ไขแปลงขยาย
@@ -212,7 +218,7 @@ export class ManageareaComponent implements OnInit {
     let villagecode = (<HTMLInputElement>document.getElementById('villagecode')).value;
     let date = this.Formaddarea.get('editplant_date').value;
 
-    if(newfmcode == null || villagecode == null || area_new == null) {alert("กรุณากรอก รหัสชาวไร่ หรือ หมู่บ้าน หรือ พื้นที่");}
+    if(newfmcode == null || villagecode == null || area_new == null) {alert("กรุณากรอก รหัสชาวไร่ หรือ หมู่บ้าน หรือ พื้นที่ หรือ วันปลูก");}
     let url="https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/update_informarea?dataid="+dataid+"&area_new="+area_new+"&note="+note+"&plant_date="+date+"&villagecode="+villagecode.slice(0,8)+"&fmcode="+newfmcode+"&type_area=er_new";
     if(confirm("ต้องการบันทึกข้อมูลหรือไม่ ?")){
       axios.post(url)
@@ -223,15 +229,19 @@ export class ManageareaComponent implements OnInit {
         }
         if(res.data.rowsAffected)
         {
+        
           alert("save data!");
+          
         }
     })
     .catch(error => {console.log(error);})
     }
-    // $('#Editplantarea').modal('hide');
-    ($('#Editplantarea') as any).modal('hide');
+    // $('#Editplantarea').hide();
+  
     this.SelectAllinformarea_6566();
     $('input[type="text"]').val('');
+    // ($('#Editplantarea') as any).modal('hide');
+    // $('.modal-backdrop').remove();
   }
    // สืบค้นข้อมูลชาวไร่
    Farmerdata;

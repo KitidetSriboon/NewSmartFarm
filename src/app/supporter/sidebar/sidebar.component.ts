@@ -98,131 +98,55 @@ export class SidebarComponent implements OnInit {
 
   } 
   findfarmmerdata(){
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-    document.getElementById("report").style.display = "none";
-  
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
+     this.router.navigateByUrl("/findlanddata");
     document.getElementById("farmmerdata").style.display ="block";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
+    document.getElementById("findlanddata").style.display = "none";
   }
+
   findlandata() {
-    document.getElementById("main").style.display = "none";
-   
-    document.getElementById("report").style.display = "none";
-  
-    document.getElementById("action6465").style.display = "none";
+    this.router.navigateByUrl("/findlanddata");
     document.getElementById("findlanddata").style.display = "block";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
     document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
-   
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
   }
 
   main() {
-    // this.mainclick = !this.mainclick;
     this.router.navigateByUrl("/supporter");
-   
+    document.getElementById("main").style.display = "block";
+    document.getElementById("report").style.display = "none";
    
   }
    
 
   myprofile(){
-    this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-  
-    document.getElementById("report").style.display = "none";
-    
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="block"
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-    
-   
-  
+    this.router.navigateByUrl("/myprofile");
   }
     
 
   showkpi() {
     this.KPI = !this.KPI;
-
     this.router.navigateByUrl("/kpiall");
     document.getElementById("allsupportter").style.display = "none";
     document.getElementById("singeldata").style.display = "block";
     document.getElementById("kpiheadzone").style.display = "none";
     document.getElementById("kpimanager").style.display = "none";
-  
-   
-
-
-    
   }
 
   showkpisupportter() {
     this.KPI = !this.KPI;
      this.router.navigateByUrl("/kpiall");
-
     document.getElementById("allsupportter").style.display = "block";
-    
     document.getElementById("singeldata").style.display = "none";
     document.getElementById("kpiheadzone").style.display = "none";
     document.getElementById("kpimanager").style.display = "none";
-  
   }
 
   showkpiheadzone() {
     this.KPI = !this.KPI;
- 
-
-     this.router.navigateByUrl("/kpiall");
-  
+    this.router.navigateByUrl("/kpiall");
     document.getElementById("allsupportter").style.display = "none";
-
     document.getElementById("singeldata").style.display = "none";
     document.getElementById("kpiheadzone").style.display = "block";
     document.getElementById("kpimanager").style.display = "none";
-    
-   
-
-
   }
 
   showkpimanager() {
@@ -232,344 +156,115 @@ export class SidebarComponent implements OnInit {
     document.getElementById("singeldata").style.display = "none";
     document.getElementById("kpiheadzone").style.display = "none";
     document.getElementById("kpimanager").style.display = "block";
-   
-   
   }
 
   showaction6465() {
-   
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-    document.getElementById("report").style.display = "none";
+    this.router.navigateByUrl("/action6464");
+    
     document.getElementById("action6465").style.display = "block";
-    document.getElementById("findlanddata").style.display = "none";
     document.getElementById("mytarget").style.display = "none";
     document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
+    
     document.getElementById("note6465").style.display = "none";
     document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-
+    
+    
   }
 
   showgrowup() {
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-   
-    document.getElementById("report").style.display = "none";
+     this.router.navigateByUrl("/action6464");
    
     document.getElementById("action6465").style.display = "block";
-    document.getElementById("findlanddata").style.display = "none";
     document.getElementById("mytarget").style.display = "none";
     document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
+    
     document.getElementById("note6465").style.display = "none";
     document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
     
-   
-
-
-   
+    
   }
 
  
 
   showtarget6465() {
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-  
-    document.getElementById("report").style.display = "none";
+     this.router.navigateByUrl("/action6464");
   
     document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none"
     document.getElementById("mytarget").style.display = "none"
     document.getElementById("target").style.display = "block"
-    document.getElementById("fertilizer3").style.display = "none";
     document.getElementById("note6465").style.display = "none";
     document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
+    
   }
 
   showgrade6465() {
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-  
-    document.getElementById("report").style.display = "none";
-  
+     this.router.navigateByUrl("/action6464");
     document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
     document.getElementById("mytarget").style.display = "block";
     document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
     document.getElementById("note6465").style.display = "none";
     document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-  }
-
-  showfertilizer3() {
-    this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-   
-    document.getElementById("report").style.display = "none";
-    
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "block";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-  
-   
    
   }
 
   shownote6465() {
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-    
-    document.getElementById("report").style.display = "none";
-    
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "block";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
-
-    // inside note 
-    document.getElementById("mapdata").style.display = "block";
-    document.getElementById("formdata").style.display = "block";
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-  }
-
-  showbugandgerm() {
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
+    this.router.navigateByUrl("/action6464");
+   document.getElementById("action6465").style.display = "none";
+   document.getElementById("mytarget").style.display = "none";
+   document.getElementById("target").style.display = "none";
+   document.getElementById("note6465").style.display = "block";
+   document.getElementById("bugandgerm").style.display = "none";
+   // inside note 
+   document.getElementById("mapdata").style.display = "block";
+   document.getElementById("formdata").style.display = "block";
   
-    document.getElementById("report").style.display = "none";
-   
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "block";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
+ }
+
+ showbugandgerm() {
+  this.router.navigateByUrl("/action6464");
+   document.getElementById("action6465").style.display = "none";
+   document.getElementById("mytarget").style.display = "none";
+   document.getElementById("target").style.display = "none";
+   document.getElementById("note6465").style.display = "none";
+   document.getElementById("bugandgerm").style.display = "block";
+ }
+
+  showfertilizer3() {
+    this.router.navigateByUrl("/accept");
+    document.getElementById("fertilizer3").style.display = "block";
+    
   }
 
   showactioncomment(){
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-   
-    document.getElementById("report").style.display = "none";
-   
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="block";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
-  }
+  this.router.navigateByUrl("/accept");
+   document.getElementById("formactioncomment").style.display ="block";
+   document.getElementById("fertilizer3").style.display ="none";
+   }
+
+
+
+
 
 
   showrepairgroup(){
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
- 
-    document.getElementById("report").style.display = "none";
-    
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="block";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
+     this.router.navigateByUrl("/repairgroup");
   }
 
   stockonline(){
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-   
-    document.getElementById("report").style.display = "none";
-    
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="block";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
+     this.router.navigateByUrl("/stockonline");
   }
 
   showcheckandtrain(){
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-   
-    document.getElementById("report").style.display = "none";
-    
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "block";
-    document.getElementById("maingroupcut").style.display ="none";
-    document.getElementById("credit").style.display = "none";
-   
+     this.router.navigateByUrl("/prbrd");
   } 
 
   showmaingroupcut(){
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-   
-    document.getElementById("report").style.display = "none";
-    
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="block";
-    document.getElementById("credit").style.display = "none";
-   
+     this.router.navigateByUrl("/groupcup");
   }
 
   showcontact(){
-     this.router.navigateByUrl("/supporter");
-    document.getElementById("main").style.display = "none";
-   
-    document.getElementById("report").style.display = "none";
-    
-    document.getElementById("action6465").style.display = "none";
-    document.getElementById("findlanddata").style.display = "none";
-    document.getElementById("mytarget").style.display = "none";
-    document.getElementById("target").style.display = "none";
-    document.getElementById("fertilizer3").style.display = "none";
-    document.getElementById("note6465").style.display = "none";
-    document.getElementById("bugandgerm").style.display = "none";
-    document.getElementById("myprofile").style.display ="none";
-    document.getElementById("farmmerdata").style.display ="none";
-    document.getElementById("formactioncomment").style.display ="none";
-    document.getElementById("repairgroup").style.display ="none";
-    document.getElementById("stockonline").style.display ="none";
-    document.getElementById("checkandtrain").style.display = "none";
-    document.getElementById("maingroupcut").style.display ="none";
+     this.router.navigateByUrl("/credit");
     document.getElementById("credit").style.display = "block";
-   
   }
 
   showmorearea6566(){
