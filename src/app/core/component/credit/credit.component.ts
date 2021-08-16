@@ -165,11 +165,11 @@ export class CreditComponent implements OnInit {
     axios.post(url)
     .then(res=> {
       console.log(res);
-      if(res.data.rowsAffected.length == 1 )
+      if(res.data.rowsAffected)
       {
         alert("บันทึกข้อมูลแล้วค่ะ");
       }
-      else { alert("บันทึกข้อมูลไม่สำเร็จ");}
+      else if(res.data.code) { alert("บันทึกข้อมูลไม่สำเร็จ");}
     }).catch(error => console.log(error))
     this.Loadtendata();
   }
@@ -196,7 +196,7 @@ export class CreditComponent implements OnInit {
     let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/dbbrr/insert_Promise6566?FMCODE='"+this.fmcode+"'&FullName='"+fullname+"'&Birthday='"+birthday+"'&ID_No='"+cardid+"'&FmCode1='"+fmcode1 +"'&FullName1='"+fmname1+"'&FmCode2='"+fmcode2 +"'&FullName2='"+fmname2+"'&FmCode3='"+fmcode3 +"'&FullName3='"+fmname3+"'&DateAdd='"+date+"'&DateUpdate='"+date+"'" ;
     axios.post(url)
     .then(res=> {
-      if(res.data.rowsAffected.length == 1 )
+      if(res.data.rowsAffected)
       {
         alert("บันทึกข้อมูลแล้วค่ะ");
       }

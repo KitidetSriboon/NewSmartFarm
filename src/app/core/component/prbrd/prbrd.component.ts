@@ -160,24 +160,15 @@ export class PrbrdComponent implements OnInit {
     if (title_doc == null || title_dec == null || title_doc =='' || title_dec == '' ){alert('กรุณากรอกข้อมูลให้ครบทุกช่อง^^');}
     else {
       if (confirm('ต้องการบันทึกข้อมูลหรือไม่?')) {
-        var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var myArr = this.responseText.split("|");
-                if (myArr[0] == "Y") {
-                    alert('(^-^) บันทึกข้อมูลเรียบร้อยแล้ว')
-                } else {
-                    // alert('!! การอัพเดตสำเร็จ')
-                }
-            }
-        };
-      xmlhttp.open("post", "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insertPR_TitleTrack?title_docs='" + title_doc  + "'"
-      +"&title_Description='"+ title_dec +"'" , true);
-        xmlhttp.send();
-      
-        alert('บันทึกข้อมูลเรียบร้อย ^_^!');
-        console.log('update db');
-        this.LoadtitileTrack();
+      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insertPR_TitleTrack?title_docs='" + title_doc  + "'"
+      +"&title_Description='"+ title_dec +"'";
+     
+      axios.post(url).then(res => {
+        if(res.data.code){alert("บันทึกข้อมูลไม่สำเร็จ");}
+        if(res.data.rowsAffected){alert("บันทึกข้อมูลเรียบร้อย");}
+      }).catch(err => {console.log(err)})
+
+      this.LoadtitileTrack();
         $('input[type="text"]').val('');
         $('textarea').val('');
       }
@@ -200,27 +191,20 @@ export class PrbrdComponent implements OnInit {
       if (title_comment == null){
         title_comment = '';
       }
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var myArr = this.responseText.split("|");
-                if (myArr[0] == "Y") {
-                    alert('(^-^) บันทึกข้อมูลเรียบร้อยแล้ว')
-                } else {
-                    // alert('!! การอัพเดตสำเร็จ')
-                }
-            }
-        };
-      xmlhttp.open("post", "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insertPR_dataTitleTrack?title_id=" + title_doc +
-        "&fmcode='"+ title_fmname[0] +"'"+
-        "&supzone='"+ title_fmname[2] +"'"+
-        "&results='"+ title_check +"'"+
-        "&comment='"+ title_comment +"'"+
-        "&date_training='"+ title_date +"'" , true);
-        xmlhttp.send();
+      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insertPR_dataTitleTrack?title_id=" + title_doc +
+      "&fmcode='"+ title_fmname[0] +"'"+
+      "&supzone='"+ title_fmname[2] +"'"+
+      "&results='"+ title_check +"'"+
+      "&comment='"+ title_comment +"'"+
+      "&date_training='"+ title_date +"'";
+      axios.post(url).then(res => {
+        if(res.data.code){alert("บันทึกข้อมูลไม่สำเร็จ");}
+        if(res.data.rowsAffected){alert("บันทึกข้อมูลเรียบร้อย");}
+      }).catch(err => {console.log(err)})
+
+        
       
-        alert('บันทึกข้อมูลเรียบร้อย ^_^!');
-        console.log('update db');
+       
         this.LoadTraindata();  
         
      
@@ -234,22 +218,13 @@ export class PrbrdComponent implements OnInit {
   // ยกเลิกรายการ
   CancleTrain(id){
     if (confirm('ต้องการยกเลิกรายการหรือไม่?')) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-              var myArr = this.responseText.split("|");
-              if (myArr[0] == "Y") {
-                  alert('(^-^) บันทึกข้อมูลเรียบร้อยแล้ว')
-              } else {
-                  // alert('!! การอัพเดตสำเร็จ')
-              }
-          }
-      };
-    xmlhttp.open("post", "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/canceled_dataTitleTrack?pr_id=" + id , true);
-    xmlhttp.send();
+    let url ="https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/canceled_dataTitleTrack?pr_id=" + id;
+      
+      axios.post(url).then(res =>{ 
+        if(res.data.rowsAffected){ alert('ยกเลิกรายการเรียบร้อย ^_^!');}
     
-      alert('ยกเลิกรายการเรียบร้อย ^_^!');
-      console.log('update db');
+      if (res.data.code) {alert("ยกเลิกรายการไม่สำเร็จ");}
+    }).catch(err=>{console.log(err);})
       this.LoadTraindata();
     }
     else {
@@ -258,7 +233,7 @@ export class PrbrdComponent implements OnInit {
 
   }
 
-
+  // แก้ไขผลประเมิน
   Editdatatrain(pr_id,oldresults){
     let loadstatus = this.FormCheckandTrain.get('title_check').value;
     let status = '';
@@ -271,17 +246,15 @@ export class PrbrdComponent implements OnInit {
       .post("https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/update_results_dataTitleTrack?pr_id="+ pr_id +"&results=" + status)
       .then(res => {
         console.log("response: ", res)
-        // do something about response
+        if(res.data.rowsAffected){ alert('แก้ไขรายการเรียบร้อย ^_^!');}
+    
+        if (res.data.code) {alert("บันทึกรายการไม่สำเร็จ");}
       })
       .catch(err => {
         console.error(err)
       })
-      // $("#forcheck").prop('selected', true);
      
-      alert('บันทึกข้อมูลเรียบร้อย ^_^!');
-      // document.getElementById("forcheck").innerHTML = "";
       this.LoadTraindata();
-      // $("#check").prop('selectedIndex', -1)
       this.FormCheckandTrain.controls['title_check'].reset()
       this.FormCheckandTrain.get('title_check').setValue(0);   
     }

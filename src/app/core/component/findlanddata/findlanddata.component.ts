@@ -96,7 +96,6 @@ export class FindlanddataComponent implements OnInit {
           // alert(a); 
         // console.log('DATA From SQL:.=>', data);     
         this.data6364 = data;
-        return this.data6364;
       })
       .catch(err => { throw err });
 
@@ -107,13 +106,11 @@ export class FindlanddataComponent implements OnInit {
           // alert(a); 
         // console.log('DATA From SQL:.=>', data);     
         this.data6263 = data;
-        return this.data6263;
       })
       .catch(err => { throw err });
 
-      setTimeout(() => {
+     
         this.spinner.hide();
-      }, 5000);
   }
 
 }

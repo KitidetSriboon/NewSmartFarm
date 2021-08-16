@@ -16,6 +16,7 @@ declare var klokantech;
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable } from 'rxjs';
+import axios from 'axios';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 declare const google: any;
 @Component({
@@ -614,18 +615,8 @@ export class ActionComponent implements OnInit {
     // console.log(cemee1);
 
     if (confirm('ต้องการบันทึกข้อมูลหรือไม่?')) {
-      var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-              var myArr = this.responseText.split("|");
-              if (myArr[0] == "Y") {
-                  alert('(^-^) บันทึกข้อมูลเรียบร้อยแล้ว')
-              } else {
-                  // alert('!! การอัพเดตสำเร็จ')
-              }
-          }
-      };
-    xmlhttp.open("post", "https://asia-southeast2-brr-farmluck.cloudfunctions.net/dbcps/inserttoaudit?"
+      
+    let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/dbcps/inserttoaudit?"
     // +"Auditor='" + this.supcode  + "'"
     // +"&ton1="+ lookcaneton
     // +"&Comment='" + textcomment  + "'"
@@ -656,16 +647,15 @@ export class ActionComponent implements OnInit {
     +"&Insect='"+ bugandgerm + "'"
     +"&getwater='"+ takewater + "'"
     +"&Comment='"+ textcomment + "'"
-    +"&Filepic='"+ img + "'"
+    +"&Filepic='"+ img + "'";
     //
-    , true);
-    xmlhttp.onload = function () {
-      console.log('DONE: ', xmlhttp.status);
-    };
-      xmlhttp.send();
-
-      alert('บันทึกข้อมูลเรียบร้อย ^_^!');
-      this.Showdatafromformactionland();
+    
+    axios
+    .post(url)
+    .then(res => {
+    if(res.data.rowsAffected)  {alert('บันทึกข้อมูลเรียบร้อย ^_^!')};
+    if (res.data.code) {alert('ไม่สามารถบันทึกข้อมูลได้')};
+    }).catch(err =>{ console.log(err)})
     }
     else {
       console.log('no update');

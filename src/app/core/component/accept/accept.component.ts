@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import axios from 'axios';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { element } from 'protractor';
 import { FirebaseService } from '../../services/firebase.service';
 
 import { MatTableDataSource } from '@angular/material/table';
@@ -281,14 +280,13 @@ export class AcceptComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  // โหลเข้อมูลขออนุมัติปุ๋ย
   ListAllorFert3() {
     let url = 'https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/v_ckGetfert3Toaccept';
     axios
       .get(url)
       .then((res) => {
-        // console.log(res);
         const data = res.data.recordsets[0].filter(el => el.ck_accept == 1 && el.allow_date_th != null);
-
         this.dataSource = new MatTableDataSource(data);
       }).catch(err => { throw err });
   }
@@ -300,14 +298,10 @@ export class AcceptComponent implements OnInit {
       .then(res => res.json())
       .then((out: any) => {
         const data = out.recordsets[0];
-
-        // console.log(data)
         if (data.leght == 0) { alert("ยังไม่มีข้อมูลดังกล่าว || ลองใหม่อีกครั้ง"); }
         else {
           this.farmerlist = data;
         }
-
-        return this.farmerlist;
       })
       .catch(err => { throw err });
   }
@@ -324,7 +318,6 @@ export class AcceptComponent implements OnInit {
         else {
           this.farmerlist = data;
         }
-
         return this.farmerlist;
       })
       .catch(err => { throw err });
@@ -332,7 +325,6 @@ export class AcceptComponent implements OnInit {
 
   GetFarmerFertilizer3() {
     let data = (this.Fertilizer3.get('farmercode').value).substring(10, 0);
-    let query = '';
     console.log('fmcode : ' + data);
     let url = 'https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/v_cp6465_getFert3?fmcode=' + data;
     fetch(url)
@@ -348,28 +340,17 @@ export class AcceptComponent implements OnInit {
         return this.datalistfarm;
       })
       .catch(err => { throw err });
-
-
   }
 
   // Load ข้อมูลปุ๋ยทีอนุมัติแล้ว
   LoadAcceptdata() {
-
-
     let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/v_ckGetfert3Toaccept";
     fetch(url)
       .then(res => res.json())
       .then((response: any) => {
         const data = response.recordsets[0];
-
         this.Allacceptdata = data.filter(element => element.ck_accept == 2);
-
-
-        // return console.log( this.Allacceptdata);
-        // this.Allacceptdata = data.filter(element => element.ck_accept == 2);
       }).catch(err => { throw err });
-
-
   }
 
 
@@ -408,18 +389,7 @@ export class AcceptComponent implements OnInit {
     let diametersmall = this.FormKumut.get('diametersmall').value;
 
     if (confirm('ต้องการบันทึกข้อมูลหรือไม่?')) {
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          var myArr = this.responseText.split("|");
-          if (myArr[0] == "Y") {
-            alert('(^-^) บันทึกข้อมูลเรียบร้อยแล้ว')
-          } else {
-            // alert('!! การอัพเดตสำเร็จ')
-          }
-        }
-      };
-      xmlhttp.open("post", "https://asia-southeast2-brr-farmluck.cloudfunctions.net/kumut/insertEstimate_yld?prodyear='2021'"
+      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/kumut/insertEstimate_yld?prodyear='2021'"
         + "&supcode='" + this.supcode + "'"
         + "&supzone='" + this.zone + "'"
         + "&fmcode='" + fmcode + "'"
@@ -445,54 +415,29 @@ export class AcceptComponent implements OnInit {
 
         + "&itid='" + landitid + "'"
         + "&intlandno='" + landno + "'"
-        + "&est_date='" + dataaction + "'", true);
-      xmlhttp.send();
+        + "&est_date='" + dataaction + "'";
 
-      alert('บันทึกข้อมูลเรียบร้อย ^_^!');
-      console.log('update db');
-      // this.GetComment();
+        axios.post(url).then(res => {
+          if (res.data.code){alert("บันทึกข้อมูลไม่สำเร็จ");}
+          if (res.data.rowsAffected){alert("บันทึกข้อมูลเรียบร้อยแล้วค่ะ");}
+        }).catch(err => { console.log(err)})
     }
     else {
       console.log('no update');
     }
-
     this.GetComment();
-    // window.location.href = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/kumut/insertEstimate_yld?prodyear='2021'"
-    // +"&supcode='"+  this.supcode  + "'"
-    // +"&supzone='"+ this.zone + "'"
-    // +"&fmcode='"+  fmcode  + "'"
-    // +"&nr1big="+ nr1big
-    // +"&nr1mid="+ nr1mid
-    // +"&nr1small="+ nr1small
-    // +"&nr2big="+ nr2big
-    // +"&nr2mid="+ nr2mid
-    // +"&nr2small="+ nr2small
-    // +"&nr3big="+ nr3big
-    // +"&nr3mid="+ nr3mid
-    // +"&nr3small="+ nr3small
-    // +"&massbig="+ massbig
-    // +"&massmid="+ massmid
-    // +"&masssmall="+ masssmall
-    // +"&itid='" + landitid  + "'"
-    // +"&intlandno='" + landno  +  "'"
-    // +"&est_date='"+ dataaction +"'";
   }
 
   Supportname;
   GetComment() {
-
     let url = 'https://asia-southeast2-brr-farmluck.cloudfunctions.net/kumut/auditData?supcode=' + this.supcode;
     fetch(url)
       .then(res => res.json())
       .then((out: any) => {
         const data = out.recordsets[0];
         this.comment = data;
-
       })
       .catch(err => { throw err });
-
-
-
   }
 
   getinforwindows(key, infoWindow) {
@@ -507,7 +452,6 @@ export class AcceptComponent implements OnInit {
     }
     this.lastSelectedInfoWindow = infoWindow;
     let url = 'https://asia-southeast2-brr-farmluck.cloudfunctions.net/dbcps/getlandnobyitid?itid=' + key + '';
-    // this.spinner.show();
     fetch(url)
       .then(res => res.json())
       .then((out: any) => {
@@ -518,14 +462,9 @@ export class AcceptComponent implements OnInit {
         $('#itid2').val(itid.toString());
         $('#landno2').val(landno.toString());
         $('#fmcode2').val(fmcode.toString());
-        // alert(a); 
-        // console.log('DATA From SQL:.=>', data);     
         this.infordata2 = data;
       })
       .catch(err => { throw err });
-    // setTimeout(() => {
-    //   this.spinner.hide();
-    // }, 3000);
   }
 
   getMap2() {
@@ -569,6 +508,7 @@ export class AcceptComponent implements OnInit {
       axios
         .post(url)
         .then(res => {
+          if (res.data.code){alert("ลบเลิกรายการไม่สำเร็จ");}
           console.log(res);
         })
         .catch(error => { console.log(error) })

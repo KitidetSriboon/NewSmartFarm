@@ -551,13 +551,14 @@ export class RepairgroupComponent implements OnInit {
         .post(url)
         .then(response => {
           console.log("response: ", response)
-          // do something about response
+          // do something about 
+          if(response.data.code){alert("บันทึกข้อมูลไม่สำเร็จ");}
+          else if (response.data.rrowsAffected){alert("บันทึกข้อมูลเรียบร้อยแล้วค่ะ ^^!");}
         })
         .catch(err => {
           console.error(err)
         });
 
-      alert('บันทึกการแก้ไขข้อมูลเรียบร้อย^^');
 
     }
     else {
@@ -595,6 +596,8 @@ export class RepairgroupComponent implements OnInit {
         .then(response => {
           console.log("response: ", response)
           // do something about response
+          if(response.data.code){alert("บันทึกข้อมูลไม่สำเร็จ");}
+          else if (response.data.rrowsAffected){alert("บันทึกข้อมูลเรียบร้อยแล้วค่ะ ^^!");}
         })
         .catch(err => {
           console.error(err)
@@ -755,18 +758,7 @@ export class RepairgroupComponent implements OnInit {
       possess_year = possess_year - 543;
 
       if (confirm('ต้องการบันทึกข้อมูลหรือไม่?')) {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            var myArr = this.responseText.split("|");
-            if (myArr[0] == "Y") {
-              alert('(^-^) บันทึกข้อมูลเรียบร้อยแล้ว')
-            } else {
-              // alert('!! การอัพเดตสำเร็จ')
-            }
-          }
-        };
-        xmlhttp.open("post", "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insertGroupCode_n0?"
+        var url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insertGroupCode_n0?"
           + "year='2122'"
           // เลือกเอา
           + "&category='" + groupname.slice(0, 1) + "'" // ประเภทกลุ่ม
@@ -798,12 +790,11 @@ export class RepairgroupComponent implements OnInit {
           + "&reg_num='" + carboardnumber + "'"
           + "&UpdateBY='" + this.supcode + "'"
           // หัวหน้ากลุ่ม
-
-          , true);
-        xmlhttp.send();
-
-        alert('บันทึกข้อมูลเรียบร้อย ^_^!');
-        console.log('update db');
+          ;
+        axios.post(url).then(response => {
+        if(response.data.code){alert("บันทึกข้อมูลไม่สำเร็จ")}
+          else if (response.data.rrowsAffected){alert("บันทึกข้อมูลเรียบร้อยแล้วค่ะ ^^!")}
+        }).catch(err => {console.log(err);})
         $('input[type="text"]').val('');
         $("#datazone").prop('selectedIndex', -1)
         $("#grouptype").prop('selectedIndex', -1)

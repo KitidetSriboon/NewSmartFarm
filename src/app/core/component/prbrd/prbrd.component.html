@@ -96,13 +96,13 @@
   
                   <!-- ภาพรวมการฝึกอบรม  -->
   
-                  <mat-card class="example-card" [hidden]="showall">
+                  <mat-card class="example-card" [hidden]="showall" style="overflow-x: auto;">
                     <mat-form-field appearance="standard">
                       <mat-label>ค้นหา</mat-label>
                       <input matInput (keyup)="Filterby($event)" placeholder="โซน ชื่อ โควต้า ผลการอมรม  " #input>
                       </mat-form-field>
                       
-                      <table mat-table [dataSource]="TrainallList" matSort>
+                      <table mat-table [dataSource]="TrainallList" matSort >
                       
                       <!-- วันที่ฝึกอบรม Column -->
                       <ng-container matColumnDef="date_training_th" >

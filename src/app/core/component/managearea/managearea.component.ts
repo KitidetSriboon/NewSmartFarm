@@ -33,12 +33,11 @@ export class ManageareaComponent implements OnInit {
       supcode:new FormControl(),
       editplant_date:new FormControl(),
 
-      lat:new FormControl(),
-      long:new FormControl(),
+      latlong:new FormControl(),
     })
   }
   displayfarmaer:string[]=['fmcode','fmname','zone','cane'];
-  datacolum:string[] = ['fmcode','fmname','type_area','area_new','NAMEMOO','plant_date','date_left','supcode','note','action'];
+  datacolum:string[] = ['fmcode','fmname','type_area','area_new','NAMEMOO','plant_date','date_left','supcode','note','latlong','action'];
   decryptedInfo;
   ngOnInit(): void {
     if (localStorage.getItem('userdata') === null || localStorage.getItem('userdata') === undefined) {
@@ -136,25 +135,24 @@ export class ManageareaComponent implements OnInit {
     let note = this.Formaddarea.get('note').value;
     let plant_date = this.Formaddarea.get('plant_date').value;
     let NAMEMOO = this.Formaddarea.get('NAMEMOO').value;
-    let lat = this.Formaddarea.get('lat').value;
-    let long= this.Formaddarea.get('long').value;
+    let latlong = this.Formaddarea.get('latlong').value;
 
     this.oldvillage = NAMEMOO;
     if (plant_date == null) {plant_date = null;}
     if (note == null) {note ='';}
     if (NAMEMOO == null || area_new == null){ alert("กรุณากรอกข้อมูลหมู่บ้าน พื้นที่ ");}
     else {
-      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insert_informarea?yearid=6566&supcode='" + this.supcode + "'&fmcode='" +fmcode+ "'&tel='"+ tel+"'&area_new="+area_new+"&type_area='er_new'&note='"+ note +"'&plant_date="+plant_date+"&villagecode='"+NAMEMOO.slice(0,8)+"'&lat="+lat+"&long="+long;
+      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/insert_informarea?yearid=6566&supcode='" + this.supcode + "'&fmcode='" +fmcode+ "'&tel='"+ tel+"'&area_new="+area_new+"&type_area='er_new'&note='"+ note +"'&plant_date="+plant_date+"&villagecode='"+NAMEMOO.slice(0,8)+"'&lat_long="+latlong;
       axios.post(url)
       .then(res => {
         if(res.data.code)
         {
-          alert("อัพเดทข้อมูลไม่สำเร็จ");
+          alert("บันทึกข้อมูลไม่สำเร็จ");
         }
   
         if(res.data.rowsAffected)
         {
-          alert("save data!");
+          alert("บันทึกข้อมูลเรียบร้อยแล้ว!");
         }
   
       })
