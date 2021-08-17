@@ -3,23 +3,21 @@ import { Router } from '@angular/router';
 import axios from 'axios';
 import * as CryptoJS from 'crypto-js';
 
-
+import { Authenticationservice } from '../../core/services/authentication.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router) { }
+  constructor(private router: Router,private auth: Authenticationservice) { }
   decryptedInfo;
   zone;
   ngOnInit(): void {
-    let data = localStorage.getItem('userdata');
-    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
-    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
+    let userdata;
     
-
-    this.zone = this.decryptedInfo.alldata[0].zonedata;
+    userdata = this.auth.Authention();
+    this.zone = userdata.zonedata;
     this.Loadtopbar();
   }
 

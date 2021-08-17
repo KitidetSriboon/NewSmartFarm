@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Authenticationservice } from '../../services/authentication.service';
 @Component({
   selector: 'app-kpiall',
   templateUrl: './kpiall.component.html',
@@ -44,8 +45,8 @@ export class KpiallComponent implements OnInit {
     { zonecode: '10.2' }
 
   ];
-  @Input() usercode: any;
-  constructor(private spinner: NgxSpinnerService) {
+  usercode: any;
+  constructor(private spinner: NgxSpinnerService,private auth:Authenticationservice) {
     this.FormCode = new FormGroup({
       selectzone: new FormControl(),
       supporttercode: new FormControl(),
@@ -56,6 +57,9 @@ export class KpiallComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    let userdata;
+    userdata = this.auth.Authention();
+    this.usercode = userdata.supcode;
   }
 
   GetAllKPISupporter() {

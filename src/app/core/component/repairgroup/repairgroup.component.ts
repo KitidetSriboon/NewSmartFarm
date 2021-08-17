@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as CryptoJS from 'crypto-js';
+import { Authenticationservice } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-repairgroup',
@@ -29,7 +30,7 @@ export class RepairgroupComponent implements OnInit {
   showformH = false;
   showformM = true;
   // ตัวแปรภายใน Component
-  constructor(private spinner: NgxSpinnerService) {
+  constructor(private spinner: NgxSpinnerService, private auth: Authenticationservice) {
     // สำหรับบันทึกข้อมูล
     this.FormRepair = new FormGroup({ 
       // address 
@@ -121,10 +122,9 @@ export class RepairgroupComponent implements OnInit {
   fmprovince; fmtel; fmzip;decryptedInfo;
   supcode;
   ngOnInit(): void {
-    let data = localStorage.getItem('userdata');
-    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
-    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
-    this.supcode = this.decryptedInfo.alldata[0].supcode;
+    let userdata;
+    userdata = this.auth.Authention();
+    this.supcode = userdata.supcode;
     this.FormRepair.get('groupcheck').setValue(1);
     this.FormRepair.get('grouptype').setValue('N');
     this.FormEditRepair.get('subworker').setValue(0);

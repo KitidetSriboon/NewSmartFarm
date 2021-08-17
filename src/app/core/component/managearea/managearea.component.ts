@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import axios from 'axios';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
+import { Authenticationservice } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-managearea',
@@ -19,7 +20,7 @@ export class ManageareaComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   Formaddarea:FormGroup;
-  constructor(private router: Router) { 
+  constructor(private router: Router, private auth :Authenticationservice) { 
     this.Formaddarea = new FormGroup({
       fmcode: new FormControl(),
       tel: new FormControl(),
@@ -43,12 +44,11 @@ export class ManageareaComponent implements OnInit {
     if (localStorage.getItem('userdata') === null || localStorage.getItem('userdata') === undefined) {
       this.router.navigateByUrl('/loign');
     }
-
-    let data = localStorage.getItem('userdata');
-    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
-    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
-    this.supcode = this.decryptedInfo.alldata[0].supcode;
-    this.supzone = this.decryptedInfo.alldata[0].zonedata;
+    
+    let userdata;
+    userdata = this.auth.Authention();
+    this.supcode = userdata.supcode;
+    this.supzone = userdata.zonedata;
     this.Loadselect_village_in_sugarcane();
     this.SelectAllinformarea_6566();
    

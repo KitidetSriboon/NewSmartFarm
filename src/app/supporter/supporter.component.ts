@@ -4,11 +4,8 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as CryptoJS from 'crypto-js';
 import * as CanvasJS from './canvasjs.min.js';
-import axios from 'axios';
-import { FunctionExpr, ThrowStmt } from '@angular/compiler';
 
-import { element } from 'protractor';
-
+import { Authenticationservice } from '../core/services/authentication.service';
 
 @Component({
   selector: 'app-supporter',
@@ -64,33 +61,23 @@ export class SupporterComponent implements OnInit {
   takedata;
 
   /// End ////
-  constructor(private router: Router, private spinner: NgxSpinnerService) {
+  constructor(private router: Router, private spinner: NgxSpinnerService,private auth: Authenticationservice) {
     this.Timecheck = new FormGroup({
       selettime: new FormControl(Validators.required),
       seletzone: new FormControl(),
     });
   }
 
-
+  lebdata;
   ngOnInit(): void {
     if (localStorage.getItem('userdata') === null || localStorage.getItem('userdata') === undefined) {
       this.router.navigateByUrl('/loign');
     }
     else {
-      let data = localStorage.getItem('userdata');
-      var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
-      this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
-      // ($('#openmodal') as any).modal('toggle');
-      // setTimeout(() => {
-      //   ($('#openmodal') as any).modal('hide');
-      // }, 3000);
-      this.takedata = this.decryptedInfo.alldata[0];
-      this.code = this.takedata.supcode;
-      this.level = this.takedata.userlevel
-    
+      this.lebdata = this.auth.Authention();
+      this.code = this.lebdata.supcode;
+      this.level = this.lebdata.userlevel
       this.Allchart();
-  
-      
       if (this.code !== '923') {
         this.manager = true;
       }
@@ -124,8 +111,6 @@ export class SupporterComponent implements OnInit {
   }
 
   Allchart() {
-
-    // console.log(this.chart)
     let url = 'https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/targetArea6465';
     fetch(url)
       .then(res => res.json())
@@ -136,7 +121,6 @@ export class SupporterComponent implements OnInit {
         let P2 = data.filter(element => element.Partcode == "P2" && element.SUPZONE === "P" && element.supcode === "z")
         let P3 = data.filter(element => element.Partcode == "P3" && element.SUPZONE === "P" && element.supcode === "z")
         let P4 = data.filter(element => element.Partcode == "P4" && element.SUPZONE === "P" && element.supcode === "z")
-        // console.log(chartbrd[0]);
         let BRDArea = new CanvasJS.Chart("BRDArea", {
           theme: "light2",
           animationEnabled: true,
@@ -220,11 +204,6 @@ export class SupporterComponent implements OnInit {
         BRDYield.render();
       })
       .catch(err => { throw err });
-
-
-
-
-    // console.log(this.chart)
   }
 
 

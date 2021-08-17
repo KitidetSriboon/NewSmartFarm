@@ -10,13 +10,13 @@ import { get } from 'scriptjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import * as CryptoJS from 'crypto-js';
 declare var klokantech;
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Observable } from 'rxjs';
 import axios from 'axios';
+import { Authenticationservice } from '../../services/authentication.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 declare const google: any;
 @Component({
@@ -97,7 +97,7 @@ export class ActionComponent implements OnInit {
   colorclick = '';
   zoom =16;
   today;
-  constructor(private spinner: NgxSpinnerService,  private firebaseService : FirebaseService, private storage: AngularFireStorage
+  constructor(private spinner: NgxSpinnerService,  private firebaseService : FirebaseService, private storage: AngularFireStorage, private auth:Authenticationservice
     ) {
     let numericRegex = /^[a-zA-Z0-9]+$/;
     this.FormTrackCane = new FormGroup({
@@ -137,12 +137,11 @@ export class ActionComponent implements OnInit {
   supcode;
   userlevel;
   ngOnInit(): void {
-    let data = localStorage.getItem('userdata');
-    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
-    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
-    this.supcode = this.decryptedInfo.alldata[0].supcode;
-    this.zone = this.decryptedInfo.alldata[0].zonedata;
-    this.userlevel =  this.decryptedInfo.alldata[0].userlevel;
+    let userdata;
+    userdata = this.auth.Authention();
+    this.supcode = userdata.supcode;
+    this.zone = userdata.zonedata;
+    this.userlevel =  userdata.userlevel;
     // this.GetTarget();
     // this.GetGradePlant();
     setTimeout(() => {

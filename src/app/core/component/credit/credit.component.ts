@@ -4,7 +4,9 @@ import axios from 'axios';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import * as CryptoJS from 'crypto-js';
+import { Authenticationservice } from '../../services/authentication.service';
+
+
 @Component({
   selector: 'app-credit',
   templateUrl: './credit.component.html',
@@ -18,7 +20,7 @@ export class CreditComponent implements OnInit {
   
   FormFirst:FormGroup;
   FormCredit: FormGroup;
-  constructor() { 
+  constructor(private auth:Authenticationservice) { 
     this.FormFirst = new FormGroup({
       idcard:new FormControl(),
       birthdaydate:new FormControl(),
@@ -41,10 +43,10 @@ export class CreditComponent implements OnInit {
   
   zone;decryptedInfo;
   ngOnInit(): void {
-    let data = localStorage.getItem('userdata');
-    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
-    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
-    this.zone = this.decryptedInfo.alldata[0].zonedata;
+
+    let userdata;
+    userdata = this.auth.Authention();
+    this.zone = userdata.zonedata;
     this.Loaddatacontact();
     this.Loadtendata();
   

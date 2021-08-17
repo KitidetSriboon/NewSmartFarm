@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as CryptoJS from 'crypto-js';
 import { Router } from '@angular/router';
+import { Authenticationservice } from '../../core/services/authentication.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -12,7 +13,7 @@ export class SidebarComponent implements OnInit {
   mode = new FormControl('over');
   shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
   isExpanded = true;
-  constructor(private spinner: NgxSpinnerService,private router: Router) { }
+  constructor(private spinner: NgxSpinnerService,private router: Router,private auth: Authenticationservice) { }
   // username:any;
   photourl;
   name;
@@ -24,14 +25,12 @@ export class SidebarComponent implements OnInit {
   decryptedInfo;
   actionlevel;
   ngOnInit(): void {
-    let data = localStorage.getItem('userdata');
-    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
-    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
-
-    this.name = this.decryptedInfo.alldata[0].supname;
-    this.photourl = this.decryptedInfo.alldata[0].suppic_url;
-    this.takesupcode = this.decryptedInfo.alldata[0].supcode;
-    this.actionlevel = this.decryptedInfo.alldata[0].userlevel;
+    let lebdata;
+    lebdata = this.auth.Authention();
+    this.name = lebdata.supname;
+    this.photourl = lebdata.suppic_url;
+    this.takesupcode = lebdata.supcode;
+    this.actionlevel = lebdata.userlevel;
     if (this.actionlevel == 8||this.actionlevel == 4){ this.pr = false;}
     if (this.actionlevel === '6' || this.actionlevel === '7' || this.actionlevel === '8' || this.actionlevel === '10' || this.actionlevel === '99')
     {

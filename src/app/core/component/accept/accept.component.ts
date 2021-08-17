@@ -8,7 +8,7 @@ import { FirebaseService } from '../../services/firebase.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import * as CryptoJS from 'crypto-js';
+import { Authenticationservice } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-accept',
@@ -71,7 +71,8 @@ export class AcceptComponent implements OnInit {
 
   FormRepair: FormGroup
 
-  constructor(private spinner: NgxSpinnerService, private router: Router, private firebaseService: FirebaseService) {
+  constructor(private spinner: NgxSpinnerService, private router: Router, private firebaseService: FirebaseService
+    ,private auth: Authenticationservice) {
 
 
     this.Fertilizer3 = new FormGroup({
@@ -123,12 +124,11 @@ export class AcceptComponent implements OnInit {
   // ระบบหลัก 
   decryptedInfo;
   ngOnInit(): void {
-    let data = localStorage.getItem('userdata');
-    var deData = CryptoJS.AES.decrypt(decodeURIComponent(data), 'bsfdev');
-    this.decryptedInfo = JSON.parse(deData.toString(CryptoJS.enc.Utf8));
-    this.supcode = this.decryptedInfo.alldata[0].supcode;
-    this.zone = this.decryptedInfo.alldata[0].zonedata;
-    this.userlevel =  this.decryptedInfo.alldata[0].userlevel;
+    let userdata;
+    userdata = this.auth.Authention();
+    this.supcode = userdata.supcode;
+    this.zone = userdata.zonedata;
+    this.userlevel =  userdata.userlevel;
 
     if (this.userlevel === '14' || this.userlevel === '15') {
       this.manager = false;
