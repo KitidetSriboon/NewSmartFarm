@@ -184,3 +184,11 @@ tr.mat-row, tr.mat-footer-row {
   
   font-family: 'Sarabun', sans-serif;
 }
+
+span , select , option {
+  font-family: 'Sarabun', sans-serif;
+}
+
+.btn.btn-tool {
+  color: whitesmoke;
+}

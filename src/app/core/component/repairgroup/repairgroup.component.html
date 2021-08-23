@@ -149,7 +149,7 @@
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <p>คิวรถตัด</p>
-                                                                        <p>ตัน</p>
+                                                                        <p *ngFor="let item of cutqueue">{{item.Assess.toLocaleString('ar-TH')}} ตัน</p>
                                                                     </div>
                                                                 </div>
 
@@ -167,7 +167,7 @@
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <p>คิวล็อค</p>
-                                                                        <p> ตัน</p>
+                                                                        <p *ngFor="let item of lockqueue">{{item.Assess.toLocaleString('ar-TH')}}  ตัน</p>
                                                                     </div>
                                                                 </div>
 
@@ -184,7 +184,7 @@
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <p>คิวรถโยน</p>
-                                                                        <p> ตัน</p>
+                                                                        <p *ngFor="let item of castqueue">{{item.Assess.toLocaleString('ar-TH')}}  ตัน</p>
                                                                     </div>
                                                                 </div>
 
@@ -201,7 +201,7 @@
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <p>คิวส่งลาน</p>
-                                                                        <p> ตัน</p>
+                                                                        <p *ngFor="let item of sucarcanesquare">{{item.Assess.toLocaleString('ar-TH')}} ตัน</p>
                                                                     </div>
                                                                 </div>
 
@@ -236,45 +236,122 @@
                                             <div class="col-md-12">
                                                 <div class="card collapsed-card" *ngFor="let item of MaindataGroupboard">
                                                     <!-- รายส่วน -->
-                                                    <div class="card-header">
+                                                    <div class="card-header" style="background-color: slateblue;">
                                                         <mat-icon>group_work</mat-icon> ส่วนที่ {{item.Partcode}} กลุ่มตัด [{{item.cntH}}] กำลังตัด
                                                         [ {{item.canePerDayH.toLocaleString('ar-TH')}}] ตัน/วัน]
                                                         กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
-                                                        <div class="card-tools"><button type="button" class="btn btn-tool"
+                                                        <div class="card-tools">
+                                                            <div class="card-tools">
+                                                                <button type="button" class="btn btn-tool" (click)="GetSubGroupBoard(item.Partcode);" data-card-widget="collapse"><i
+                                                                        class="fas fa-plus"></i>
+                                                                </button>
+                                                            </div>
+                                                            <!-- <button type="button" class="btn btn-tool"
                                                                 data-card-widget="collapse"> 
                                                                 <mat-icon (click)="GetSubGroupBoard(item.Partcode);">toc</mat-icon>
-                                                            </button></div>
+                                                            </button> -->
+                                                        </div>
                                                     </div>
                                                     <div class="card-body">
                                                         <!-- รายโซน -->
                                                         <div class="card collapsed-card" *ngFor="let item of ZoneMaindataGroupboard;">
-                                                            <div class="card-header">
+                                                            <div class="card-header" style="background-color: steelblue;">
                                                                 <mat-icon>home</mat-icon> โซน {{item.supzone}} กลุ่มตัด [{{item.cntH}}]
                                                                 กำลังตัด [{{item.canePerDayH.toLocaleString('ar-TH')}} ตัน/วัน]
                                                                 กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
-                                                                <div class="card-tools"><button type="button" class="btn btn-tool"
+                                                                <div class="card-tools">
+                                                                        <button type="button" class="btn btn-tool" (click)="GetSupportGroupboard(item.Partcode,item.supzone);" data-card-widget="collapse"><i
+                                                                                class="fas fa-plus"></i>
+                                                                        </button>
+                                                                    <!-- <button type="button" class="btn btn-tool"
                                                                         data-card-widget="collapse">
                                                                         <mat-icon (click)="GetSupportGroupboard(item.Partcode,item.supzone);">toc</mat-icon>
-                                                                    </button>
+                                                                    </button> -->
                                                                 </div>
                                                             </div>
                                                             <div class="card-body">
                                                                 <!-- นักส่งเสริม -->
                                                                 <div class="card collapsed-card" *ngFor="let item of supportterboard;">
-                                                                    <div class="card-header">
+                                                                    <div class="card-header" style="background-color: #4CB963;">
                                                                         <div class="card-title">
-                                                                            <mat-icon>assignment_ind</mat-icon>
+                                                                              
                                                                         </div>
+                                                                        <img src="{{photosupportter}}" class="img-circle" style="width: 50px; height: 50px;">
                                                                         นักส่งเสริม {{item.supname}} โซน {{item.supzone}}  กลุ่มตัด [{{item.cntH}}]
                                                                         กำลังตัด [{{item.canePerDayH.toLocaleString('ar-TH')}} ตัน/วัน]
                                                                         กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
-                                                                        <div class="card-tools"><button type="button" class="btn btn-tool"
+
+                                                                       
+                                                                        <div class="card-tools">
+                                                                            <button mat-raised-button color="primary" (click)="Showgroupcutbysup(1)">กลุ่มตัด</button>
+                                                                            <button mat-raised-button color="warn" (click)="Showgroupcutbysup(2)"> กลุ่มบำรุง </button>
+                                                                            <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                                                                <i class="fas fa-expand"></i>
+                                                                              </button>
+                                                                            <button type="button" class="btn btn-tool" (click)="Loadsupporttergroupdata(item.supcode);" data-card-widget="collapse"><i
+                                                                                class="fas fa-plus"></i>
+                                                                            </button>
+                                                                            <!-- <button type="button" class="btn btn-tool"
                                                                                 data-card-widget="collapse">
-                                                                                <mat-icon>toc</mat-icon>
-                                                                            </button></div>
+                                                                                <mat-icon (click)="Loadsupporttergroupdata(item.supcode);" >toc</mat-icon>
+                                                                            </button> -->
+                                                                        </div>
                                                                     </div>
                                                                     <div class="card-body">
+                                                                        <!-- กลุ่มตัด -->
+                                                                            <mat-card [hidden]="showHcode">
+                                                                                <table class="table">
+                                                                                    <thead>
+                                                                                        <th scope="col">รหัสกลุ่ม</th>
+                                                                                        <th scope="col">ชื่อกลุ่ม</th>
+                                                                                        <th scope="col">หัวหน้ากลุ่ม</th>
+                                                                                        <th scope="col">ประเภทกลุ่ม</th>
+                                                                                        <th scope="col">ประเภทงาน</th>
+                                                                                        <th scope="col">ประเมิน (ตัน)</th>
+                                                                                        <th scope="col">หมายเหตุ</th>
+                                                                                    </thead>
+                                                                                    <tbody *ngFor="let item of allsupporttergroupdata"> 
+                                                                                        <tr  *ngIf="item.category==='H'">
+                                                                                            <td>{{item.categoryGroup}}</td>
+                                                                                            <td>{{item.groupname}}</td>
+                                                                                            <td>{{item.h_fmname}}</td>
+                                                                                            <td>{{item.category_docs}}</td>
+                                                                                            <td>{{item.qdesc}}</td>
+                                                                                            <td>{{item.Assess}}</td>
+                                                                                            <td>{{item.comment}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </mat-card> <br><br>
+                                                                        <!-- จบกลุ่มตัด -->
 
+                                                                        <!-- กลุ่มบำรุง -->
+                                                                            <mat-card [hidden]="showMcode">
+                                                                                <table class="table">
+                                                                                    <thead>
+                                                                                        <th scope="col">รหัสกลุ่ม</th>
+                                                                                        <th scope="col">ชื่อกลุ่ม</th>
+                                                                                        <th scope="col">หัวหน้ากลุ่ม</th>
+                                                                                        <th scope="col">ประเภทกลุ่ม</th>
+                                                                                        <th scope="col">ประเภทงาน</th>
+                                                                                        <th scope="col">ประเมิน (ตัน)</th>
+                                                                                        <th scope="col">หมายเหตุ</th>
+                                                                                    </thead>
+                                                                                    <tbody *ngFor="let item of allsupporttergroupdata"> 
+                                                                                        <tr *ngIf="item.category==='M'">
+                                                                                            <td>{{item.categoryGroup}}</td>
+                                                                                            <td>{{item.groupname}}</td>
+                                                                                            <td>{{item.h_fmname}}</td>
+                                                                                            <td>{{item.category_docs}}</td>
+                                                                                            <td>{{item.qdesc}}</td>
+                                                                                            <td>{{item.Assess}}</td>
+                                                                                            <td>{{item.comment}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </mat-card>
+                                                                        <!-- จบกลุ่มบำรุง -->
+                                                                      
                                                                     </div>
                                                                 </div>
                                                                 <!-- นักส่งเสริม -->
@@ -298,8 +375,9 @@
                 
                 <mat-card  id="addgroup" style="display:none;">
                     <div class="input-group mb-3" [formGroup]="FormRepair">
-                        <select class="form-control"   formControlName="swapwork" (change)="swapwork();" >
-                            <option value="1" selected>ภาพรวมกลุ่มหลัก</option>
+                        <span class="input-group-text">เลือกรายการ</span>
+                        <select class="form-control"   formControlName="swapwork" (change)="swapwork();" [(ngModel)]="select_list" >
+                            <option value="1" [selected]>ภาพรวมกลุ่มหลัก</option>
                             <option value="2">เพิ่มกลุ่มหลัก</option>
                             <option value="3">เพิ่มกลุ่มย่อย</option>
                         </select>
@@ -437,6 +515,7 @@
                                             </tr>
                                         </mat-table>
                                     </mat-card>
+
                                     <mat-card [hidden]="showzoneH">
                                         <mat-form-field appearance="standard">
                                             <mat-label>ค้นหา</mat-label>
@@ -553,6 +632,7 @@
                                         </table>
                                     
                                     </mat-card>
+
                                     <mat-card [hidden]="showzoneM">
                                         <mat-form-field appearance="standard">
                                             <mat-label>ค้นหา</mat-label>

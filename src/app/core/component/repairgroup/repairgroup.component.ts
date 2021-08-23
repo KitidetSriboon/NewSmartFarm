@@ -7,7 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import * as CryptoJS from 'crypto-js';
 import { Authenticationservice } from '../../services/authentication.service';
 
 @Component({
@@ -26,7 +25,7 @@ export class RepairgroupComponent implements OnInit {
   dataGroupSourceH;
   ColumnGroupM: string[] = ['supzone', 'categoryGroup', 'category_docs', 'fmcode', 'fmname', 'position_docs', 'brand', 'Tools_docs', 'horsepower', 'comment', 'canePerDay', 'dateUpdate_th', 'editdata'];
   ColumnGroupH: string[] = ['supzone', 'categoryGroup', 'category_docs', 'qdesc', 'fmcode', 'fmname', 'position_docs', 'Tools_docs', 'horsepower', 'comment', 'canePerDay', 'dateUpdate_th', 'editdata'];
-
+  select_list = 1;
   showformH = false;
   showformM = true;
   // ตัวแปรภายใน Component
@@ -125,10 +124,10 @@ export class RepairgroupComponent implements OnInit {
     let userdata;
     userdata = this.auth.Authention();
     this.supcode = userdata.supcode;
+    this.Loadgroupcutqueue();
     this.FormRepair.get('groupcheck').setValue(1);
     this.FormRepair.get('grouptype').setValue('N');
     this.FormEditRepair.get('subworker').setValue(0);
-
     setTimeout(() => {
     this.Loadzonegroup();
     this.Getdatagrouptype();
@@ -142,16 +141,11 @@ export class RepairgroupComponent implements OnInit {
     this.GetAllGroup();
     this.Loadchart();
     }, 3000);
-    
+    this.dataGroupSource.paginator = this.paginator;
+    this.dataGroupSource.sort = this.sort;
   }
 
   ngAfterViewInit() {
-
-    this.dataGroupSource.paginator = this.paginator;
-    this.dataGroupSource.sort = this.sort;
-
-
-
   }
   /// ค้นหาข้อมูลในตารางกลุ่ม
   applyFilter2(event: Event) {
@@ -216,19 +210,19 @@ export class RepairgroupComponent implements OnInit {
   addsubgroup=true;
   swapwork(){
     let id = this.FormRepair.get('swapwork').value;
-    if (id === '1')
+    if (id == 1)
     {
       this.alltypegroup = false;
       this.addgroupmain = true;
       this.addsubgroup = true;
     }
-    if (id === '2')
+    if (id == 2)
     {
       this.alltypegroup = true;
       this.addgroupmain = false;
       this.addsubgroup = true;
     }
-    if (id === '3')
+    if (id == 3)
     {
       this.alltypegroup = true;
       this.addgroupmain = true;
@@ -894,6 +888,7 @@ export class RepairgroupComponent implements OnInit {
   supportterboard:any []=[];
 
   GetSupportGroupboard(Partcode,supzone){
+    
     this.supportterboard =[];
     let bypartsupcodetozone = this.AllMaindataGroupboard.filter(el => el.Partcode == Partcode && el.supcode !== "S" && el.supzone === supzone );
     let data = bypartsupcodetozone.map(function(element){return element.supcode.trim(); });
@@ -964,7 +959,6 @@ export class RepairgroupComponent implements OnInit {
       let gc_all = data.map(function (elem){return elem.gc_all});
       let gc_ke = data.map(function (elem){return elem.gc_ke});
       let pc_gc_ke = data.map(function (elem){return elem.pc_gc_ke});
-      console.log(pc_gc_ke);
       // 
       ////// สามารถกำหนดเป็น 'line','bar','radar','pie','doughnut','polarArea','bubble','scatter'
       this.dataChart = {
@@ -1157,5 +1151,54 @@ export class RepairgroupComponent implements OnInit {
     
   }
 
+  Alldatabyqueue;
+  cutqueue;
+  lockqueue;
+  castqueue;
+  sucarcanesquare;
+  Loadgroupcutqueue(){
+    axios.get("https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_sumAssess_qtype")
+    .then(res => {
+      let data = res.data.recordset;
+      this.Alldatabyqueue = data;
+      this.castqueue = this.Alldatabyqueue.filter(el => el.qtype == 2);
+      this.cutqueue = this.Alldatabyqueue.filter(el => el.qtype == 3);
+      this.lockqueue = this.Alldatabyqueue.filter(el => el.qtype == 1);
+      this.sucarcanesquare = this.Alldatabyqueue.filter(el => el.qtype == 4);
+    }).catch(err => { console.log(err);}) 
 
+  
+  }
+
+  allsupporttergroupdata;
+  photosupportter;
+  Loadsupporttergroupdata(scode){
+    this.spinner.show();
+    axios
+    .get("https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_groupCode_HM_assess")
+    .then(res => {
+      let data = res.data.recordset;
+      // console.log(scode)
+      this.allsupporttergroupdata = data.filter(el => el.supcode == scode.trim());
+      // console.log(this.allsupporttergroupdata);
+      this.spinner.hide();
+    })
+    .catch(err => {console.log(err);})
+
+    axios.get("https://asia-southeast2-brr-farmluck.cloudfunctions.net/dbcps/get_users_all")
+    .then(res => {
+      let data = res.data.recordset;
+      let onedata = data.filter(el => el.supcode == scode.trim());
+      this.photosupportter = onedata[0].suppic_url;
+    })
+    .catch(err=> {console.log(err);})
+  }
+
+  // แสดงกลุ่มตัดกลุ่มบำรุงโดยนักส่งเสริม
+  showHcode = false;
+  showMcode = false;
+  Showgroupcutbysup(check){
+    if (check == 1){ this.showHcode = false; this.showMcode = true;}
+    if (check == 2){ this.showHcode = true; this.showMcode = false;}
+  }
 }

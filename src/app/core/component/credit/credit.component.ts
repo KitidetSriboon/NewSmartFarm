@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import axios from 'axios';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -26,6 +26,7 @@ export class CreditComponent implements OnInit {
       birthdaydate:new FormControl(),
       fullname : new FormControl(),
       birthday:new FormControl(),
+      fmtel:new FormControl('',[Validators.required,Validators.minLength(10),Validators.pattern("[0-9 ]{11}")]),
     })
 
     this.FormCredit = new FormGroup({
@@ -56,8 +57,8 @@ export class CreditComponent implements OnInit {
   ngAfterViewInit() {
    
    
-    this.Farmerdata.paginator = this.paginator;
-    this.Farmerdata.sort = this.sort;
+    // this.Farmerdata.paginator = this.paginator;
+    // this.Farmerdata.sort = this.sort;
     
   }
 
@@ -81,19 +82,21 @@ export class CreditComponent implements OnInit {
   fullname;
   cardid;
   fmcode;
+  fmbirthday;
   Toformdata(){
     let name = this.FormFirst.get('fullname').value;
     let data = this.Selectfarmer.filter(el => el.fmcode_b1 === name.slice(1,11));
     this.fullname = data[0].fmname;
     this.cardid = data[0].IDCARD;
     this.fmcode = data[0].fmcode;
-    console.log(name);
+    this.fmbirthday = data[0].birthdayTH.split('/').reverse().join('-');
+    console.log(data);
   }
 
   // 10 ข้อมูลล่าสุดที่บันทึกคำประกัน
   tendata;
   Loadtendata(){
-    let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/dbbrr/select_top_Promise6566";
+    let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/dbbrr/select_top_Promise6566Byzone?supzone="+this.zone;
     axios.get(url)
     .then(res=>
       {
@@ -125,33 +128,47 @@ export class CreditComponent implements OnInit {
   }
 
   CheckFarmer2(){
-    let fmcode = this.FormCredit.get('fmcodeperson2').value;
-    let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_credit_ckpromise6566Byfmcode?fmcode=" + fmcode;
-    axios.get(url)
-    .then(res=>
-      {
-      let data = res.data.recordset;
-      this.person2 = data; 
-      }
-    ).catch(error =>{ console.log(error);
-    })
+    let fmcode1 = this.FormCredit.get('fmcodeperson1').value;
+    let fmcode2 = this.FormCredit.get('fmcodeperson2').value;
+    if (fmcode1 == fmcode2){alert('ข้อมูลคนค้ำ ไม่สามารถซ้ำกันได้ กรุณาลองใหม่');}
+    else {
+      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_credit_ckpromise6566Byfmcode?fmcode=" + fmcode2;
+      axios.get(url)
+      .then(res=>
+        {
+        let data = res.data.recordset;
+        this.person2 = data; 
+        }
+      ).catch(error =>{ console.log(error);
+      })
+    }
   }
 
   CheckFarmer3(){
-    let fmcode = this.FormCredit.get('fmcodeperson3').value;
-    let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_credit_ckpromise6566Byfmcode?fmcode=" + fmcode;
-    axios.get(url)
-    .then(res=>
-      {
-      let data = res.data.recordset;
-      this.person3 = data; 
-      }
-    ).catch(error =>{ console.log(error);
-    })
+    let fmcode1 = this.FormCredit.get('fmcodeperson1').value;
+    let fmcode2 = this.FormCredit.get('fmcodeperson2').value;
+    let fmcode3 = this.FormCredit.get('fmcodeperson3').value;
+    if (fmcode1 == fmcode3 || fmcode2 == fmcode3){alert('ข้อมูลคนค้ำ ไม่สามารถซ้ำกันได้ กรุณาลองใหม่');}
+    else {
+      let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_credit_ckpromise6566Byfmcode?fmcode=" + fmcode3;
+      axios.get(url)
+      .then(res=>
+        {
+        let data = res.data.recordset;  
+        this.person3 = data; 
+        }
+      ).catch(error =>{ console.log(error);
+      })
+    }
   }
 
   // บันทึกข้อมูล แบบใช้เหลักทรัพย์
   InsertCredit(){
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.FormFirst.invalid) {
+        return;
+    }
     const now = new Date;
     var year    = now.getFullYear();
     var month   = now.getMonth()+1; 
@@ -166,13 +183,14 @@ export class CreditComponent implements OnInit {
     let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/dbbrr/insert_Promise6566?FMCODE='"+this.fmcode+"'&FullName='"+fullname+"'&Birthday='"+birthday+"'&ID_No='"+cardid+"'&DateAdd='"+date+"'&DateUpdate='"+date+"'" ;
     axios.post(url)
     .then(res=> {
-      console.log(res);
       if(res.data.rowsAffected)
       {
         alert("บันทึกข้อมูลแล้วค่ะ");
       }
-      else if(res.data.code) { alert("บันทึกข้อมูลไม่สำเร็จ");}
-    }).catch(error => console.log(error))
+      if(res.data.code) 
+      { alert("บันทึกข้อมูลไม่สำเร็จ");}
+    })
+    .catch(error => console.log(error))
     this.Loadtendata();
   }
   // บันทึกแบบมีคนค้ำ 3 คน
@@ -221,4 +239,21 @@ export class CreditComponent implements OnInit {
     ).catch(error =>{ console.log(error);
     })
   }
+  get form() { return this.FormFirst.controls; }
+  submitted = false;
+  onSubmit() {
+    this.submitted = true;
+    alert('tst');
+    // stop here if form is invalid
+    if (this.FormFirst.invalid) {
+        return;
+    }
+
+    // display form values on success
+    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.FormFirst.value, null, 4));
 }
+
+
+}
+
+

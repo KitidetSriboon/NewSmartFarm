@@ -66,14 +66,26 @@ export class GroupcutComponent implements OnInit {
       axios.get(url)
       .then(function (response) {
         console.log(response);
+        if (response.data.code)
+        {
+          alert("บันทึกข้อมูลไม่สำเร็จ");
+        }
+        else  if(response.data.rowsAffected)
+        {
+          alert("บันทึกข้อมูลเรียบร้อยแล้ว!");
+        }
       });
-      ($('#editcut')as any).modal('hide');
     }
     else {
        alert("ยกเลิกรายการ");
     }
+    $('input[type="text"]').val('');
     this.FormCutGroup.get('timecut').setValue(0);
     this.FormCutGroup.get('groupcodeedit').setValue(0);
+    setTimeout(() => {
+      this.LoaddataGroupcupbyzone();
+      
+    }, 1500);
   }
 
   oldtime;
@@ -83,11 +95,6 @@ export class GroupcutComponent implements OnInit {
     this.oldgroup = cutg;
     this.oldtime = time;
     console.log( this.oldgroup );
-    ($('#editcut')as any).modal('show');
-  }
-
-  closemodal(){
-    ($('#editcut')as any).modal('hide');
   }
 
   timecut;

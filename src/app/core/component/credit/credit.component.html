@@ -54,7 +54,7 @@
             <div class="col-lg-6">
                <div class="card">
                   <div class="card-body">
-                     <form [formGroup]="FormFirst">
+                     <form [formGroup]="FormFirst"  (ngSubmit)="InsertCredit()">
                         <div class="input-group mb-3">
                         
                            <span  class="input-group-text">เลือกชาวไร่ <mat-icon>person</mat-icon></span >
@@ -66,7 +66,7 @@
                   
                         </div>
                         <div class="input-group mb-3">
-                           <button class="btn btn-info" (click)="InsertCredit();">ใช้หลักทรัพย์</button>
+                           <button class="btn btn-info">ใช้หลักทรัพย์</button>
                         </div>
                         <div class="input-group mb-3">
                            <label style="color: red;">เฉพาะกรณีชาวไร่ใช้หลักทรัพย์ที่ไม่ใช่ชื่อตนเองค้ำประกัน แค่คีย์ วันเดือนปีเกิดและเลขบัตรประชาชนและแนบสัญญาตัวจริง</label>
@@ -75,7 +75,10 @@
                            <span  class="input-group-text"> <mat-icon>contact_mail</mat-icon></span >
                               <input type="text" class="form-control"   onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="{{cardid}}" id="cardid"> 
                            <span  class="input-group-text"> <mat-icon>event</mat-icon></span >
-                              <input type="date" class="form-control"  formControlName="birthday">
+                              <input type="date" class="form-control"  formControlName="birthday"  [ngClass]="{ 'is-invalid': submitted && form.birthday.errors }" [(ngModel)]="fmbirthday">
+                              <div *ngIf="submitted && form.birthday.errors" >
+                                 <p style="color: red;">กรุณาระบุวันเดือนปีเกิด</p>
+                              </div>
                         </div>
                         <div class="input-group mb-3">
                            <span  class="input-group-text"> <mat-icon>person</mat-icon></span >
@@ -85,6 +88,18 @@
                            <span  class="input-group-text"> <mat-icon>groups</mat-icon></span >
                            <input type="text" class="form-control"  disabled>
                         </div>
+                        <div class="input-group mb-3">
+                           <span class="input-group-text">เบอร์โทร</span>
+                           <input type="text" class="form-control" formControlName="fmtel"
+                           onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                           placeholder="อย่างน้อย 1 หมายเลข เช่น 0987654321">
+                        </div>
+                        <!-- <div *ngIf="submitted && f.fmtel.errors" class="invalid-feedback">
+                           <div *ngIf="f.fmtel.errors.required"></div>
+                       </div> -->
+                       <div *ngIf="form.fmtel.errors?.minlength">
+                         <p style="color: red;">กรุณากรอกเบอร์โทรอย่างน้อย 1 หมายเลข (10 ตัว)</p>
+                      </div>
                      </form>
                   </div>
                </div> <br>
@@ -151,7 +166,7 @@
                            <tr *ngFor="let item of tendata">
                               <td>{{item.FMCODE}}</td>
                               <td>{{item.FullName}}</td>
-                              <td>{{item.DateAdd}}</td>
+                              <td>{{item.DateAdd.toLocaleString()}}</td>
                            </tr>
                         </tbody>
                      </table>
@@ -166,19 +181,16 @@
                   
                      <table mat-table [dataSource]="Farmerdata" matSort>
                       
-                        <!-- โควตา Column -->
                         <ng-container matColumnDef="fmcode">
                           <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;" id="KanitTH"> โควตา </th>
                           <td mat-cell *matCellDef="let element"> {{element.fmcode}} </td>
                         </ng-container>
                         
-                        <!-- ชื่อ - สกุล Column -->
                         <ng-container matColumnDef="fmname">
                           <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 45%;" id="KanitTH"> ชื่อ - สกุล </th>
                           <td mat-cell *matCellDef="let element"> {{element.fmname}}  </td>
                         </ng-container>
                     
-                                    <!-- วันที่ฝึกอบรม Column -->
                         <ng-container matColumnDef="zone" >
                            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;" id="KanitTH"> โซน </th>
                            <td mat-cell *matCellDef="let element"> {{element.supzone}} </td>
@@ -198,6 +210,8 @@
                           <td class="mat-cell" colspan="4">ไม่มีข้อมูลตรงกัน "{{input.value}}"</td>
                         </tr>
                      </table>
+
+                    
                   </div>
                </div>
             </div>
