@@ -18,12 +18,12 @@ export class SidebarComponent implements OnInit {
   photourl;
   name;
   takesupcode;
-  orther = true;
-  manager = true;
-  headmanager = true;
-  pr = true;
-  decryptedInfo;
-  actionlevel;
+  orther = true; // อื่น ๆ 
+  manager = true; // หัวหน้าเขต
+  headmanager = true; // ผอ หัวหน้าส่วน
+  pr = true; // ประชาสัมพันธ์
+  actionlevel; 
+  academic = true ; // วิชาการ
   ngOnInit(): void {
     let lebdata;
     lebdata = this.auth.Authention();
@@ -59,6 +59,7 @@ export class SidebarComponent implements OnInit {
   formreport = false;
   tabledata = false;
   action6465 = false;
+  action6566 = false;
   accept = false;
   clicked(x) {
 
@@ -85,6 +86,9 @@ export class SidebarComponent implements OnInit {
     }
     if (x === 29) {
       this.action6465 = !this.action6465;
+    }
+    if (x === 30) {
+      this.action6566 = !this.action6566;
     }
     if (x === 100) {
       this.accept = !this.accept;
@@ -171,7 +175,6 @@ export class SidebarComponent implements OnInit {
   }
 
   showgrowup() {
-     this.router.navigateByUrl("/action6464");
    
     document.getElementById("action6465").style.display = "block";
     document.getElementById("mytarget").style.display = "none";

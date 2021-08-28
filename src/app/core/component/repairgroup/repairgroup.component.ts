@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Authenticationservice } from '../../services/authentication.service';
+import { LoaddataFarmmerService } from '../../services/loaddata_farmer.service';
 
 @Component({
   selector: 'app-repairgroup',
@@ -29,7 +30,7 @@ export class RepairgroupComponent implements OnInit {
   showformH = false;
   showformM = true;
   // ตัวแปรภายใน Component
-  constructor(private spinner: NgxSpinnerService, private auth: Authenticationservice) {
+  constructor(private spinner: NgxSpinnerService, private auth: Authenticationservice, private loaddata: LoaddataFarmmerService) {
     // สำหรับบันทึกข้อมูล
     this.FormRepair = new FormGroup({ 
       // address 
@@ -118,7 +119,7 @@ export class RepairgroupComponent implements OnInit {
   //// ข้อมูลชาวไร่
   farmername; farmernamecode; fmhomeno;
   fmmoo; fmnamemoo; fmdistrict; fmcounty;
-  fmprovince; fmtel; fmzip;decryptedInfo;
+  fmprovince; fmtel; fmzip;
   supcode;
   ngOnInit(): void {
     let userdata;
@@ -128,6 +129,7 @@ export class RepairgroupComponent implements OnInit {
     this.FormRepair.get('groupcheck').setValue(1);
     this.FormRepair.get('grouptype').setValue('N');
     this.FormEditRepair.get('subworker').setValue(0);
+    
     setTimeout(() => {
     this.Loadzonegroup();
     this.Getdatagrouptype();
@@ -1180,8 +1182,9 @@ export class RepairgroupComponent implements OnInit {
       let data = res.data.recordset;
       // console.log(scode)
       this.allsupporttergroupdata = data.filter(el => el.supcode == scode.trim());
-      // console.log(this.allsupporttergroupdata);
-      this.spinner.hide();
+      let hdata = this.allsupporttergroupdata.filter(el => el.category === 'H');
+      console.log(hdata.map(function(element){return element.groupcode}));
+     
     })
     .catch(err => {console.log(err);})
 
@@ -1192,8 +1195,21 @@ export class RepairgroupComponent implements OnInit {
       this.photosupportter = onedata[0].suppic_url;
     })
     .catch(err=> {console.log(err);})
+    this.spinner.hide();
   }
 
+  supdatabygroup;
+  Loadsubsupportterdatagroup(){
+    this.spinner.show();
+    axios
+    .get('https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_v_groupCode_HMn0_1')
+    .then(res => {
+        let  data = res.data.recordset;
+        this.supdatabygroup = data;
+        this.spinner.hide();
+        return 1000;
+    }).catch(err =>{console.log(err);})
+  }
   // แสดงกลุ่มตัดกลุ่มบำรุงโดยนักส่งเสริม
   showHcode = false;
   showMcode = false;

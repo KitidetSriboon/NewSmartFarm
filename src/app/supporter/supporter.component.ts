@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import * as CryptoJS from 'crypto-js';
 import * as CanvasJS from './canvasjs.min.js';
 
 import { Authenticationservice } from '../core/services/authentication.service';

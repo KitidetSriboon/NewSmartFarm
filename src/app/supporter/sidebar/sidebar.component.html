@@ -103,8 +103,8 @@
                 </li>
                 
                 <hr>
-                
-                <li [hidden]="!pr" [ngClass]="{'nav-item': true,'menu-is-opening menu-open': KPI}" (click)="clicked(1);">
+                <!-- KPI -->
+                <!-- <li [hidden]="!pr" [ngClass]="{'nav-item': true,'menu-is-opening menu-open': KPI}" (click)="clicked(1);">
                     <a href="" [ngClass]="{'nav-link': true,'active': KPI}" (click)="false">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
@@ -125,7 +125,7 @@
                                 <p>สรุป KPI นักส่งเสริม</p>
                             </a>
                         </li>
-                        <!-- <li class="nav-item">
+                         <li class="nav-item">
                             <a class="nav-link" (click)="showkpiheadzone();">
                                 &nbsp; &nbsp; <i class="far fa-circle nav-icon"></i>
                                 <p>สรุป KPI หัวหน้าส่วนส่งเสริม (ยังไม่เปิดใช้งาน)</p>
@@ -136,10 +136,11 @@
                                 &nbsp; <i class="far fa-list-alt nav-icon"></i>
                                 <p>สรุป KPI ผู้จัดการเขต (ยังไม่เปิดใช้งาน)</p>
                             </a>
-                        </li> -->
+                        </li> 
 
                     </ul>
-                </li>
+                </li> -->
+                <!-- KPI -->
                 <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': sugarcanedata}">
                     <a [ngClass]="{'nav-link': true,'active': sugarcanedata}" (click)="clicked(2);">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -155,12 +156,7 @@
                                 <p> สืบค้นข้อมูลแปลง</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" (click)="showmorearea6566()">
-                                &nbsp; <i class="fas fa-globe-asia nav-icon"></i>
-                                <p> พื้นที่ขยาย 65/66</p>
-                            </a>
-                        </li>
+                        
                         <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': action6465}">
                             <a [ngClass]="{'nav-link': true}" (click)="clicked(29);">
                                 &nbsp; <i class="far fa-clipboard nav-icon"></i>
@@ -168,6 +164,12 @@
                                 <i class="right fas fa-angle-left"></i>
                             </a>
                             <ul class="nav nav-treeview">
+                                <!-- <li [hidden]="!pr" class="nav-item">
+                                    <a class="nav-link" (click)="showmorearea6566()">
+                                        &nbsp; <i class="fas fa-globe-asia nav-icon"></i>
+                                        <p> พื้นที่ขยาย 65/66</p>
+                                    </a>
+                                </li> -->
                                 <li class="nav-item">
                                     <a class="nav-link" (click)="showaction6465()">
                                         &nbsp; &nbsp; <i class="fas fa-file-contract nav-icon"></i>
@@ -193,7 +195,7 @@
                                     </a>
                                 </li>
                                
-                                <li class="nav-item">
+                                <li [hidden]="!pr" class="nav-item">
                                     <a class="nav-link" (click)="showmaingroupcut()">
                                         &nbsp; &nbsp; <i class="far fa-edit nav-icon"></i>
                                         <p> บันทึกกลุ่มตัดแปลงอ้อย </p>
@@ -215,6 +217,21 @@
                             </ul>
                         </li>
 
+                        <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': action6566}" (click)="clicked(30);">
+                            <a  [ngClass]="{'nav-link': true,'active': action6566}">
+                                &nbsp; <i class="fas fa-clipboard nav-icon"></i>
+                                <p> กิจกรรมแปลง 65/66</p>
+                                <i class="right fas fa-angle-left"></i>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li [hidden]="!pr" class="nav-item">
+                                    <a class="nav-link" (click)="showmorearea6566()">
+                                        &nbsp;&nbsp; <i class="fas fa-globe-asia nav-icon"></i>
+                                        <p> พื้นที่ขยาย 65/66</p>
+                                    </a>
+                                </li>
+                               </ul> 
+                        </li>
                     </ul>
                 </li>
 
@@ -273,7 +290,7 @@
                     </a>
                 </li>
 
-                <li [ngClass]="{'nav-item': true,'menu-is-opening menu-open': onlinecredit}" (click)="clicked(4);"> 
+                <li [hidden]="!pr" [ngClass]="{'nav-item': true,'menu-is-opening menu-open': onlinecredit}" (click)="clicked(4);"> 
                     <a  [ngClass]="{'nav-link': true,'active': onlinecredit}">
                         <i class="nav-icon fas fa-copy"></i>
                         <p>

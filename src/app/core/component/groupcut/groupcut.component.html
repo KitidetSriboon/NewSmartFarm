@@ -11,7 +11,7 @@
                         <div class="col-md-6">
                             
                             <div class="input-group mb-3" [formGroup]="FormCutGroup">
-                                <input type="text" class="form-control" placeholder="หมายเลขแปลง โควตาชาวไร่" formControlName="fmdata">
+                                <input type="text" class="form-control" placeholder="หมายเลขแปลง โควตาชาวไร่" formControlName="fmdata" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                 <button mat-raised-button color="warn" (click)="LoaddataGroupcupbyzone();">ค้นหา</button>
                             </div>
                         </div>

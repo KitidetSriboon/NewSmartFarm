@@ -1,5 +1,8 @@
 <app-header></app-header>
 <app-sidebar></app-sidebar>
+<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#0058ff" type="ball-scale-pulse" [fullScreen]="true">
+    <p style="color: black"> กำลังโหลดข้อมูล... </p>
+</ngx-spinner>
 <div class="content-wrapper" style="min-height: 307px">
 <!-- กลุ่มตัด|กลุ่มซ่อมบำรุง --> <br>
 <section id="repairgroup" class="content">
@@ -254,8 +257,8 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <!-- รายโซน -->
-                                                        <div class="card collapsed-card" *ngFor="let item of ZoneMaindataGroupboard;">
-                                                            <div class="card-header" style="background-color: steelblue;">
+                                                        <div class="card collapsed-card" *ngFor="let item of ZoneMaindataGroupboard;" >
+                                                            <div class="card-header" style="background-color: steelblue; ">
                                                                 <mat-icon>home</mat-icon> โซน {{item.supzone}} กลุ่มตัด [{{item.cntH}}]
                                                                 กำลังตัด [{{item.canePerDayH.toLocaleString('ar-TH')}} ตัน/วัน]
                                                                 กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
@@ -269,7 +272,7 @@
                                                                     </button> -->
                                                                 </div>
                                                             </div>
-                                                            <div class="card-body">
+                                                            <div class="card-body" >
                                                                 <!-- นักส่งเสริม -->
                                                                 <div class="card collapsed-card" *ngFor="let item of supportterboard;">
                                                                     <div class="card-header" style="background-color: #4CB963;">
@@ -308,6 +311,8 @@
                                                                                         <th scope="col">ประเภทกลุ่ม</th>
                                                                                         <th scope="col">ประเภทงาน</th>
                                                                                         <th scope="col">ประเมิน (ตัน)</th>
+                                                                                        <th scope="col">กำลังตัด (ตันต่อวัน) </th>
+                                                                                        <th scope="col">บรรทุก (ตันต่อวัน) </th>
                                                                                         <th scope="col">หมายเหตุ</th>
                                                                                     </thead>
                                                                                     <tbody *ngFor="let item of allsupporttergroupdata"> 
@@ -318,11 +323,13 @@
                                                                                             <td>{{item.category_docs}}</td>
                                                                                             <td>{{item.qdesc}}</td>
                                                                                             <td>{{item.Assess}}</td>
+                                                                                            <td>{{item.cutperday}}</td>
+                                                                                            <td>{{item.truckperday}}</td>
                                                                                             <td>{{item.comment}}</td>
                                                                                         </tr>
                                                                                     </tbody>
                                                                                 </table>
-                                                                            </mat-card> <br><br>
+                                                                            </mat-card>
                                                                         <!-- จบกลุ่มตัด -->
 
                                                                         <!-- กลุ่มบำรุง -->
@@ -335,6 +342,7 @@
                                                                                         <th scope="col">ประเภทกลุ่ม</th>
                                                                                         <th scope="col">ประเภทงาน</th>
                                                                                         <th scope="col">ประเมิน (ตัน)</th>
+                                                                                        <th scope="col">ความสามารถต่อวัน </th>
                                                                                         <th scope="col">หมายเหตุ</th>
                                                                                     </thead>
                                                                                     <tbody *ngFor="let item of allsupporttergroupdata"> 
@@ -345,6 +353,7 @@
                                                                                             <td>{{item.category_docs}}</td>
                                                                                             <td>{{item.qdesc}}</td>
                                                                                             <td>{{item.Assess}}</td>
+                                                                                            <td>{{item.caneperday}}</td>
                                                                                             <td>{{item.comment}}</td>
                                                                                         </tr>
                                                                                     </tbody>
