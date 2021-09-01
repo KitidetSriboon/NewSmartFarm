@@ -261,7 +261,7 @@ export class SidebarComponent implements OnInit {
   } 
 
   showmaingroupcut(){
-     this.router.navigateByUrl("/groupcup");
+     this.router.navigateByUrl("/groupcut");
   }
 
   showcontact(){
@@ -282,4 +282,8 @@ export class SidebarComponent implements OnInit {
   shownewplantcane(){
     this.router.navigateByUrl("/newplantcane");
   }
+
+  showreportplantcut(){
+    this.router.navigateByUrl("/reportplantcut");
+ } 
 }

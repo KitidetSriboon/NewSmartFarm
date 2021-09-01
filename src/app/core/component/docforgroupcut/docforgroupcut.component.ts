@@ -28,7 +28,7 @@ export class DocforgroupcutComponent implements OnInit {
   today;
   
   Nowdate(){
-    const date = new Date(2020, 7, 1)
+    const date = new Date()
     const result = date.toLocaleDateString('th-TH', {
     year: 'numeric',
     month: 'long',

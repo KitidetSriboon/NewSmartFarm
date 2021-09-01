@@ -103,8 +103,8 @@ export class RepairgroupComponent implements OnInit {
   FormRepair: FormGroup
   /// แก้ไชช้อมูลกลุ่ม
   FormEditRepair: FormGroup
-  Olddata;
-  oldgroupname; oldhcode; oldhname; oldsupcode; oldsupzone; oldposition_docs; old_Tools_docs; subhorsepower; old_brand;
+  Olddata;  oldgroupname; oldhcode; oldhname; oldsupcode; oldsupzone; 
+  oldposition_docs; old_Tools_docs; subhorsepower; old_brand;
   Oldsupdata;
   subcode; subname; subtell; subcanePerDay; subModel_brand;
   Hshow = true; Mshow = true;
@@ -142,7 +142,7 @@ export class RepairgroupComponent implements OnInit {
     this.GetCanperday();
     this.GetAllGroup();
     this.Loadchart();
-    }, 3000);
+    }, 1000);
     this.dataGroupSource.paginator = this.paginator;
     this.dataGroupSource.sort = this.sort;
   }
@@ -184,7 +184,7 @@ export class RepairgroupComponent implements OnInit {
       })
       .catch(err => { throw err });
   }
-  // โหลดข้อมูลกลุ่มหลัก
+  // โหลดข้อมูลกลุ่มย่อย
   Getsupgroupdate() {
     axios.get("https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_groupCode_n0")
       .then((out: any) => {
@@ -469,7 +469,6 @@ export class RepairgroupComponent implements OnInit {
   // ส่งค่าแก้ไขกลุ่มหลัก
   oldtel;
   CheckIDdata(iddata) {
-    console.log(iddata);
     let url = 'https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_groupCode';
     axios
       .get(url)
@@ -488,9 +487,8 @@ export class RepairgroupComponent implements OnInit {
       })
   }
   // ส่งค่าแก้ไขกลุ่มย่อย
+  reg_num;
   CheckSubIDdata(iddata, grouptype) {
-    console.log(iddata);
-    console.log(grouptype);
     if (grouptype.trim() === "H") {
       this.Hshow = false;
       this.Mshow = true;
@@ -511,8 +509,12 @@ export class RepairgroupComponent implements OnInit {
         this.subcanePerDay = oldsupdata[0].canePerDay;
         this.subtell = oldsupdata[0].tel.trim();
         this.oldposition_docs = oldsupdata[0].position_docs.trim();
-        this.subModel_brand = oldsupdata[0].Model_brand();
+        this.subModel_brand = oldsupdata[0].Model_brand;
         this.subhorsepower = oldsupdata[0].horsepower;
+        this.reg_num = oldsupdata[0].reg_num;
+
+        console.log(this.reg_num);
+
       })
       .catch(err => {
         console.error(err)
@@ -600,7 +602,6 @@ export class RepairgroupComponent implements OnInit {
         });
       this.FormEditRepair.controls['subposition'].reset()
       this.FormEditRepair.controls['subTools'].reset()
-      alert('บันทึกการแก้ไขข้อมูลเรียบร้อย^^');
 
     }
     else {
@@ -1183,6 +1184,7 @@ export class RepairgroupComponent implements OnInit {
       // console.log(scode)
       this.allsupporttergroupdata = data.filter(el => el.supcode == scode.trim());
       let hdata = this.allsupporttergroupdata.filter(el => el.category === 'H');
+      console.log(hdata);
       console.log(hdata.map(function(element){return element.groupcode}));
      
     })
@@ -1204,10 +1206,8 @@ export class RepairgroupComponent implements OnInit {
     axios
     .get('https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_v_groupCode_HMn0_1')
     .then(res => {
-        let  data = res.data.recordset;
-        this.supdatabygroup = data;
+        this.supdatabygroup = res.data.recordset;
         this.spinner.hide();
-        return 1000;
     }).catch(err =>{console.log(err);})
   }
   // แสดงกลุ่มตัดกลุ่มบำรุงโดยนักส่งเสริม

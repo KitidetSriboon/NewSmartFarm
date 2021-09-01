@@ -54,6 +54,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DocforgroupcutComponent } from './core/component/docforgroupcut/docforgroupcut.component';
 import { NgSelect2Module } from 'ng-select2';
+import { ReportplantcutComponent } from './core/component/reportplantcut/reportplantcut.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { NgSelect2Module } from 'ng-select2';
     CreditComponent,
     ManageareaComponent,
     DocforgroupcutComponent,
+    ReportplantcutComponent,
   ],
   imports: [
     NgSelect2Module,

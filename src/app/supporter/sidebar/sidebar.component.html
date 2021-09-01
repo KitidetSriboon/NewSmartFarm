@@ -170,6 +170,8 @@
                                         <p> พื้นที่ขยาย 65/66</p>
                                     </a>
                                 </li> -->
+                           
+
                                 <li class="nav-item">
                                     <a class="nav-link" (click)="showaction6465()">
                                         &nbsp; &nbsp; <i class="fas fa-file-contract nav-icon"></i>
@@ -266,6 +268,12 @@
                             <a class="nav-link" (click)="showrepairgroup();">
                                 &nbsp; <i class="fas fa-users nav-icon"></i>
                                 <p> กลุ่มตัด | กลุ่มบำรุง </p>
+                            </a>
+                        </li>
+                        <li [hidden]="!pr" class="nav-item">
+                            <a class="nav-link" (click)="showreportplantcut()">
+                                &nbsp; <i class="fas fa-clipboard nav-icon"></i>
+                                <p> รายงานแปลงอ้อยในกลุ่มตัด</p>
                             </a>
                         </li>
                         <!-- <li class="nav-item">

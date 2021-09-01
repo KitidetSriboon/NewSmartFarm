@@ -17,6 +17,7 @@ import { GroupcutComponent } from './core/component/groupcut/groupcut.component'
 import { CreditComponent } from './core/component/credit/credit.component';
 import { ManageareaComponent } from './core/component/managearea/managearea.component';
 import { DocforgroupcutComponent } from './core/component/docforgroupcut/docforgroupcut.component';
+import { ReportplantcutComponent } from './core/component/reportplantcut/reportplantcut.component';
 
 
 
@@ -31,12 +32,13 @@ const routes: Routes = [
   { path:'plantaction', component: PlantactionComponent},
   { path:'findlanddata', component: FindlanddataComponent },
   { path:'repairgroup', component: RepairgroupComponent},
-  { path:'groupcup', component: GroupcutComponent },
+  { path:'groupcut', component: GroupcutComponent },
   { path:'prbrd', component: PrbrdComponent },
   { path:'stockonline', component: StockonlineComponent},
   { path:'kpiall', component: KpiallComponent },
-  {path:'docforgroupcut', component: DocforgroupcutComponent},
-  {path:'managearea', component: ManageareaComponent},
+  { path:'docforgroupcut', component: DocforgroupcutComponent},
+  { path:'managearea', component: ManageareaComponent},
+  { path:'reportplantcut', component: ReportplantcutComponent},
  
   // { path: 'supporter', loadChildren: './app.module#AppModule' },
   { path: '**', redirectTo: 'login', pathMatch: 'full'}

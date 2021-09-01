@@ -14,7 +14,7 @@ export class GroupcutComponent implements OnInit {
   constructor() { 
     
   }
-  ColumByzone:string[] = [ 'supzone','route','intlandno','fmname','CaneTypeName','landvalue','Assess','Ton','period_cut','groupCode','Qtype','action'];
+  ColumByzone:string[] = [ 'supzone','route','intlandno','fmname','CaneTypeName','landvalue','Assess','Ton','period_cut','groupCode','Qtype','confirm_area_doc','action'];
   DataByZone;
   itid;
   ngOnInit(): void {
@@ -23,6 +23,7 @@ export class GroupcutComponent implements OnInit {
       groupnameedit: new FormControl(),
       groupcodeedit: new FormControl(),
       timecut: new FormControl(),
+      selectconfirm: new FormControl(),
     })
   setTimeout(() => {
     this.Gettimecut();
@@ -97,6 +98,9 @@ export class GroupcutComponent implements OnInit {
     console.log( this.oldgroup );
   }
 
+  opedcheck(itid){
+    this.itid = itid;
+  }
   timecut;
   Gettimecut(){
     axios
@@ -111,7 +115,7 @@ export class GroupcutComponent implements OnInit {
       console.error(err)
     })
   }
-
+  select_list = 99;
   Maincut;
   GetMainGroupcup(){
     axios.get("https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/select_groupCode")
@@ -126,6 +130,21 @@ export class GroupcutComponent implements OnInit {
     })
   }
 
-
+  // ยืนยันพื้นที่
+  Comfirmarea(){
+    let id = this.FormCutGroup.get('selectconfirm').value;
+    // console.log(this.itid);
+    let url = "https://asia-southeast2-brr-farmluck.cloudfunctions.net/brdsqlapi/update_cp_confirm_area?itid="+this.itid+"&confirm_area="+id;
+    axios.post(url)
+    .then(res => {
+      if(res.data.recordsets)
+      {
+        alert("บันทึกข้อมูลเรียบร้อย");
+      }
+      else if (res.data.code)
+      {alert("บันทึกข้อมูลไม่สำเร็จกรุณาลองใหม่ หรือ ติดต่อ IT");}
+    }).catch(err => { console.log(err);})
+    this.LoaddataGroupcupbyzone();
+  }
 
 }

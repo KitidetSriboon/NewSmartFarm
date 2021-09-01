@@ -22,8 +22,6 @@
                         <mat-icon>group_work</mat-icon> รายการกลุ่ม
                     </a>
                 </li>
-                
-
             </ul>
 
            
@@ -220,7 +218,6 @@
                                         <div class="row"> 
                                             <div class="col-lg-12">
                                                 <div class="card">
-                                                <!-- <div id="TEST" style="width: 100%; height: 500px;"></div> -->
                                                     <chart [type]="typeChart" [data]="dataChart"  [options]="optionsChart" style="height: 500px;"></chart>
                                                 </div>
                                             </div>
@@ -228,7 +225,6 @@
                                         <div class="row">    
                                             <div class="col-lg-12">
                                                 <div class="card">
-                                                <!-- <div id="TEST" style="width: 100%; height: 500px;"></div> -->
                                                     <chart [type]="typeChart" [data]="dataChart2"  [options]="optionsChart2" style="height: 500px;"></chart>
                                                 </div>
                                             </div>
@@ -239,7 +235,7 @@
                                             <div class="col-md-12">
                                                 <div class="card collapsed-card" *ngFor="let item of MaindataGroupboard">
                                                     <!-- รายส่วน -->
-                                                    <div class="card-header" style="background-color: slateblue;">
+                                                    <div class="card-header" style="background-color: rgb(152, 136, 255);">
                                                         <mat-icon>group_work</mat-icon> ส่วนที่ {{item.Partcode}} กลุ่มตัด [{{item.cntH}}] กำลังตัด
                                                         [ {{item.canePerDayH.toLocaleString('ar-TH')}}] ตัน/วัน]
                                                         กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
@@ -249,16 +245,12 @@
                                                                         class="fas fa-plus"></i>
                                                                 </button>
                                                             </div>
-                                                            <!-- <button type="button" class="btn btn-tool"
-                                                                data-card-widget="collapse"> 
-                                                                <mat-icon (click)="GetSubGroupBoard(item.Partcode);">toc</mat-icon>
-                                                            </button> -->
                                                         </div>
                                                     </div>
                                                     <div class="card-body">
                                                         <!-- รายโซน -->
                                                         <div class="card collapsed-card" *ngFor="let item of ZoneMaindataGroupboard;" >
-                                                            <div class="card-header" style="background-color: steelblue; ">
+                                                            <div class="card-header" style="background-color: rgb(123, 195, 253); ">
                                                                 <mat-icon>home</mat-icon> โซน {{item.supzone}} กลุ่มตัด [{{item.cntH}}]
                                                                 กำลังตัด [{{item.canePerDayH.toLocaleString('ar-TH')}} ตัน/วัน]
                                                                 กลุ่มบำรุง [{{item.cntM}}] [ความสามารถ [{{item.canePerDayM.toLocaleString('ar-TH')}}] ไร่/วัน]
@@ -266,16 +258,12 @@
                                                                         <button type="button" class="btn btn-tool" (click)="GetSupportGroupboard(item.Partcode,item.supzone);" data-card-widget="collapse"><i
                                                                                 class="fas fa-plus"></i>
                                                                         </button>
-                                                                    <!-- <button type="button" class="btn btn-tool"
-                                                                        data-card-widget="collapse">
-                                                                        <mat-icon (click)="GetSupportGroupboard(item.Partcode,item.supzone);">toc</mat-icon>
-                                                                    </button> -->
                                                                 </div>
                                                             </div>
                                                             <div class="card-body" >
                                                                 <!-- นักส่งเสริม -->
                                                                 <div class="card collapsed-card" *ngFor="let item of supportterboard;">
-                                                                    <div class="card-header" style="background-color: #4CB963;">
+                                                                    <div class="card-header" style="background-color: #85f89e;">
                                                                         <div class="card-title">
                                                                               
                                                                         </div>
@@ -294,71 +282,33 @@
                                                                             <button type="button" class="btn btn-tool" (click)="Loadsupporttergroupdata(item.supcode);" data-card-widget="collapse"><i
                                                                                 class="fas fa-plus"></i>
                                                                             </button>
-                                                                            <!-- <button type="button" class="btn btn-tool"
-                                                                                data-card-widget="collapse">
-                                                                                <mat-icon (click)="Loadsupporttergroupdata(item.supcode);" >toc</mat-icon>
-                                                                            </button> -->
                                                                         </div>
                                                                     </div>
                                                                     <div class="card-body">
                                                                         <!-- กลุ่มตัด -->
-                                                                            <mat-card [hidden]="showHcode">
-                                                                                <table class="table">
-                                                                                    <thead>
-                                                                                        <th scope="col">รหัสกลุ่ม</th>
-                                                                                        <th scope="col">ชื่อกลุ่ม</th>
-                                                                                        <th scope="col">หัวหน้ากลุ่ม</th>
-                                                                                        <th scope="col">ประเภทกลุ่ม</th>
-                                                                                        <th scope="col">ประเภทงาน</th>
-                                                                                        <th scope="col">ประเมิน (ตัน)</th>
-                                                                                        <th scope="col">กำลังตัด (ตันต่อวัน) </th>
-                                                                                        <th scope="col">บรรทุก (ตันต่อวัน) </th>
-                                                                                        <th scope="col">หมายเหตุ</th>
-                                                                                    </thead>
-                                                                                    <tbody *ngFor="let item of allsupporttergroupdata"> 
-                                                                                        <tr  *ngIf="item.category==='H'">
-                                                                                            <td>{{item.categoryGroup}}</td>
-                                                                                            <td>{{item.groupname}}</td>
-                                                                                            <td>{{item.h_fmname}}</td>
-                                                                                            <td>{{item.category_docs}}</td>
-                                                                                            <td>{{item.qdesc}}</td>
-                                                                                            <td>{{item.Assess}}</td>
-                                                                                            <td>{{item.cutperday}}</td>
-                                                                                            <td>{{item.truckperday}}</td>
-                                                                                            <td>{{item.comment}}</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </mat-card>
+                                                                            <div class="card"  *ngFor="let item of allsupporttergroupdata">
+                                                                                <div class="card" [hidden]="showHcode" *ngIf="item.category==='H'" >
+                                                                                     <div class="card-header" style="background-color: gray;">
+                                                                                        {{item.h_fmname}} กลุ่ม {{item.categoryGroup}} [กำลังตัด {{item.cutperday}} ตัน/วัน] [บรรทุก {{item.truckperday}} ตัน/วัน] ประเมินอ้อย [ {{item.Assess.toLocaleString('ar-TH')}} ตัน]
+                                                                                      </div>  
+                                                                                      <div class="card-body">
+
+                                                                                      </div>
+                                                                                </div>
+                                                                            
                                                                         <!-- จบกลุ่มตัด -->
 
                                                                         <!-- กลุ่มบำรุง -->
-                                                                            <mat-card [hidden]="showMcode">
-                                                                                <table class="table">
-                                                                                    <thead>
-                                                                                        <th scope="col">รหัสกลุ่ม</th>
-                                                                                        <th scope="col">ชื่อกลุ่ม</th>
-                                                                                        <th scope="col">หัวหน้ากลุ่ม</th>
-                                                                                        <th scope="col">ประเภทกลุ่ม</th>
-                                                                                        <th scope="col">ประเภทงาน</th>
-                                                                                        <th scope="col">ประเมิน (ตัน)</th>
-                                                                                        <th scope="col">ความสามารถต่อวัน </th>
-                                                                                        <th scope="col">หมายเหตุ</th>
-                                                                                    </thead>
-                                                                                    <tbody *ngFor="let item of allsupporttergroupdata"> 
-                                                                                        <tr *ngIf="item.category==='M'">
-                                                                                            <td>{{item.categoryGroup}}</td>
-                                                                                            <td>{{item.groupname}}</td>
-                                                                                            <td>{{item.h_fmname}}</td>
-                                                                                            <td>{{item.category_docs}}</td>
-                                                                                            <td>{{item.qdesc}}</td>
-                                                                                            <td>{{item.Assess}}</td>
-                                                                                            <td>{{item.caneperday}}</td>
-                                                                                            <td>{{item.comment}}</td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
-                                                                            </mat-card>
+                                                                    
+                                                                                <div class="card" [hidden]="showMcode" *ngIf="item.category==='M'" >
+                                                                                 <div class="card-header" style="background-color: rgb(164, 88, 219);">
+                                                                                    {{item.h_fmname}} กลุ่ม {{item.categoryGroup}} [กำลังตัด {{item.cutperday}} ตัน/วัน] [บรรทุก {{item.truckperday}} ตัน/วัน] ประเมินอ้อย [ {{item.Assess.toLocaleString('ar-TH')}} ตัน]
+                                                                                  </div>  
+                                                                                  <div class="card-body">
+
+                                                                                  </div>
+                                                                                </div>
+                                                                        </div>
                                                                         <!-- จบกลุ่มบำรุง -->
                                                                       
                                                                     </div>
@@ -375,13 +325,11 @@
                         </div>
                        
                 </div>
-                        <!-- ภาพรวมทั้งหมด -->
-               
-                      
+                <!-- ภาพรวมทั้งหมด -->
             </div>
                 <!-- ภาพรวม -->
 
-                
+                <!-- จัดการกลุุ่ม -->
                 <mat-card  id="addgroup" style="display:none;">
                     <div class="input-group mb-3" [formGroup]="FormRepair">
                         <span class="input-group-text">เลือกรายการ</span>
@@ -1122,7 +1070,7 @@
                     </div>
                     <!-- แบบบันทึกกลุ่มตัด | แบบบันทึกกลุ่มบำรุง -->
                 </mat-card>
-               
+                 <!-- จัดการกลุุ่ม -->
             </div>
            
 
@@ -1321,7 +1269,7 @@
                             </tr>
                             <tr [hidden]="Hshow">
                                 <td>ทะเบียนรถ</td>
-                                <td><input type="text" class="form-control" formControlName="subcarboardnumber" required
+                                <td><input type="text" class="form-control" formControlName="subcarboardnumber" [ngModel]="reg_num" required
                                         placeholder="ทบ 112"> </td>
                                 <td>ปีที่ผลิต (พ.ศ.) : </td>
                                 <td><input class="form-control" type="text"

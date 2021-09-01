@@ -1,0 +1,77 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#0058ff" type="ball-scale-pulse" [fullScreen]="true">
+    <p style="color: black"> กำลังโหลดข้อมูล... </p>
+</ngx-spinner>
+<div class="content-wrapper" style="min-height: 307px">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <form>
+                    <div class="input-group mb-3 no-print">
+                        <input type="text" class="form-control" placeholder="กรอกรหัสกลุ่ม" id="groupcode">
+                        <button class="btn btn-primary" (click)="Loadreportplantcup();">ค้นหา</button>
+                        <button  mat-raised-button color="warn"  (click)="print()">ออกเอกสาร</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body">
+                <img mat-card-image src="../../../../assets/images/bsfLogo.jpg" style="width: 50%; margin-left: 25%;"> <br> <br>
+                <h2 *ngFor="let item of datagroup">ชื่อกลุ่ม : {{item.groupname}} รหัส : {{item.categoryGroup}} หัวหน้ากลุ่ม : {{item.h_fmname}} ประเภทคิว : {{item.qdesc}}</h2>
+                <table class="table">
+                    <thead>
+                        <th scope="col">ชื่อ - สกุล</th>
+                        <th scope="col">เลขแปลง</th>
+                        <th scope="col">พื้นที่</th>
+                        <th scope="col">พันธุ์</th>
+                        <th scope="col">โซน</th>
+                        <th scope="col">รูท</th>
+                        <th scope="col">อายุ</th>
+                        <th scope="col">ตัน</th>
+                        <th scope="col">ประเมิน</th>
+                        <th scope="col" style="text-align: center;">ลำดับตัด</th>
+                        <th scope="col" style="text-align: center;">วันที่ตัด</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of datareportplantcup; index as i">
+                            <td> <label *ngIf="item.supzone==null" style="text-decoration: underline;">{{item.fmname}}</label> <p *ngIf="item.supzone!=null">{{item.fmname}}</p></td>
+                            <!-- <td>{{item.fmname}}</td> -->
+                            <td>
+                                <label *ngIf="item.supzone==null" style="text-decoration: underline;">{{item.intlandno}}</label> <p *ngIf="item.supzone!=null">{{item.intlandno}}</p>
+                            </td>
+                            <td><label *ngIf="item.supzone==null" style="text-decoration: underline;">{{item.landvalue.toLocaleString('ar-TH')}}</label> <p *ngIf="item.supzone!=null">{{item.landvalue.toLocaleString('ar-TH')}}</p></td>
+                            <td>{{item.seedname}}</td>
+                            <td>{{item.supzone}}</td>
+                            <td>{{item.route}}</td>
+                            <td>{{item.caneage}}</td>
+                            <td>{{item.ton}}</td>
+                            <td>
+                                <label *ngIf="item.supzone==null" style="text-decoration: underline;">{{item.Assess.toLocaleString('ar-TH')}}</label> <p *ngIf="item.supzone!=null">{{item.Assess.toLocaleString('ar-TH')}}</p>
+                            </td>
+                            <td>....................</td>
+                            <td>....................</td>
+                        </tr>
+                        
+                    </tbody>
+                </table> <br>
+                วันที่พิมพ์เอกสาร {{today}}
+
+                <div class="row">
+                    <div class="col-6" style="margin-left: 10%;">
+                     
+                     
+                    </div>
+                    <div class="col-4"> <br><br><br>
+                      <p>ลงชื่อ ..................................................</p>
+                      <p>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;หัวหน้ากลุ่ม</p>
+                      <p>ลงชื่อ ..................................................</p>
+                      <p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;พนักงานส่งเสริม</p>
+                      <p>วันที่ (............./............./..............)</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

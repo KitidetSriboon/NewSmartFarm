@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="card">
-                <div class="card-header bg-success">รายการข้อมูล</div>
+                <div class="card-header bg-success">รายการข้อมูล บันทึกกลุ่มตัดแปลงอ้อย </div>
                 <div class="card-body"  >
                     <div class="row">
                         <div class="col-md-6">
@@ -92,10 +92,18 @@
                             <td mat-cell *matCellDef="let element"> {{element.qdesc}}  </td>
                             </ng-container>
 
+                            <ng-container matColumnDef="confirm_area_doc">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;" id="KanitTH"> ยืนยันพื้นที่ </th>
+                              <td mat-cell *matCellDef="let element"> {{element.confirm_area_doc}}  </td>
+                            </ng-container>
+
                             <ng-container matColumnDef="action">
                               <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 200px;" id="KanitTH"> Action </th>
-                              <td mat-cell *matCellDef="let element"> <button class="btn btn-primary" data-toggle="modal"
-                                data-target="#editcut" (click)="openedit(element.itid,element.groupCode,element.period_cut);"><mat-icon>edit</mat-icon></button>   </td>
+                              <td mat-cell *matCellDef="let element"> 
+                                <button class="btn btn-primary" data-toggle="modal"
+                                data-target="#editcut" (click)="openedit(element.itid,element.groupCode,element.period_cut);"><mat-icon>edit</mat-icon>แก้ไขกลุ่มตัด</button>   
+                                <button class="btn btn-success" data-toggle="modal" data-target="#checkcut" (click)="opedcheck(element.itid);"><mat-icon>check</mat-icon>ยืนยันพื้นที่</button>
+                              </td>
                               </ng-container>
 
                          
@@ -119,9 +127,11 @@
     <div class="modal fade" id="editcut" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header bg-primary">
             <h5 class="modal-title" id="exampleModalLabel">แก้ไขข้อมูล</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
           </div>
           <div class="modal-body" [formGroup]="FormCutGroup">
             <p>งวดตัด : <input type="text"  class="form-control"  value="{{oldtime}}" disabled> 
@@ -156,6 +166,35 @@
       </div>
     </div>
     <!-- MOdal -->
+
+    <!-- Modal  checkcut-->
+    <div class="modal fade" id="checkcut" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-success">
+            <h2 class="modal-title" id="exampleModalLabel">ยืนยันพื้นที่</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" [formGroup]="FormCutGroup">
+            <select class="form-control" formControlName="selectconfirm" [(ngModel)]="select_list">
+              <option [ngValue]="99" selected>กรุณาเลือก</option>
+              <option [ngValue]="1">ไว้ตอ</option>
+              <option [ngValue]="2">รื้อตอ</option>
+              <option [ngValue]="3">เลิกปลูก</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="Comfirmarea();">บันทึกรายการ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MOdal -->
+
+
 </section>
 </div>
 <app-footer></app-footer>
